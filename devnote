@@ -1,0 +1,8 @@
+//Image csomag telepítés---------------------------------
+ composer require intervention/image
+ config >> app.php
+    'providers' => [  Intervention\Image\ImageServiceProvider::class,
+    'aliases' => ['Image' => Intervention\Image\Facades\Image::class,
+//php hibák kiíratása a .htaccaes -ből
+php_flag display_startup_errors on
+php_flag display_errors on

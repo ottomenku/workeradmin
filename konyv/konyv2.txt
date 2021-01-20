@@ -1,0 +1,125 @@
+ A fenevad könyve 
+első fejezet
+ Az ember számára elérhető minden tudás:LÉTEZEL
+
+jegyzet:
+STN: A világ informatikus szemmel
+első fejezet: A tudás
+Mikor kiderült hogy elószót irhatok a fenevad könyvéhez,
+ úgy voltam vele mmint a vegyész, aki lakmuszpapírnak öltözött az álarcos bálon, és leöntötték savval. Hirtelen azt sem tudtam hogy reagáljak... 
+ Kétség kívül érdekes magának a sötétség fejedelmének kinyilatkoztatásait véleményezni, de az emberben azért bekapcsol a vészcsengő is ...
+Egyáltalán ki a fene az a fenevad? Mi az a gonosz?
+Persze gyerekként midannyian tudjuk hogy gonosz a farkas, aki megeszi az ártatlan nyuszit..
+Aztán nagyobbak leszünk és olvasunk egy mesét  Sibi királyról, aki buddhává válása előtt látta, hogy egy karvaly üldöz egy galambot. Szerencsétlen galamb már a végkimerülés határán volt. Nyilvánvaló volt hogy a karvaly el fogja kapni. Utolsó erelyét megfeszítve a leendő buddha elé vetette magát és könyörögni kezdett:
+-Kérlek ments meg! Ha el kap a karvaly nem csak én halok meg hanem a pár napos fiókáim is!
+-Ne aggódj mondta Sidi király! Számomra minden élet szent! Nem hagyom hogy bántson.
+Ekkor azonbam megérkezett a karvaly is. Láthatóan ő sem volt túl jó bőrben. 
+-Napok óta nem sikerült semmit zsákmányolnom. Minden maradék energiámat ennek a galambnak az elejtésére fordítottam, és ha nem lépsz közbe, el is kaptam volna. Megmenekültem volna és a fiókáim is. Te viszont közbe avatkoztál, el vetted a jogos prédámat amiért megdolgoztam. Ezzel halálra itéltél engem is és a fiókáimat is.
+Ekkor sidi érezte hogy hibát követett el de nem szeghette meg adott szavát. Felajánlotta hát, hogy saját húsábból ad a galamb helyett. Ekkor egy mérleg ereszkedett le az égből és az egyik serpenyőjébe került agalamb. Sidi király levágot a lábából egy nagy darab húst és a másik serpenyőbe tette. De kevésnek bizonyult. Ekkor levágott még egy darbot majd az egyik kezét is. Megdöbbenve tapasztalta hogy a galamb még mindig nehezebb...
+Ekkor megvilágosodott.
+ Az egyenelet nem úgy szól, hogy egy darab húst egy darab húsért, hanem egy életet egy életért!
+Ráállt a mérlegre.
+Szóval itt egy kicsit elbizonytalanodunk...
+
+Most kivételesen eltekintek a precíz meghatározástól. Egy élet rámenne mindent elovasni és leszürni belőle a lényeget. Régebben érdekeltek a vallások is, természetesen belefutottam ebbe a témába is. Nézzük mi maradt meg! Ami lényeges időtálló:
+ Köztudott dolgok: a fenevad tulajdonképpen az Antikrisztus, a gonosz megtestesülése. Fia annak a lázadó angyalnak,   aki szembe fordult Istennel. Eljövetele a vég kezdete. Össze fogja a kereszténység ellenes erőket és krisztus második eljövetelekor a végső csatba vezeti. A jó és a rossz örök harcában ő a roszz.
+ Bennfentesebb információk: Eljövetléig  krisztus után kétezer évet kapott az emberiség, száma 666 csellel elfoglal egy kis országot majd teljes világuralomra tör.
+egy kis töprengés:A gondok mindjárt az apjával kezdődnek,
+
+
+
+ Persze nyilván nem ő írta ezt szenélyesen, bár végül is ki tudja? De lehet olyasmi is mint a bibliánál, hogy sugalmazásra született. Attól még nem túl jó dolog vele poénkodni...
+ Végül is mindegy mivel pont van egy projektem  ahol az ötven év alatt bennem felgyülemlett bölcsességet-hülyeséget (Mindenkinek szíve joga hogy minősítse) akarom az meberiség nyakába zúdítani. Nem igazán jó szó erre a bosszú... Inkább egyfajta önfejlesztés. Szóval van ez a projektem ami eredileg okoska törp válogatott bölcsességeinek indult, de vénségemre informatikussá képeztem magam, és és úgy éreztem baromi érdekes a régi ezoterikus világképemet informatikus szemszögből is megvizsgálni. Ezért a hihetetlen fantáziadús "Világ informatikus szemmel" címet adtam neki. És abban pont terveztem egy fejezetet a tudásról is. Ugyhogy összekapcsolom a kellemest a hasznossal, a tüzes szortyogót a "lelkesítő" facebook kommentekkel és a tudásról szóló fejezetet egyben elószónak is alkalmassá teszem.
+Kezdetnek mindjárt egy érdekes sztori ötlött fel bennem. Az egyik informatikai előadáson akövetkező kérdés riasztott fel békés szundikálásomból: Mit ud a számítófgép?
+Pontosabban nem is a kérdés volt ami szetzúzta a békés álmosságot hanem az utána következő döbbent csend.
+Mit is tud a számítógép? Hogy lehet erre pár mondatban válaszolni?
+ Gyakoprlatilag mindent! A fotó manipulációtól az űrhajó irányításon át a mesterséges intelligencia futtatásáig... 
+A döbbent csend után, Volt is néhány erőtlen próbálkozás egy hevenyészett lista összeállítására.. A tanár kb úgy nézett ránk mint Eisten nézhetett élete végén a homokban játszadozó gyerekere. Majd a következőt írta a táblára: 
+0+0=0
+1+0=1
+0+1=1
+1+1=(1)0
+Ennyit tudnak a szamítógépek. A legegyszerűbbtől a legbonyolutabb szuper számítógépekeig :
+igaz a fenti műveleteket rendkívül gyorsan, és sokszor képesek elvégezni. és  Minél "nagyobb tudású" annál gyorsabban. Másodpercenként akár sok milliárdszor.. Ami szép de lássuk be azért ettől egy kicsit többet vártunk!
+Mégis hogy lesz ebből mesterséges inntelligencia meg űrhajó irányítás?
+     Ez a dolog érdekes része. Borzasztóan leegyszerúsítve: valaki megmondja neki hogy a fenti műveleteket milyen sorrendben végezze el, és milyen jelsorozatra milyen interakciót hajtson végre. A gyakorlati megvalósításba most ne menjünk  bele nevezzük egyszerűen csak programozásnak.
+Ez azonban igen ingoványos terület. tele hibával bizonytalansággal problémával.. Ne is foglalkozzunk most vele! térjünk vissza a tiszta vitán felül áló stabil tudáshoz. ami mint megállaőpítottuk nem túl sok. Lényegében a semmi a és a valami viszonyat írja le...
+
+Lehet hogy ilyesmi a helyzet az emberi tudással is.
+ Kezdjü azzal. hogy ne esünk mindjárt hasra, azon hogy maga fényhozó adta át az emberiség számára elérhető  összes tudást számunkra. Igaz ez az ő asztala... De a teleshopon edződött lelkünk azért már nem hisz el mindent kritikátlanul. Ez a tudás ugyanis gyanüsan kevés. Érdemes volt ezért enni a tudás fájáról? Ősszeveszni a teremtővel, vállalni ezt a sok macerát...
+Nem tudom... De ez már negvolt. Inkább vizsgáljuk meg, hogy tényleg csak ennyit kaptunk-e? Nem lehet hogy kimaradt valami?
+  A feladat egyszerű. Vegyük a tudás definícióját, vagyis egy olyan meghatározást ami alapján mindenről egyértelműen eldönthető hogy az a dolog tudás-e vagy nem. Aztán vizsgáljunk meg minden dolgot ami számunkra elérhető. Amire a definició illik az lesz a számunkra elérhető összes tudás halmaza. Ezt már csak össze kell hasonlítani a fenevad által átadott halmazzal és amennyiben egyenlő ok. Ha nem akkor meg át vagyunk verve. És lehet hogy még pokol sincs...
+  Szóval rajta, keressük meg a tudás definicióját. Az internet korában ez már nem lehet probléma.
+
+Vagy mégis? A huszadik google találati oldal után kezd az embernek olyan érzése lenni hogy itt azért elég nagy mellébeszélés megy.. Lehetséges volna hogy a tudás alapú társadalom építése közben, azt sem tudjuk pontosan hogy mi a tudás? Igaz megcsináltuk ezt már a kommunizmussal is...
+ha valakit érdekelnek az ilyen értelmetlen karakterhalmazok kezdje mondjuk a wikipédia tudás szócikkével:
+https://hu.wikipedia.org/wiki/Tud%C3%A1s  
+Persze van még sok ilyen....
+
+Aki inkább használható megoldást akar, azzal haladjunk tovább
+Kezdetnek ezek jók:
+- A tudás a megismerő folyamatok (tanulás) eredményeként a tudatban létrejövő pszichikus képződmények rendszere.
+(http://okt.ektf.hu/data/szlahorek/file/kezek/02_terv_ert/222a_tuds_fogalma_tpusai.html)
+- Használható ismeret vagy képesség egy helyzet, feladat, munka sikeres elvégzésére, kitűzött cél elérésére.
+(https://wikiszotar.hu/ertelmezo-szotar/Tudás)
+
+Az összes többi lényegében ennek a kettőnek egyre körülményesebb leírása. valamint mellébeszélés...
+Amiben negegyeznek hogy szerintük sok féle tudás van. Ezeket azonban két nagy csoportra lehet osztani
+
+ismeretjellegű és képességjellegű tudás. 
+
+Az nyilvánvaló hogy minket az ismeret jellegű érdekel. Mivel képességet nem lehet könyvben átadni.
+És egyben az is nyilvánvaló hogy Fenevad úrnak pontosítania kellene a fejezet címet. Minden ismeret jellegú tudás ami az ember számára elérhető-re.
+Illetve, most hogy felvillant előttem egy kép a gőzölgő kondérok kürül ténfergő patás lényekről, hirtelen eszembe jutott hogy tulajdonképpen a képesség jellegű tudás egész egyszerűen csak képesség. Vagyis nem kell változtatni semmin. Tudás csak egyfajta van az ismeret alapú. 
+    Hogy fog az ember agya, ha egy kis inspirációt kap! 
+Nosza ha ilyen lendületben vagyunk próbáljunk a két nem túl jó  meghatározásból egy igazit csinálni. Ami már megérdemli a definíció minősítést is.
+ Az első meghatározás első része lényegében nem kell. Egyrészt lehet velünk született vagy akár programozott tudás is, Másrészt  tök mindegy hogy a tudás hogyan jön létre. A pszhikus képződmények rendszerét egész egyszerúen helyettesíthetjük a valami szóval. Mivel a tudatban van nyilvánvalóan pszihikus, a képződmény nem bír semmilyen információval a valami tuljdonságait illetően, mint ahaogy a rendszer is csak annyit árul el hogy több is lehet és ezek kapcsolatban lehetnek egymással.
+ Tehát  ez a definició leegyszerúsítve igy hangzik: 
+ 
+ A tudatban lévő valami vagy valamik. Amik kapcsolatban lehetnek egymással.
+
+  Na bumm! Mondaná erre Besenyő Pista bácsi! Ezen kár volt annyit agyalni. Hogy a tudás olyan valami ami tudatban van.. Ki hinné!
+
+  de nézzük a második meghatározást:
+  Ebből nyugodtan kivehetjük a képességre utaló részeket. Marad a használható ismeret.
+   Vagyis a tudás a tudatban lévő használható ismeret.
+
+Alakul ez! Már csak a tudatot kell meghatározni, az ismeretet, és az imeret használhatóságának fogalmát. Valamint bizoníyítani hogy az ismeretet tényleg a használhatósága teszi tudássá.
+
+Semmiség hiszen van internetünk! Igaz már kicsitfélve írom be tudat szót a keresőbe, de beírom!
+És láss csodát! A legelső találat legelső soraiban szinte használható meghatározás van:
+"Az agy legmagasabb rendű, csakis az emberre és állatokra jellemző funkciója, amelynek lényege, hogy célszerűen visszatükrözi a külső tárgyak tulajdonságait és kapcsolatait, megtervezi a cselekvést és következtet annak majdani eredményére"
+(https://hu.wikipedia.org/wiki/Tudat)
+
+Egyszewrúsítsük egy kicsit. Ne szűkítsük csak az emberekre és az állatokra! Nem szeretnék kinos beszélgetéseket a földönkívüliekkel, esetleg a sötétség urával, vagy akár valami fejlett robottal... Ezért azt sem hiszem hogy csak az agyban lehet tudat, de ez persze csak hit. Mint ahogy az ellenkjezője is.  A hitet pedig egyenlőre hagyjuk. 
+Tehát az első rész igazából nem kell. amásodik rész pedig helyettesíthető a jóval egyszerűbb képes modleszni a külvilágot kifejezéssel.
+Vagyis: tudatnak nevezzük a gondolatban  külvilágot modelezés képességét.
+Vagyis aki rendelkezek ezzel a képességgel annak van tudata aki nem annak nincs. Ez már egy jó kis definició. segítségével mindenről eldöntehető hogy van-e tudata vagy sem.
+Két apró  szépséghibája van. Az egyik hogy nem biztos hogy helyes. 
+Sajnos attól hogy valami megfelel a jó definíció kritériumainak még semmi nem garantálja hogy helyes is. Pl itt is igen erősen motoszkál bewnnünk a kisördög hogy ettől azért több lehet a tudat. De ez már valószínúleg túl van tudomány és az emberi elme mgértési képességén. Persze elég kisstílű dolog azért elfogadni egy valószínűleg nem tökéletes meghatározást mert nem tudunk jobbat. Nem is azért tesszük. Azért tesszük mert mint később látni fogjuk, a célnak ez is megfelel. Tehát ez is tökéletes.
+Lehetne persze belemerülni a filozófia mocsaraiba, szédelegni a spititualizmus tengerén... Még az sincs kizárva hogy valami egészen zseniálisat össze hoznánk ebben a témában, de nem ez a feladatunk. Márpedig az informatikusok első szabálya hogy sosem  felejtsd el mi a feladatod! Ha az  a feladatod hogy a program egy képen ismerje fel mondjuk a kereszt jelet, nem kell képfelismerő mesterséges inttelligenciát fejleszteni.   Nem az a feladatunk hogy univerzális meghatározást adjunk a tudatról
+Ami igazán érdekes kérdés, hogy hogyan készül ez a belső világ? Ez a model. Nos aki már modelezett az tudja hogy egy model megalkotásához legelőször is információra van szükség a modelezendő dologról. Méreteiről, anyagáról szíbéről stbb. 
+
+
+
+A külvilágból érkező információk alapján.
+Szerencsére it sem kell túl variálni a dolgokat.Az nyilvánvaló hogy a tudat nem lehet akkora (olyan bonyolult) mint a külvilág. Például azért nem mert feltételezzük hogy a tudatot létre hozó jóval kisebb egyszerűbb mint a külvilág.. Ezt most fogadjuk el axiómaként, mint ahogy azt is hogy van külvilág. Nem azért mert biztos így van, hanem mert... 
+Tehát a tudatot létre hozó valaminek először is el kell döntenie hogy a kulvilág mely részét akarja modelezni. Vagyis milyen poaramétereire kiváncsi. 
+Pl tudni akarja hogy hideg van -e , van e a közelben valami stb... ha akérdések megvannak akkor természetesen válaszok iskellenek rá. Vagyis információ.
+Amit lényegében már meg is határoztunk hogy mi. Válasz. Vagyis olyan valami ami egy rendszer bizonytalanságát képes csökkenteni. Két fontos paramétere van. A mennyisége, vagyis mennyire képes a bizonytalanságot csökkneteni, és miősége. vagyis mennyire igaz. esetünkben mennyire jó modelt eredményez a használata. 
+
+
+
+Itt most fordított irányban kell elindulnunk. Vagyis a programozásból kell meg próbálnunk vissza fejtenünk  a tudást. Mire szolgál az ember, és gyakorlatilag minden állat programozása. Elsősorban az életben maradásra. Ehhez fontos hogy meg tudja alkotni a külvilág modeljét. Amihez az információt az érzékszervei biztosítják. Ezen információkat értelmezmi kell és ez alapján meg alkotni a külvilág vagyis a valóság modeljét. Nyilvánvaló hogy ez model jóval egyszerűbb mint a külvilág.
+
+Viszont ez már érdekes módon nem tudás. Csak a tudás megfelelő sorrendben való alkalmazása. Lényegében egy megoldási algoritmus.  De Mi a különbség a tudás és az algoritmus között?
+
+
+
+
+
+A tudás tulajdonképpen megegyezik a matematikai axióma fogalmával. Vagyis a kiindulási pontként igaznak elfogadott kijelentések. erre épülnek a definiciók majd az algoritmusok..
+
+Talán a mi hihetetlen nagy tudásunkat is le lehet bontani 
+
+Van valami mágikus ebben a szóban.Mindenki használja mindenki ismeri, de vajon ki tudná meghatározni hogy mit is ért alatta?  A világ tele van csodákkal. mágikus lényekkel, különleges képességű emberekkel, csodálatos eszközökkel.. Legalábbis a mesékben... de vajon tényleg csak ott? Egy mostani mobil telefon pár száz éve nem minősült volna egyenértékű csodának mondjuk egy varázsgömbel? Es mégis azért érezzük hogy van egy lapvető különbség a kettő között: hogy a mobil telefon létezik a varázsgömb meg nem. Es ezt a nem jelentéktelen különbséget a tudásanak köszönhetjük. Vagyis a tudás az az eszköz ami képes a csodából valóságot csinálni. Ez tulajdonképpen isteni privillégium. És valóban mi is volt az ember fő bűne: hogy evett a udás fájáról és ezzel hasonlatossá vált istenhez

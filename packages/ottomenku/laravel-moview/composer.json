@@ -1,0 +1,24 @@
+{
+    "name": "ottomenku/laravel-mocontroller",
+    "authors": [{
+        "name": "ottomenku",
+        "email": "ottomenku@gmail.com"
+    }],
+    "autoload": {
+        "psr-4": {
+            "Ottomenku\\MoController\\": "src/"
+        }
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ottomenku\\MoController\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.1.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    }
+}

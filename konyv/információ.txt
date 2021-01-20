@@ -1,0 +1,27 @@
+axi´om´akb´ol, defin´ıci´okb´ol, t´etelekb˝ol ´es bizony´ıt´asokb´ol ´all.
+
+Mi az információ?
+
+Az információ egy olyan dolog ami ami egy másik dolog bizonytalansá
+
+Az információ olyan új ismeret, amely megszerzője számára szükséges, és korábbi tudása alapján értelmezhető. Az információ olyan tény, amelynek megismerésekor olyan tudásra teszünk szert, ami addig nem volt a birtokunkban. (Úgy is fogalmazhatunk, hogy az információ valamely meglévő bizonytalanságot szüntet meg.) Azokat az információkat, amelyekből valamilyen konkrét tényt tudunk meg adatnak is nevezzük. Az információ értelmezett adat.
+
+
+
+
+
+Mi az adat?
+
+Az adat elemi ismeret. Az adat tények, fogalmak olyan megjelenési formája, amely alkalmas emberi eszközökkel történő értelmezésre, feldolgozásra, továbbításra. Az adatokból gondolkodás vagy gépi feldolgozás útján információkat, azaz új ismereteket nyerünk.
+
+
+
+azt az adatot, hírt tekintjük, amely számunkra releváns és ismerethiányt csökkent. Egyik legleegyszerűsítettebb megfogalmazás szerint az információ nem más, mint a valóság (vagy egy részének) visszatükröződése.[1] 
+
+Mennyisége
+Az információ mennyisége az idővel exponenciálisan nő, ugyanis az információ felhasználásakor nem semmisül meg, többszörösen újrafelhasználható. Ugyanakkor az is igaz, hogy az információ megsemmisíthető, hiszen csak az információt reprezentáló adatokat, jeleket kell törölni.
+Az információmennyiség mértékegysége a bit[j 2] – nem tévesztendő össze a adatmennyiség mértékegységével, amely szintén bit.
+Ha egy eldöntendő kérdésre egyforma valószínűséggel adhatók különböző válaszok, akkor az e kérdésre adott bármely válasz pontosan 1 bit információt hordoz.
+Minősége
+Az információ minősége alapvetően a feldolgozás és a tömörítés szintjétől, valamint az információtárolás minőségétől függ. Ide tartozik, hogy az információ mennyire megbízható, pontos, illetve mennyire időszerű.
+

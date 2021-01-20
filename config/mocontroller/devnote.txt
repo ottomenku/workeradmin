@@ -1,0 +1,7 @@
+ 
+ !!! ha két azonos kulcs van az alkalmazás lefagy!!!!!
+ ---------------------------------------
+ 
+ // itt lehet definiálni hogy az admin controller milyen szintű felhasználónak milyen routot hívjon meg belépés után  
+   mocontroller.routeForRole => ['superadmin' => ['m/ad.man.user']...]
+
