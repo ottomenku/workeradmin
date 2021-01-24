@@ -109,7 +109,11 @@ switch ($ret) {
         $res=$this->DATA;
       }
      
-        return response()->json($res);
+        return response()->json($res) 
+                    ->header('Access-Control-Allow-Origin', '*')
+                    ->header('Access-Control-Allow-Methods', '*')
+                    ->header('Access-Control-Allow-Headers', '*')  ;
+
       break;
     case 'viewFull': //a view teljes elérési útját meg kell adni vagy semmit. Akkor a Taskviews meg a viewsből generálja moView()
     $view=$this->ACT['return'][1] ?? $this->get('ACT.viewpar.view') ?? null;

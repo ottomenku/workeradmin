@@ -10,10 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/kilep', 'Auth\LoginController@logout');
 Route::get('probamanagerlogin/{key}', 'TestController@probaManagerLogin');
 Route::get('/', function () {
     return view('welcome');
 });
+
 //App\Http\Controllers\Auth
 Auth::routes();
 Route::get('/moreset', 'Auth\MoResetPasswordController@showMoResetForm')->name('moreset');

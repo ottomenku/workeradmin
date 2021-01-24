@@ -2,13 +2,13 @@
 
 namespace Tests\Unit;
 
-use App\RoleTime;
+use App\Doc;
 use App\User;
 use App\Time;
 use Carbon\Carbon;
 use Tests\TestCase;
 
-class TimeTest extends TestCase
+class DocTest extends TestCase
 {
  /*  public function setUp(): void
     {
@@ -17,14 +17,39 @@ class TimeTest extends TestCase
         \Artisan::call('migrate');
         \Artisan::call('db:seed');
     }*/
+    public function testHtmlgen()
+    { 
+        $userdat['nev'] = 'testnev';
+        $userdat['cim'] = 'testcim';
+        $target='ééééé testnev űűűű testcim';
+        $path= storage_path('app\doc_tmpl');  
+      // $html=file_get_contents(storage_path('app/doc_tmpl').'.\test.html', true);
 
-public function testhasGetTimeRole()
-    {  
-      $user = User::findOrFail(20);
-        \Auth::login($user);
-      $time= new Time() ;
-     $res= $time-> getTimes(['year'=>2021,'month'=>'1',]);
-     $this->assertEquals([],$res);
+        $doc=new Doc();
+        $res=$doc->htmlGen($userdat,'test');
+        $this->assertEquals( $res, $target);
+    }
+public function testPdfgen()
+    { 
+        $rdat['ceg_id'] = 'test';
+      //  $rdat['worker_id'] = $worker->id;
+      //  $rdat['origin'] = $filename . '.pdf';
+      //  $rdat['name'] = $filename;
+     // $mt=mktime();
+        //$html='<html><body>fhsdfhsbhsdf</body></html>';
+        $html=file_get_contents(storage_path('app/doc_tmpl').'.\adatkezeles.html', true);
+        //$html=mb_convert_encoding($html, 'UTF-8');
+
+        $rdat['filename'] = 'bvsd_fsdf.pdf';
+        $rdat['path'] = storage_path('app/public').'\\' . $rdat['ceg_id'] .'\\';      
+        if(file_exists($rdat['path'].$rdat['filename'])){unlink($rdat['path'].$rdat['filename']);}
+        $doc=new Doc();
+        $doc->pdfGen($rdat,$html);
+       //  $user = User::findOrFail(20);
+       // \Auth::login($user);
+      
+       $this->asserttrue(file_exists($rdat['path'].$rdat['filename'])); 
+     $this->assertEquals(1, 1);
     }
 
 /*
