@@ -28,8 +28,10 @@ return [
         'task'=>'show', // a kattintásra meghivandó task
         'fa'=>'fa fa-eye',
         'title'=>'show full data',
+        'action'=>'href',
         //'dusk'=>"show"
         ],
+        'download'=>['action'=>'href','class'=>'btn btn-primary btn-sm','task'=>'download','fa'=>'fa fa-download','title'=>'Letöltés'],
         'edit'=>['action'=>'href','class'=>'btn btn-primary btn-sm','task'=>'edit','fa'=>'fa fa-pencil-square-o','title'=>'Szerkesztés'],
         'destroy'=>['action'=>'href','class'=>'btn btn-danger btn-sm','task'=>'destroy','fa'=>'fa fa-trash-o','title'=>'Törlés','onclick'=>"return confirm('Biztos hogy törölni akarja?')" ],
         'pub'=>['action'=>'href','class'=>'btn btn-danger btn-sm','task'=>'pub','fa'=>'fa fa-times','title'=>'Tiltva, engedélyezés'],

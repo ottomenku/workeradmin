@@ -59,7 +59,8 @@
                                 $value.='<a class="btn btn-primary btn-sm" href="'.url($viewpar['route']).'/download/'.$file->id.'">'.str_limit($file->name, 20, '...').' </a>&nbsp;';                                              
                         }
                     }
-                    else{$value=str_limit($item->$key, 20, '...');}
+                    else{$value=str_limit($item->$key, 30, '...');}
+                    //TODO str_limot paraméterből szabályozható legyen
     //-----------------------------------------------------------------------------------------                
 @endphp
 

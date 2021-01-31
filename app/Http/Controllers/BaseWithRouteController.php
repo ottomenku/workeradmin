@@ -118,9 +118,15 @@ switch ($ret) {
     case 'viewFull': //a view teljes elérési útját meg kell adni vagy semmit. Akkor a Taskviews meg a viewsből generálja moView()
     $view=$this->ACT['return'][1] ?? $this->get('ACT.viewpar.view') ?? null;
     return $this->moView($view);
+    case 'viewsimple': //a view teljes elérési útját meg kell adni vagy semmit. Akkor a Taskviews meg a viewsből generálja moView()
+      $view=$this->ACT['return'][1];
+      return $this->moView($view);
+
     case 'download': 
-   // $view=$this->ACT['return'][1] ?? $this->get('ACT.viewpar.view') ?? null;
     return Storage::download($this->DATA['file']);  
+    case 'downloadFromStorage': 
+     // return Storage::download('\storage\\'.$this->DATA['file']); 
+     return response()->download(storage_path($this->DATA['file']));
     break;
     case 'redirect':
     $message=$this->ACT['return'][2] ?? '';

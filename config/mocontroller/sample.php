@@ -41,8 +41,10 @@ return [
           'paginate'=>25,
             'viewpar'=>[ 
                 'view'=>'index',
-                'table'=>[],
-                'table_action'=> ['edit'=>true,'destroy'=>true  ] //'show'=>true, pub'=>true,unpub'=>true,
+                'table'=>[
+                    'actions'=> ['Action',[['show',['style'=>'none']],'download','ifpub'] ] // show gomb stílusát kkapcsolja
+                ],
+               // 'table_action'=> ['edit'=>true,'destroy'=>true  ] // régi
                 ] ,     
             'funcs' => [
             'indexSetData'=>[[],'DATA.tabledata']

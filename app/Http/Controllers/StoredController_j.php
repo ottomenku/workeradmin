@@ -77,7 +77,7 @@ $data['szorzo']= $szorzo ;
 $data['timeFrame']=$timeFrame ;
 $data['times']= $times ;
 
- //return var_dump($data);
+ //return var_dump($data); 
     //echo $times[0]['sum(hour)'];
  // return var_dump($timesob->with('worker')->where([ ['datum', '>=', $start],['datum', '<=', $end],['worker_id', '=', 5]])->selectRaw('sum(hour)')->get()->toarray() );
     return response()->json($data);

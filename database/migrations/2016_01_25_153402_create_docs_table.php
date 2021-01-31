@@ -18,7 +18,8 @@ class CreateDocsTable extends Migration
             $table->foreign('ceg_id')->references('id')->on('cegs'); // nem igazán kell csak könnyít
             $table->integer('worker_id')->unsigned();
             $table->foreign('worker_id')->references('id')->on('workers');   
-            $table->string('origin');
+            $table->string('origin')->nullable();
+            $table->string('cat')->nullable();
             $table->string('name');
             $table->string('filename');
             $table->string('path');

@@ -11,9 +11,9 @@ return [
           ],  
     'validations' =>['foto'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'] ,
    // 'delFromParrent'=>[ 'viewpar.menu.superadmin.egy'] ,
-    'obClass'=>['baseOB'=>'App\Doc','worker'=>'App\Worker','ManagerHandler'=>'App\Handlers\ManagerHandler'],
+    'obClass'=>['baseOB'=>'App\Doc','worker'=>'App\Worker'],
     'viewpar'=>[
-        'route'=>'m/ad.man.doc.adatkezeles', //ez alapján múködnek a gombok
+        'route'=>'m/ad.wor.docs', //ez alapján múködnek a gombok
   
         ]
     ],
@@ -27,20 +27,20 @@ return [
             'view'=>'index',
             'table'=>[
                // 'id'=>['Id',],
-                'join_1'=>['Dolgozó','worker','workername'] ,
+              //  'join_1'=>['Dolgozó','worker','workername'] ,
                 'name'=>['doc'] ,
                  'created_at'=>['Dátum'] ,
                // 'fullname'=>['Teljes név'] ,
               //  'join_2'=>['Email','user','email'],
               //  'actions'=> ['Action',[['show',['style'=>'none']],'download','ifpub'] ]
-              'actions'=> ['Action',['download','destroy'] ]
+              'actions'=> ['Action',['download'] ]
                 ],
                 
             ]   ,   
             'funcs' => [
                10=>['replaceACT',[]] , 
              //  20=>['baseOB::getManagerAdatkezeles',['{ACT}','{OB.Request}'],'DATA.tabledata']  
-             20=>['baseOB::getManagerAdatkezeles',[],'DATA.tabledata']  
+             20=>['baseOB::getWorkerDocs',[],'DATA.tabledata']  
                 ],
              //  'return'=>['dump']    
         ],

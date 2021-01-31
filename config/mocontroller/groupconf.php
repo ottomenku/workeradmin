@@ -33,7 +33,7 @@ return [
         ],
         'worker' => [
             10 => ['m/ad.time.worker', 'Munkaidők'],
-           
+            11 => ['m/ad.wor.docs', 'Dolumentumok'],
             12 => ['m/ad.wor.booking', ' Kérelmek'],
             15=> ['/moreset', 'Jelszó változtatás'],
             //20=> ['/', ' Home'],
