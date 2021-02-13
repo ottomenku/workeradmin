@@ -10,7 +10,7 @@ return [
     'validations' =>['foto'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'] ,
     'obClass'=>['baseOB'=>'App\Doctemplate'],
     'viewpar'=>[
-        'route'=>'m/ad.man.doc.general', //ez alapján múködnek a gombok
+        'route'=>'m/ad.man.doc.doctemplate', //ez alapján múködnek a gombok
         ]
     ], 
 
@@ -45,15 +45,15 @@ return [
           
       ], 
         'funcs' => [
-              10=>['replaceACT',[]] ,
+           /*   10=>['replaceACT',[]] ,
                20=>['worker::getWorkers',[],'DATA.workers'],  
-               25=>['worker::getUserCeg',[],'DATA.ceg']  
+               25=>['worker::getUserCeg',[],'DATA.ceg']  */
         ],
          
     
       //  'return'=>['dump']
 
-        'return'=>['viewsimple','admin_crudgenerator.docs.create']
+        'return'=>['viewsimple','doc_tmpl.general']
   ],
 
 ];
