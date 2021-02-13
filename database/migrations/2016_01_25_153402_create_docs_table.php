@@ -25,7 +25,7 @@ class CreateDocsTable extends Migration
             $table->string('path');
             $table->string('worknote')->nullable();
             $table->string('adnote')->nullable();
-
+            $table->smallInteger('pub')->default(1);
          $table->timestamps();
          $table->softDeletes();
         });

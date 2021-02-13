@@ -23,7 +23,9 @@ return [
             'position'=> ['text','',[]],
             'image'=> ['image','foto',[]], //'fileupload name'=> ['tipus','mező név',[]],
             
-            'cim'=> ['text','',[]],
+            'város'=> ['text','Város (cím)',[]],
+            'cim'=> ['text','utca, házszám',[]],
+            'mothername'=> ['text','Anyja neve',[]],
             'tel'=> ['text','',[]],
             'ado'=> ['text','',[]],
             'tb'=> ['text','',[]],

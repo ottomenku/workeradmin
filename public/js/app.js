@@ -52527,6 +52527,325 @@ var app = new Vue({
 
 /***/ }),
 
+/***/ "./resources/js/app_old.js":
+/*!*********************************!*\
+  !*** ./resources/js/app_old.js ***!
+  \*********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.min.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+var _data;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_1___default.a, axios__WEBPACK_IMPORTED_MODULE_2___default.a); //Vue.component('example-component', require('./components/ExampleComponent.vue'));
+
+Vue.component('modal', {
+  template: '#modal-template'
+});
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+  mode: 'history'
+});
+var app = new Vue({
+  el: '#app',
+  created: function created() {
+    this.PandFwitId('getbasedata'); // this.PandFwitId('freshdata'); 
+  },
+  data: (_data = {
+    //paraméterek---------------------------------
+    viewpar: window.viewpar,
+    viewparid: window.viewparid,
+    level: 10,
+    //jogosultság alapból worker
+    baseroute: window.viewpar.baseroute,
+    host: window.viewpar.host,
+    //actuális értékek (kijelölt kiválasztott)-------------
+    showModal: false,
+    showInfo: false,
+    actTimetype: 2,
+    //timetypetype selectlist actuális értéke
+    actDaytype: 2,
+    //daytype selectlist actuális értéke
+    activeTab: 'home',
+    activeAdminTab: 'stored',
+    actchecklist: '',
+    select_action: 'nothing',
+    workerid: 0,
+    // a stored modal használja
+    user: [],
+    ceg: [],
+    //base adatok  a post kérésekkor alapból automatikusan elküldve és frissítve------------------------
+    year: window.year,
+    month: window.month,
+    cegid: 0,
+    datums: [],
+    //kivállasztott napok dátumai idők napok felviteléhez
+    workerids: [],
+    //kivállasztott dolgozók azonosítói
+    workers: [],
+    // full worker adatok  
+    plusdata: {},
+    //post kérésben plusz adatok küldése a base adatokon kivül
+    formdata: null,
+    //post kérésben form adatok küldése a base adatokon kivül
+    justdata: null,
+    //ha nem üres a post kérésben csak ezek adatok lesznek elküldve plusz az id ha van a paraméterben
+    //select tömbök --------------------------------  
+    timetypes: []
+  }, _defineProperty(_data, "actTimetype", 2), _defineProperty(_data, "daytypes", []), _defineProperty(_data, "actDaytype", 0), _defineProperty(_data, "months", [{
+    value: 1,
+    text: 'Január'
+  }, {
+    value: 2,
+    text: 'Február'
+  }, {
+    value: 3,
+    text: 'Március'
+  }, {
+    value: 4,
+    text: 'Április'
+  }, {
+    value: 5,
+    text: 'Május'
+  }, {
+    value: 6,
+    text: 'Június'
+  }, {
+    value: 7,
+    text: 'Július'
+  }, {
+    value: 8,
+    text: 'Augusztus'
+  }, {
+    value: 9,
+    text: 'Szeptember'
+  }, {
+    value: 10,
+    text: 'Október'
+  }, {
+    value: 11,
+    text: 'November'
+  }, {
+    value: 12,
+    text: 'Decenber'
+  }]), _defineProperty(_data, "checklist", {
+    'all': 'Mind',
+    'workday': 'Munkanapok',
+    'nothing': 'egyiksem',
+    'inverse': 'fordított'
+  }), _defineProperty(_data, "calendar", []), _defineProperty(_data, "calendarbase", []), _defineProperty(_data, "times", []), _defineProperty(_data, "workerdays", []), _defineProperty(_data, "basedays", []), _defineProperty(_data, "storeds", []), _defineProperty(_data, "storedToShow", []), _defineProperty(_data, "solver", []), _defineProperty(_data, "timeFrames", []), _data),
+  methods: {
+    onfileInputChange: function onfileInputChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+
+      if (!files.length) {
+        this.formdata.files = files;
+      }
+    },
+    //adatok PandFwitId-nek és a child funkcüknak-------------------------------------
+    getBaseDataWitId: function getBaseDataWitId() {
+      var pardata = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      return {
+        id: pardata,
+        month: this.month,
+        year: this.year,
+        cegid: this.cegid,
+        workerids: this.workerids,
+        datums: this.datums,
+        formdata: this.formdata,
+        plusdata: this.plusdata,
+        viewparid: this.viewparid
+      };
+    },
+
+    /**
+     * elküldi az alap adatokat és a responsból frissíti a this paramétereket
+     * ha formadatokat akarun küldeni a this.formdatas ba kell írni 
+     * Ha a pardataType= 'id' akkor a pardatas értéke  id kulcsal bekerül a databa
+     * Ha a pardataType= 'justpardata' akkor csak a pardata-t küldi el a data-t nem
+     * egyébként  'justpardata'
+     * @param  route //host nem kell alapból hozzáteszi
+     */
+    postAndFresh: function postAndFresh() {
+      var _this = this;
+
+      var task = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'calendar/';
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(this.host + this.baseroute + task, data).then(function (response) {
+        _this.storeds = [];
+        Object.entries(response.data).forEach(_this.DataRefresh);
+      })["catch"](function (error) {
+        alert(error);
+      });
+    },
+    showModalInfo: function showModalInfo() {
+      this.showInfo = true;
+    },
+    DataRefresh: function DataRefresh(value, key, response) {
+      //  alert(key);
+      this[value[0]] = value[1];
+    },
+    // PandFwitId  childek-----------------------------
+    PandFwitId: function PandFwitId() {
+      var task = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'calendar/';
+      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      this.postAndFresh(task, this.getBaseDataWitId(id));
+    },
+    // zárások-----PandFwitId taskok: storeStoreds,'delStored(id),zarStored(cegid),nyitStored(cegid)-----
+    showStored: function showStored(id) {
+      this.storedToShow = JSON.parse(this.storeds[id]['fulldata']);
+      this.workerid = this.storeds[id]['worker_id'];
+      this.solver = JSON.parse(this.storeds[id]['solverdata']);
+      this.storedid = id;
+      this.showModal = true;
+    },
+    delStored: function delStored(id) {
+      this.PandFwitId('delstored', id);
+    },
+    storeStoreds: function storeStoreds() {
+      this.PandFwitId('storestored');
+    },
+    nyitStored: function nyitStored(id) {
+      this.PandFwitId('nyitstored', id);
+    },
+    zarStored: function zarStored(id) {
+      this.PandFwitId('zarstored', id);
+    },
+    //timeframes------------------------------------------
+    getTimeFrames: function getTimeFrames() {
+      this.formdata = {
+        start: $("input[name=start]").val(),
+        end: $("input[name=end]").val(),
+        szorzo: $("input[name=norma]").val(),
+        justworkdays: 'all'
+      };
+
+      if ($("#workday").is(':checked')) {
+        this.formdata.justworkdays = 'workdays';
+      }
+
+      this.PandFwitId('timeframes');
+    },
+    // idők -----------taskok:'deltime(id),-----------------
+    timesreset: function timesreset() {
+      if (confirm("A kijelölt dolgozók és napok idő bejegyzései végleg törlődni fognak. Biztos hogy ezt akarja?")) {
+        this.PandFwitId('resettimes');
+      }
+
+      ;
+    },
+    deltime: function deltime(id) {
+      this.PandFwitId('deltime', id);
+    },
+    storetimes: function storetimes() {
+      this.formdata = {
+        end: $("input[name=end]").val(),
+        start: $("input[name=start]").val(),
+        timetype_id: $("select[name=timetype_id]").val(),
+        hour: $("input[name=hour]").val(),
+        pubbase: $('input[name="pubtime"]:checked').val()
+      };
+      /*   this.formdata.end = $("input[name=end]").val();
+         this.formdata.timetype_id=  $("select[name=timetype_id]").val();
+         this.formdata.hour = $("input[name=hour]").val();
+         this.formdata.pubbase=  $('input[name="pubtime"]:checked').val();
+      **/
+
+      this.PandFwitId('storetimes');
+    },
+    // napok------taskok:'delday(id),---------------------------------------  
+    daysreset: function daysreset() {
+      if (confirm("A kijelölt dolgozók és napok napbejegyzései végleg törlődni fognak. Biztos hogy ezt akarja?")) {
+        this.PandFwitId('resetdays');
+      }
+
+      ;
+    },
+    delday: function delday(id) {
+      this.PandFwitId('delday', id);
+    },
+    storedays: function storedays() {
+      this.formdata = {
+        workernote: $("input[name=workernote]").val(),
+        daytype_id: $("select[name=daytype_id]").val(),
+        pubbase: $('input[name="pubday"]:checked').val()
+      };
+      this.PandFwitId('storedays');
+    },
+    kivalaszt: function kivalaszt() {},
+    // file-----------------------------------
+    filesreset: function filesreset() {
+      if (confirm("A kijelölt napok file bejegyzései végleg törlődni fognak. Biztos hogy ezt akarja?")) {
+        this.PandFwitId('filesreset');
+      }
+
+      ;
+    },
+    storefiles: function storefiles() {
+      this.PandFwitId('storefiles');
+      this.formdatas = {};
+    },
+    //év hó----------------------------------------------
+    minusyear: function minusyear() {
+      var task = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      this.year--;
+      this.PandFwitId(task);
+    },
+    addyear: function addyear() {
+      var task = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      this.year++;
+      this.PandFwitId(task);
+    },
+    changeEv: function changeEv() {
+      var task = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      this.year = event.target.value;
+      this.calendarFresh(task);
+    },
+    changeHo: function changeHo() {
+      var task = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      //ho = rowId ;
+      this.PandFwitId(task);
+    },
+    //kijelölések------------------------------------ 
+    uncheckday: function uncheckday(dayid) {
+      this.dayids.splice(this.dayids.indexOf(dayid), 1);
+    },
+    //felső tabok váltása----------------------------------------------
+    isAdminActive: function isAdminActive(menuItem) {
+      return this.activeTab === menuItem;
+    },
+    setAdminActive: function setAdminActive(menuItem) {
+      this.activeTab = menuItem;
+    },
+    isActive: function isActive(menuItem) {
+      return this.activeTab === menuItem;
+    },
+    setActive: function setActive(menuItem) {
+      this.activeTab = menuItem;
+    },
+    //worker tab kinyitás összecsukás-----------------------------
+    toggleWorker: function toggleWorker(workerid) {
+      $("#" + workerid).toggle();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -52584,14 +52903,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!***************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/app_old.js ./resources/sass/app.scss ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\laravel\workertime_dev\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\laravel\workertime_dev\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\ujworkertime\workeradmin\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\ujworkertime\workeradmin\resources\js\app_old.js */"./resources/js/app_old.js");
+module.exports = __webpack_require__(/*! C:\ujworkertime\workeradmin\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

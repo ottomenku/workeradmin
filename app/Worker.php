@@ -169,7 +169,7 @@ class Worker extends Model
      *    
      * @var array
      */
-    protected $fillable = ['user_id','ceg_id','position','foto', 'fullname', 'workername','cim','tel','birth','birthplace','ado','tb','start','end','note','pub'];
+    protected $fillable = ['user_id','ceg_id','position','foto', 'fullname', 'workername','mothername','city','cim','tel','birth','birthplace','ado','tb','start','end','note','pub'];
 
  
     public function user()

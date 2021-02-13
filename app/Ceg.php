@@ -28,10 +28,11 @@ class Ceg extends BaseModel
 
     /**
      * Attributes that should be mass-assignable.
+
      *    
      * @var array
      */
-    protected $fillable = ['user_id','cegnev','note','pub'];
+    protected $fillable = ['user_id','cegnev','ugyvezeto','szekhely','cim','ado','note','pub'];
     public function findCegArr($id)
     {  $ceg=$this->find($id)->toarray();
         $admin=User::where('id',$ceg['user_id'])->first()->toarray();

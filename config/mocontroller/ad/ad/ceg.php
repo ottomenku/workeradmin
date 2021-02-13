@@ -14,7 +14,11 @@ return [
                         'cegnev'=>['text','Cég név',[]],
                         'note'=>['text','Megjegyzés',[]],
                         'name'=>['text','Manager neve',[]],
-                        'email'=>['text','Manager Email',[]],
+                        'email'=>['text','Manager Email',[]], 
+                        'ugyvezeto'=>['text','Ügyvezető',[]],
+                        'szekhely'=>['text','Székhely (város)',[]],
+                        'cim'=>['text','Székhely Címe (utca, házszám)',[]],        
+                        'ado'=>['text','Adószám',[]],      
                         'password'=>['text','Manager Jelszó',[]],
                      'pub'=>['radiolist','',[['0','Tiltva' ],['1','Engedélyezve',true ]]] ,
                          'submit'=>['submit','Cég mentése'], //,'submit'=>['submit','Ment','class'=>'btn btn-danger'] 

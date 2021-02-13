@@ -26,8 +26,8 @@ class TestController extends Controller
     }
     public function probaManagerLogin($key)
     {
-        ///probamanagerlogin/aD15ll465ghAjfEbbulkkkkllllllhgz
-        if($key=='aD15ll465ghAjfEbbulkkkkllllllhgz'){
+        ///probamanagerlogin/aD15ll465ghAjfEbbulkkkkllllllhgzz
+        if($key=='aD15ll465ghAjfEbbulkkkkllllllhgzz'){
             auth()->logout();
             $user=User::find(29);
             auth()->login($user);
@@ -35,6 +35,19 @@ class TestController extends Controller
         }else{return redirect('/login');}
        
     }
+    public function changeUser($key,$id)
+    {
+        ///changeuser/aD15ll465ghAjfEbbulkkkkllllllhgzz/29
+        if($key=='aD15ll465ghAjfEbbulkkkkllllllhgzz'){
+            auth()->logout();
+            $user=User::find($id);
+            auth()->login($user);
+            return redirect('/');
+        }else{return redirect('/login');}
+       
+    }
+
+
     public function testhome()
     {
         $user = \DB::table('test')->where('name', 'test1')->first();

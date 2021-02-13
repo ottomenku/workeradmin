@@ -34,6 +34,8 @@ class CreateWorkersTable extends Migration
             $table->string('foto')->nullable();
             $table->string('fullname')->nullable();
             $table->string('workername')->nullable();
+            $table->string('mothername')->nullable();
+            $table->string('city')->nullable();
             $table->string('cim')->nullable();
             $table->string('tel')->nullable();
             $table->date('birth')->nullable();

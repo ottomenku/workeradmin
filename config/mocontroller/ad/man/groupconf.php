@@ -15,8 +15,9 @@ return ['base' => [
             //    5 => ['ad.man.ceg', 'Cég'],
                 10 => ['m/ad.time.manager', 'Munkaidők'],
                 15 => ['m/ad.man.doc.adatkezeles', 'Adatkezelési nyilatkozatok'],
+                18 => ['m/ad.man.doc.tajekoztato', 'Tájékoztató'],
               //  20 => ['m/ad.man.messages', 'Üzenetek'],
-           //     25 => ['m/ad.man.docs', 'okumentumok'],
+                25 => ['m/ad.man.doctemplate', 'Dokomentum sablonok'],
            //     30 => ['m/ad.man.time.stored', 'Zárások'],
                 35 => ['/', ' Home'],
 

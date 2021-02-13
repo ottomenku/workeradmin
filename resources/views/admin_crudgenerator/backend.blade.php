@@ -201,9 +201,10 @@ function datasendModal(dataout) {
             </div>
             @endif
             <div class="container" dusk="category.index" >
-                <div class="row">
+            <div class="row">
                 @include('admin_crudgenerator.sidebar')
- @yield('content')
+               
+                @yield('content')
             </div>
             </div>
         </main>

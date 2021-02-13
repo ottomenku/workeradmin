@@ -7,10 +7,17 @@
         <div class="card">
             <div class="card-header">Dashboard       
             </div>
-            {!! Form::open(['url' => 'm/ad.man.doc.adatkezeles/store', 'class' => 'form-horizontal']) !!}        
-            <div class="card-body" style="display: flex;">
-                
-                    @foreach ($data as $worker)
+ @php
+ //$ceg=$data->ceg;
+ @endphp            
+            
+                 
+            <div class="card-body" >
+             <div class="row" style="display: flex;">
+            {!! Form::open(['url' => $viewpar["route"].'/store', 'class' => 'form-horizontal']) !!} 
+           
+            @include('admin_crudgenerator.docs.'.$viewpar["doc_tmpl"].'_form', ['ceg' => $data['ceg']]) 
+                    @foreach ($data['workers'] as $worker)
                         <div style=" align-items: stretch; border: 1px solid gray; float:left; margin:5px ;" class="col-md-2 col-sm-4 col-xs-6 usercard">
                         
                             <label  class="checkcontainer">
@@ -40,8 +47,11 @@
                     @endforeach
                          
             </div>
+            <div class="row">
             {!! Form::submit( 'Create', ['class' => 'btn btn-primary']) !!}
             {!! Form::close() !!} 
+            </div>
+          </div>  
         </div>
      </div>
      <style>

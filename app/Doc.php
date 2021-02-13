@@ -30,15 +30,15 @@ class Doc extends Model
      *
      * @var array
      */
-    protected $fillable = ['ceg_id', 'worker_id','cat', 'origin', 'name', 'filename', 'path', 'worknote', 'worknote', 'pub'];
+    protected $fillable = ['ceg_id', 'worker_id','cat', 'origin', 'name', 'filename', 'path', 'worknote', 'adnote', 'pub'];
 
     /**
      * adminnnak cégenként getWorkerDocs
      */
-    public function getManagerAdatkezeles()
+    public function getManagerAdatkezeles($doc_tmpl)
     {
         $ceg = \Auth::user()->getCeg();
-        $res = Doc::where(['ceg_id' => $ceg->id, 'cat' => 'adatkezeles'])->with('worker')->get();
+        $res = Doc::where(['ceg_id' => $ceg->id, 'cat' => $doc_tmpl])->with('worker')->get();
         return $res;
     }
     public function getWorkerDocs()
@@ -63,18 +63,10 @@ class Doc extends Model
         return preg_replace('/\s+/', '_', $c); //szóközöket aláhüzásra cseráli több egymás mellettit egyre
     }
     public function pdfGen($rdat,$html){
-         //TODO: karakterkódolást megoldani
-       // $html = view('pdfcell', compact('data'))->render();
-
-        // $pdf = \App::make('dompdf.wrapper');
-        // $pdf->loadHTML($html);
-        //  return $pdf->stream();
-
         $dompdf = new Dompdf\Dompdf();
-      $options = new \Dompdf\Options();
-      // set options indvidiually
+    //  $options = new \Dompdf\Options();
     //  $options->set('defaultFont', 'arial');
-      $dompdf->setOptions($options);
+     // $dompdf->setOptions($options);
 
       $path=storage_path($rdat['path']);
       if(!is_dir($path)){mkdir($path,755);}
@@ -84,46 +76,35 @@ class Doc extends Model
         file_put_contents($path . $rdat['filename'], $output);
         
     }
-    public function htmlGen($userdat,$htmlname){
-        $html=file_get_contents(storage_path('app/doc_tmpl').'.\\'.$htmlname.'.html', true);
-            foreach($userdat->attributes as $key=>$dat){
-                $html=  str_replace('$'.$key.'$',$dat,$html);         
-            } 
-         //   $html=  str_replace('ő','&#x171;',$html);
-           // $html=  str_replace('Ő','&Ocirc;',$html);
-          //  $chars = array( "ű" => "&udblac;","Ű" => "&Udblac;",  "ő" => "&odblac;","Ő" => "&Odblac;");
-           // $chars = array( "ű" => "&ucirc;","Ű" => "&Ucirc;",  "ő" => "&ocirc;","Ő" => "&Ocirc;");
-           // $html = str_replace(array_keys($chars), $chars,$html);
-            return $html;
-       
-   }
+
 /**
  * nem kell jogosultság vizsgálat mert csak a manager configból érhető el
  */
-    public function storeAdatkezeles($data)
+    public function storeDoc($data,$act)
     {
         //TODO: megoldani a hibajelet ha nem jön létre a file vagy a rekord
         // $path='/chanel number5 /';'ceg_id',  'worker_id', 'origin', 'name', 'filename', 'path',  'worknote','worknote', 'pub'
         $cegid = \Auth::user()->getCeg()->id;
        // $path = storage_path('app/public').'/' . $cegid.'/';
         $path = 'app/public/' . $cegid.'/';
+        $tmpl=$act['viewpar']['doc_tmpl'];
         $workeids=$data['workerids'] ?? [];
         foreach ($workeids as $workerid) {
             $worker = Worker::where('id', $workerid)->first();
             if ($cegid == $worker->ceg_id) {
 
-                $filename =  $worker->workername . '_adatkezeles_' . Carbon::now();
+                $filename =  $worker->workername . '_'.$tmpl.'_' . Carbon::now();
                 $safename =$this->cleanchars($filename);
                 $rdat['ceg_id'] = $worker->ceg_id;
                 $rdat['worker_id'] = $worker->id;
                 $rdat['origin'] = $safename  . '.pdf';
                 $rdat['name'] = $filename;
-                $rdat['cat'] = 'adatkezeles';
+                $rdat['cat'] = $tmpl;
                // $rdat['filename'] = $safename . '_' . mktime() . '.pdf';
                 $rdat['filename'] = $safename . '.pdf';
                 $rdat['path'] = $path;
-
-                $html=$this-> htmlGen($worker,'adatkezeles');
+                $data['worker'] = $worker;
+               $html = view('doc_tmpl.'.$tmpl, compact('data'))->render();
              //   $html=iconv(mb_detect_encoding($html, mb_detect_order(), true), "UTF-8", $html);
                 $this->pdfGen($rdat,$html);
                  $this->create($rdat);

@@ -19,6 +19,10 @@ class CreateCegsTable extends Migration
             } else {
                 $table->integer('user_id')->unsigned();
             }
+            $table->string('ugyvezeto')->nullable();
+            $table->string('szekhely')->nullable();
+            $table->string('cim')->nullable();
+            $table->string('ado')->nullable();
             $table->string('cegnev'); // a name nemjó mert nem feleslegesen koplikálja az admin name felvitelét...
             $table->string('note')->nullable();
             $table->smallInteger('pub')->default(1);

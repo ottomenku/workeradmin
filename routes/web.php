@@ -10,8 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//config editor----------------------------------------
+Route::get('/config', 'ConfigEditor@index');
+
+//proba auth---------------------------------
 Route::get('/kilep', 'Auth\LoginController@logout');
-Route::get('probamanagerlogin/{key}', 'TestController@probaManagerLogin');
+//Route::get('probamanagerlogin/{key}', 'TestController@probaManagerLogin');
+Route::get('changeuser/{key}/{id}', 'TestController@changeUser');
 Route::get('/', function () {
     return view('welcome');
 });
