@@ -17,7 +17,7 @@ return ['base' => [
                 15 => ['m/ad.man.doc.adatkezeles', 'Adatkezelési nyilatkozatok'],
                 18 => ['m/ad.man.doc.tajekoztato', 'Tájékoztató'],
               //  20 => ['m/ad.man.messages', 'Üzenetek'],
-                25 => ['m/ad.man.doctemplate', 'Dokomentum sablonok'],
+                25 => ['m/ad.man.doc.doctemplate', 'Dokomentum sablonok'],
            //     30 => ['m/ad.man.time.stored', 'Zárások'],
                 35 => ['/', ' Home'],
 

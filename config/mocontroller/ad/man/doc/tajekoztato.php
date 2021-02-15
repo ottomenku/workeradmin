@@ -55,7 +55,7 @@ return [
         ],
 
     'create' => [
-     /*   'viewpar'=>[ 
+      'viewpar'=>[ 
             'taskheader'=>'Új dolgozó Cég:{ACT.cegnev}',
             
         ], 
@@ -68,7 +68,7 @@ return [
       
         //  'return'=>['dump']
 
-          'return'=>['viewsimple','admin_crudgenerator.docs.create']*/
+          'return'=>['viewsimple','admin_crudgenerator.docs.create']
     ],
 
     'store' => [

@@ -13,7 +13,14 @@ return [
         'route'=>'m/ad.man.doc.doctemplate', //ez alapján múködnek a gombok
         ]
     ], 
-
+  'preview' => [
+        'funcs' => [  
+       //  20=>['baseOB::pdfView',[], "DATA"]  
+            ],
+         // 'return'=>['dump']  
+          'return'=>['pdfstream'] 
+        // 'return'=>['view'] 
+    ],
     'index' => [
       'viewpar'=>[ 
 

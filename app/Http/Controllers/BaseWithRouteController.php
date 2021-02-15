@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route as RouteF;
 use PhpParser\Node\Stmt\Foreach_;
 use Illuminate\Support\Facades\Storage;
+use Dompdf;
 /**
  * a __construct nem hvja meg automatikusan a beállító függvényeket
  */
@@ -124,6 +125,18 @@ switch ($ret) {
 
     case 'download': 
     return Storage::download($this->DATA['file']);  
+    case 'pdfstream': 
+         $html = $_POST['editordata'];
+      // $html = 'hkhgkhksfjh hajsf jsalfsha jj';
+  // dump($_POST);
+      $dompdf = new Dompdf\Dompdf();
+   //   $data['worker'] = $worker;
+    //  $html = view('doc_tmpl.'.$tmpl, compact('data'))->render();
+      $dompdf->load_html($html,'UTF-8');
+      $dompdf->render();
+    //  $output = $dompdf->output();
+     // file_put_contents($path . $rdat['filename'], $output);
+    return  $dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
     case 'downloadFromStorage': 
      // return Storage::download('\storage\\'.$this->DATA['file']); 
      return response()->download(storage_path($this->DATA['file']));
@@ -152,7 +165,7 @@ switch ($ret) {
         }
         else{
             $tmpl=$this->ACT['viewpar']['template'] ?? 'admin_crudgenerator';
-            return view($tmpl.'.404');
+           
         }
         break;
 }

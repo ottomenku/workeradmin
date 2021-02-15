@@ -56,8 +56,10 @@ class Doctemplate extends Model
         $c = trim($b); //elejéről végéről eltávolítja a szóközöket.
         return preg_replace('/\s+/', '_', $c); //szóközöket aláhüzásra cseráli több egymás mellettit egyre
     }
-    public function pdfView($html){
-        $dompdf = new Dompdf\Dompdf();
+    public function pdfView(){
+      //  $html = $_POST['html'];
+   dump($_POST);
+     /*   $dompdf = new Dompdf\Dompdf();
      //   $data['worker'] = $worker;
       //  $html = view('doc_tmpl.'.$tmpl, compact('data'))->render();
         $dompdf->load_html($html,'UTF-8');
@@ -65,7 +67,7 @@ class Doctemplate extends Model
         $output = $dompdf->output();
        // file_put_contents($path . $rdat['filename'], $output);
         $dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
- 
+ */
     }
 
 /**
