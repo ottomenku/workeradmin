@@ -13,8 +13,9 @@ return [
            2 => ['m/ad.ad.timetypes', ' Időtipusok'],
            3 => ['m/ad.ad.daytypes', ' Natipusok'],
            4 => ['m/ad.ad.basedays', 'Naptár'],
-           5 => ['/moreset', 'Jelszó változtatás'],
-         //  6 => ['/', ' Home'],
+           5 => ['m/ad.ad.doctemplate', 'Dokumentum sablonok'],
+           6 => ['/moreset', 'Jelszó változtatás'],
+            7 => ['/', ' Home'],
         ],
     
 
@@ -25,10 +26,12 @@ return [
 
         ],
         'manager' => [
-            1 => ['m/ad.man.worker', 'Dolgozók'],
-            10 => ['m/ad.time.manager', 'Munkaidők'],
-            12 => ['m/ad.man.booking', ' Kérelmek'],
-            15 => ['/moreset', 'Jelszó változtatás'],
+                1 => ['m/ad.man.worker', 'Dolgozók'],
+                10 => ['m/ad.time.manager', 'Munkaidők'],
+              //20 => ['m/ad.man.messages', 'Üzenetek'],
+                25 => ['m/ad.man.docgeneral', 'Dokomentum generálás'],
+           //   30 => ['m/ad.man.time.stored', 'Zárások'],
+                35 => ['/', ' Home'],
            // 35 => ['/', ' Home'],
         ],
         'worker' => [

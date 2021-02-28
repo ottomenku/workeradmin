@@ -25,6 +25,9 @@ class CreateCegsTable extends Migration
             $table->string('ado')->nullable();
             $table->string('cegnev'); // a name nemjó mert nem feleslegesen koplikálja az admin name felvitelét...
             $table->string('note')->nullable();
+            $table->smallInteger('docedit')->default(1);
+            $table->smallInteger('timeedit')->default(1);
+            $table->smallInteger('timeform')->default(1);
             $table->smallInteger('pub')->default(1);
             $table->timestamps();
             $table->softDeletes();

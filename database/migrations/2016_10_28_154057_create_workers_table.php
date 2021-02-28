@@ -40,8 +40,11 @@ class CreateWorkersTable extends Migration
             $table->string('tel')->nullable();
             $table->date('birth')->nullable();
             $table->date('birthplace')->nullable();
+            $table->string('alapber')->nullable();
+             $table->string('bertipus')->nullable();
             $table->string('ado')->nullable();
             $table->string('tb')->nullable();
+            $table->string('szig')->nullable();
             $table->date('start')->nullable();
             $table->date('end')->nullable();
             $table->string('note')->nullable();

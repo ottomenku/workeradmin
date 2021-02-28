@@ -1,16 +1,7 @@
 @php             
-   $menuT=[
-    'superadmin'=>[],
-    'admin'=>[
-        1 => ['m/ad.ad.ceg', 'Cégek'],
-        2 => ['m/ad.ad.timetypes', ' Időtipusok'],
-        3 => ['m/ad.ad.daytypes', ' Natipusok'],
-        4 => ['m/ad.ad.basedays', 'Naptár'],
-        5 => ['/', ' Home'],
-    ],
-    
-    ];
-   $menuT= $viewpar['menu'] ?? $menuT;
+   $menuT= $viewpar['menu'] ?? [];
+   $doctemplate=new App\Doctemplate();
+   $docmenuT=$doctemplate->getMenu(); 
  //  $menuT['superadmin'][]=['/admin/generator'=>' Generátor'];
  @endphp             
  <div class="col-md-3">
@@ -88,27 +79,29 @@
             @endforeach
             </ul>  
         </div>  
-    </div>    
-@endif 
-@if (Auth::user()->hasRole('workadmin')) 
-
-   <div class="card">
         <div class="card-header">
-            Workadmin menü
+          Dokumentum generálás
+        </div>
+        @foreach($docmenuT as $cat=>$menus)     
+        <div class="card-header">
+           {{$cat}}
         </div>
         <div class="card-body">
+            
             <ul class="nav flex-column" role="tablist">
-                @foreach($menuT['workadmin'] ?? [] as $menu)
+                @foreach($menus ?? [] as $menu)
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" href="{{ url($menu[0]) }}">
-                        {{ $menu[1]}}
+                    <a class="nav-link" href="/m/ad.man.docgeneral/create/{{$menu['id']}}">
+                        {{ $menu['name']}}
                     </a>
                 </li>
-            @endforeach
+                @endforeach
             </ul>  
         </div>  
-    </div>    
+        @endforeach
+    </div>  
 @endif 
+
 @if (Auth::user()->hasRole('worker')) 
 
    <div class="card">

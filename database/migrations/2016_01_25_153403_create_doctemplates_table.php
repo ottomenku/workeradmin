@@ -16,7 +16,7 @@ class CreateDoctemplatesTable extends Migration
             $table->increments('id'); 
             $table->integer('ceg_id')->unsigned();
             $table->foreign('ceg_id')->references('id')->on('cegs')->default(1); // nem igazán kell csak könnyít
-            $table->string('cat')->nullable();
+            $table->string('cat')->default('vegyes');
             $table->string('name');
             $table->string('filename');
             $table->string('path');

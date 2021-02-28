@@ -31,6 +31,8 @@ return [
         'action'=>'href',
         //'dusk'=>"show"
         ],
+        'previewid'=>[ 'class'=>'btn btn-info btn-sm', 'fa'=>'fa fa-eye', 'task'=>'previewid', 'title'=>'show','action'=>'href' ],
+        'previewid_new_vindow'=>[ 'target'=>'_new','fa'=>'fa fa-eye', 'class'=>'btn btn-info btn-sm', 'task'=>'previewid', 'title'=>'show','action'=>'href' ],
         'download'=>['action'=>'href','class'=>'btn btn-primary btn-sm','task'=>'download','fa'=>'fa fa-download','title'=>'Letöltés'],
         'edit'=>['action'=>'href','class'=>'btn btn-primary btn-sm','task'=>'edit','fa'=>'fa fa-pencil-square-o','title'=>'Szerkesztés'],
         'destroy'=>['action'=>'href','class'=>'btn btn-danger btn-sm','task'=>'destroy','fa'=>'fa fa-trash-o','title'=>'Törlés','onclick'=>"return confirm('Biztos hogy törölni akarja?')" ],

@@ -100,7 +100,14 @@ $value = array_get($base_par, 'names.john', 'default'); //dot tömbelérés defa
                                 @endphp 
                               <{{$tipus}} {{$param}}> {{$content}} </{{$tipus}}>
                                @break
-
+                               @case('selectFromArr')
+                                    @php
+                                    $checked= $param[3] ?? null;
+                                    $inputp=$param[2]['inputpar'] ?? $param[2] ?? []; 
+                                    $inputpar=config('tpar.inputpar'); 
+                                    @endphp 
+                                    {!! Form::select($name, $param[2], $checked, $inputpar) !!}   
+                                 @break
                                 @case('select')
                                  @php
                                      $checked= $data[$name] ?? $param[3] ?? null;

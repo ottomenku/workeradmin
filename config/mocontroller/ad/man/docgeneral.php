@@ -4,15 +4,6 @@
 
 
 return [
-
-    'base'=>[
-
-    'validations' =>['foto'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'] ,
-    'viewpar'=>[
-        'route'=>'m/ad.man.doc.tajekoztato', //ez alapján múködnek a gombok
-        'doc_tmpl'=>'tajekoztato',
-        ]
-    ], 
     'base'=>[
         'funcs' => [ 
             3=>['replaceACT',[]] 
@@ -21,11 +12,20 @@ return [
    // 'delFromParrent'=>[ 'viewpar.menu.superadmin.egy'] ,
     'obClass'=>['baseOB'=>'App\Doc','worker'=>'App\Worker','user'=>'App\User','ManagerHandler'=>'App\Handlers\ManagerHandler'],
     'viewpar'=>[
-        'route'=>'m/ad.man.doc.tajekoztato', //ez alapján múködnek a gombok
+        'route'=>'m/ad.man.docgeneral', //ez alapján múködnek a gombok
         'doc_tmpl'=>'tajekoztato',
   
         ]
     ],
+    'preview' => [
+      'funcs' => [  
+     // 20=>['baseOB::getMenu',[], "DATA"]  
+          ],
+     //   'return'=>['dump']  
+        'return'=>['pdfstream'] 
+      // 'return'=>['view'] 
+  ],
+
     'index' => [
     // 'delFromParrent'=>[ 'funcspppp'],
        //'role'=>'manager',worker_id', 'origin', 'name', 'filename', 'path', 'worknote', 'worknote', 'pub'
@@ -42,7 +42,7 @@ return [
                // 'fullname'=>['Teljes név'] ,
               //  'join_2'=>['Email','user','email'],
               //  'actions'=> ['Action',[['show',['style'=>'none']],'download','ifpub'] ]
-              'actions'=> ['Action',['download','destroy'] ]
+              'actions'=> ['Action',['previewid_new_vindow','download','destroy','ifpub'] ]
                 ],
                 
             ]   ,   
@@ -54,24 +54,25 @@ return [
              //  'return'=>['dump']    
         ],
 
-    'create' => [
-      'viewpar'=>[ 
-            'taskheader'=>'Új dolgozó Cég:{ACT.cegnev}',
-            
-        ], 
-          'funcs' => [
-                10=>['replaceACT',[]] ,
-                 20=>['worker::getWorkers',[],'DATA.workers'],  
-                 25=>['worker::getUserCeg',[],'DATA.ceg']  
-          ],
-           
-      
-        //  'return'=>['dump']
+        'create' => [
+          'viewpar'=>[ 
+              'taskheader'=>'Új dokumentum generálás',
+              
+          ], 
+            'funcs' => [
+                 10=>['replaceACT',[]] ,
+                 15=>['baseOB::moEdit',['{ACT.viewpar.id}'],'DATA.item'] ,
+                   20=>['worker::getWorkers',[],'DATA.workers'],  
+                   25=>['worker::getUserCeg',[],'DATA.ceg']  
+            ],
+             
+        
+           // 'return'=>['dump']
+    
+            'return'=>['viewsimple','admin_crudgenerator.docs.doc_general']
+      ],
 
-          'return'=>['viewsimple','admin_crudgenerator.docs.create']
-    ],
-
-    'store' => [
+    'storedoc' => [
         'funcs' => [
            8=>['replaceACT',[]] , 
             10=>['validateToDATA',[],'DATA'],

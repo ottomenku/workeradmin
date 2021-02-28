@@ -37,10 +37,16 @@ class Doctemplate extends Model
     public function getTemplates()
     {
         //$ceg = \Auth::user()->getCeg();
-        $res = Doctemplate::get();
-        return $res;
+        return Doctemplate::get(); 
     }
-
+    public function getMenu()
+    {
+        $dc = Doctemplate::select('id','cat','name')->get(); 
+        foreach ($dc as  $dtmpl) {
+            $res[$dtmpl['cat']][]=$dtmpl;
+        }
+        return $res; 
+    }
     public function cleanchars($string)
     {
         $chars = array(
@@ -65,46 +71,56 @@ class Doctemplate extends Model
         $dompdf->load_html($html,'UTF-8');
         $dompdf->render();
         $output = $dompdf->output();
-       // file_put_contents($path . $rdat['filename'], $output);
+       // file_put_contents($path . $data['filename'], $output);
         $dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
  */
     }
-
 /**
  * nem kell jogosultság vizsgálat mert csak a manager configból érhető el
  */
-    public function storeDoc($data,$act)
+public function formeditsave($data)
+{
+    //TODO: megoldani a hibajelet ha nem jön létre a file vagy a rekord
+  //  $cegid = \Auth::user()->getCeg()->id;
+  $item = $this->findOrFail($data['id']);
+  $item->update($data);
+            $head='<!DOCTYPE html> <html><head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Page Title</title><style> *{font-family: DejaVu Sans !important;} </style></head><body>';
+            $footer='</body></html>';
+            $editordata= $data['editordata'] ?? '';
+            $editordata= str_replace('&lt;&lt;[','{{$data[',$editordata);
+            $editordata= str_replace(']&gt;&gt;',']}}',$editordata); 
+            $html= $head.$editordata.$footer;
+            file_put_contents(resource_path().'/views//'. $item['path'].$item['filename'], $html);
+          //  $myfile = fopen(resource_path().'/views//'. $item['path'].$item['filename'], "w") ;
+          //  fwrite($myfile, $html);
+          //  fclose($myfile);
+}
+/**
+ * nem kell jogosultság vizsgálat mert csak a manager configból érhető el
+ */
+    public function formsave($data)
     {
         //TODO: megoldani a hibajelet ha nem jön létre a file vagy a rekord
-        // $path='/chanel number5 /';'ceg_id',  'worker_id', 'origin', 'name', 'filename', 'path',  'worknote','worknote', 'pub'
         $cegid = \Auth::user()->getCeg()->id;
-       // $path = storage_path('app/public').'/' . $cegid.'/';
-        $path = 'app/public/' . $cegid.'/';
-        $tmpl=$act['viewpar']['doc_tmpl'];
-        $workeids=$data['workerids'] ?? [];
-        foreach ($workeids as $workerid) {
-            $worker = Worker::where('id', $workerid)->first();
-            if ($cegid == $worker->ceg_id) {
+        $path = 'doc_tmpl/';  //resource_path('').'views/doc_tmpl/'
 
-                $filename =  $worker->workername . '_'.$tmpl.'_' . Carbon::now();
+                $filename =  $data['name'].'_' . Carbon::now();
                 $safename =$this->cleanchars($filename);
-                $rdat['ceg_id'] = $worker->ceg_id;
-                $rdat['worker_id'] = $worker->id;
-                $rdat['origin'] = $safename  . '.pdf';
-                $rdat['name'] = $filename;
-                $rdat['cat'] = $tmpl;
-               // $rdat['filename'] = $safename . '_' . mktime() . '.pdf';
-                $rdat['filename'] = $safename . '.pdf';
-                $rdat['path'] = $path;
-                $data['worker'] = $worker;
-               $html = view('doc_tmpl.'.$tmpl, compact('data'))->render();
-             //   $html=iconv(mb_detect_encoding($html, mb_detect_order(), true), "UTF-8", $html);
-                $this->pdfGen($rdat,$html);
-                 $this->create($rdat);
-           
-            }
-
-        }
+      
+               // $data['filename'] = $safename . '_' . mktime() . '.pdf';
+                $data['filename'] = $safename . '.blade.php';
+                $data['path'] = $path;
+                $head='<!DOCTYPE html> <html><head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Page Title</title><style> *{font-family: DejaVu Sans !important;} </style></head><body>';
+                $footer='</body></html>';
+               // {{$data
+                $editordata= $data['editordata'] ?? '';
+                $editordata= str_replace('&lt;&lt;[','{{$data[',$editordata);
+                $editordata= str_replace(']&gt;&gt;',']}}',$editordata); 
+                $html= $head.$editordata.$footer;
+                $myfile = fopen(resource_path().'/views//'. $data['path'].$data['filename'], "w") ;
+                fwrite($myfile, $html);;
+                fclose($myfile);
+                $this->create($data);
     }
 /**
  * ha le van zárva nem törli
@@ -112,25 +128,34 @@ class Doctemplate extends Model
     public function destroyOne($id) //
     {
         $item = $this->findOrFail($id);
-        unlink(storage_path($item->path.$item->filename));
+        unlink(resource_path().'/views/doc_tmpl//'.$item->filename);
         $this->destroy($id);
        // if ($stored['lezarva'] == false) {} //lehet tömb is
 
     }
-    public function zarStored($data)
-    {
-        $stored = $this->find($data['id']);
-        $stored->update(['lezarva' => true]);
-        // return $this->getStoreds($data);
 
-    }
-    public function nyitStored($data)
+      public function moEdit($id)
     {
-        $stored = $this->find($data['id']);
-        $stored->update(['lezarva' => false]);
+        $data=$this->find($id)->toarray();
+        $html=file_get_contents(resource_path().'/views//'. $data['path'].$data['filename'], true);
+      
+        $html= str_replace('<!DOCTYPE html> <html><head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Page Title</title><style> *{font-family: DejaVu Sans !important;} </style></head><body>','',$html);
+        $html= str_replace('</body></html>','',$html);
+        $html= str_replace('{{$data[','&lt;&lt;[',$html);
+        $html= str_replace(']}}',']&gt;&gt;',$html); 
+        $data['html']=$html;
+        return $data;
     }
-
-   
+    public function pub($id)
+    {
+        $ob=$this->find($id);
+        $ob->update(['pub'=>1]);
+    }
+    public function unpub($id)
+    {
+        $ob= $this->find($id);
+        $ob->update(['pub'=>0]);
+    }
 
     public function show($id)
     {

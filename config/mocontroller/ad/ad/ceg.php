@@ -20,7 +20,12 @@ return [
                         'cim'=>['text','Székhely Címe (utca, házszám)',[]],        
                         'ado'=>['text','Adószám',[]],      
                         'password'=>['text','Manager Jelszó',[]],
-                     'pub'=>['radiolist','',[['0','Tiltva' ],['1','Engedélyezve',true ]]] ,
+                   //  'pub'=>['radiolist','',[['0','Tiltva' ],['1','Engedélyezve',true ]]] ,
+                 //  {!! Form::select($name, $param[2], $checked, $inputpar) !!}   label: param[1]
+                     'docedit'=>['selectFromArr','Doc szerkesztés',['0'=>'Tiltva','5'=>'engedélyezve'],'0'] ,
+                     'timeedit'=>['selectFromArr','Munkaidő beírás szerkesztés',['0'=>'csak manager','5'=>'dolgozó is'],'0'] ,
+                     'timeform'=>['selectFromArr','Munkaidő szerkesztés felület',['0'=>'egyszerú','5'=>'multi','10'=>'full'],'0'] ,
+                     'pub'=>['selectFromArr','jogosultság',['0'=>'Alap','5'=>'Pro','10'=>'VIP'],'0'] ,
                          'submit'=>['submit','Cég mentése'], //,'submit'=>['submit','Ment','class'=>'btn btn-danger'] 
                         'formend'=>['formend']
                 ] ]       

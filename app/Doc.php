@@ -41,12 +41,8 @@ class Doc extends Model
         $res = Doc::where(['ceg_id' => $ceg->id, 'cat' => $doc_tmpl])->with('worker')->get();
         return $res;
     }
-    public function getWorkerDocs()
-    {
-        $workerid= \Auth::user()->getWorkerid();
-        $res = Doc::where(['worker_id' => $workerid])->with('worker')->get();
-        return $res;
-    }
+  
+
     public function cleanchars($string)
     {
         $chars = array(
@@ -76,7 +72,18 @@ class Doc extends Model
         file_put_contents($path . $rdat['filename'], $output);
         
     }
-
+    public function moEdit($id)
+    {
+        $data=Doctemplate::find($id)->toarray();
+        $html=file_get_contents(resource_path().'/views//'. $data['path'].$data['filename'], true);
+      
+        $html= str_replace('<!DOCTYPE html> <html><head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Page Title</title><style> *{font-family: DejaVu Sans !important;} </style></head><body>','',$html);
+        $html= str_replace('</body></html>','',$html);
+        $html= str_replace('{{$data[','&lt;&lt;[',$html);
+        $html= str_replace(']}}',']&gt;&gt;',$html); 
+        $data['editordata']=$html;
+        return $data;
+    }
 /**
  * nem kell jogosultság vizsgálat mert csak a manager configból érhető el
  */
@@ -99,7 +106,8 @@ class Doc extends Model
                 $rdat['worker_id'] = $worker->id;
                 $rdat['origin'] = $safename  . '.pdf';
                 $rdat['name'] = $filename;
-                $rdat['cat'] = $tmpl;
+               
+                $rdat['cat'] = 'base';
                // $rdat['filename'] = $safename . '_' . mktime() . '.pdf';
                 $rdat['filename'] = $safename . '.pdf';
                 $rdat['path'] = $path;

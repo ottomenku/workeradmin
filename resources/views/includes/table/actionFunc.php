@@ -10,8 +10,14 @@ function buttonGeneral($actual,$route,$taskId) { //pl.('del','/m/ad.man.booking'
     if(isset($actual['action']) && $actual['action']=='href') 
     {
         // $res.= 'href="'.url($viewpar['route']).'/'.$task.'/'. $taskId .'"';
-       $res.= 'href="'.url($route.'/'.$task.'/'. $taskId ).'"';
+       $res.= ' href="'.url($route.'/'.$task.'/'. $taskId ).'"';
     }
+    if(isset($actual['target'])) 
+    {
+        // $res.= 'href="'.url($viewpar['route']).'/'.$task.'/'. $taskId .'"';
+       $res.= ' target="'.$actual['target'].'"';
+    }
+
   //  if(!isset($actual['title'])){die(dump($actual));}
     $res.=' title="'.$actual['title'].'"' ;
     $style=$actual['style'] ?? ''; //TODO mocontroller.mocontroller.baseAction-badefimioálni alap style

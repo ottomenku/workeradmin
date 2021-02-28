@@ -9,7 +9,11 @@ return [
         'funcs' => [ 
             3=>['replaceACT',[]] 
           ],  
-    'validations' =>['foto'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'] ,
+    'validations' =>[
+        'foto'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'email'  => 'required|unique:users|max:255',
+    
+    ] ,
    // 'delFromParrent'=>[ 'viewpar.menu.superadmin.egy'] ,
     'obClass'=>['baseOB'=>'App\Worker','ManagerHandler'=>'App\Handlers\ManagerHandler'],
     'viewpar'=>[
@@ -17,21 +21,23 @@ return [
         'form'=>[   
             'name'=>['text','Felhasználónév (egyedi)',['required' => 'required']],
             'fullname'=>['text','Teljes (anyakönyvi) név',[]],
-           // 'workername'=> ['text','Egyedi név',[]],
+            'workername'=> ['text','Egyedi név',[]],
             'email'=> ['email','Email',['required' => 'required']],
             'password'=> ['text','Jelszó (Ha üresen marad nem változik)',[]],
             'position'=> ['text','',[]],
             'image'=> ['image','foto',[]], //'fileupload name'=> ['tipus','mező név',[]],
-            
-            'város'=> ['text','Város (cím)',[]],
             'cim'=> ['text','utca, házszám',[]],
-            'mothername'=> ['text','Anyja neve',[]],
-            'tel'=> ['text','',[]],
-            'ado'=> ['text','',[]],
-            'tb'=> ['text','',[]],
-            'start'=> ['date','',[]],
-            'end'=> ['date','',[]],
-            'note'=> ['text','',[]],
+            'város'=> ['text','Város (cím)',[]],
+            'alapber'=> ['text','alapbér',[]],
+            'bertipus'=> ['text','Bértipus',[]],    
+            'mothername'=> ['text','Anyja neve',[]], 
+            'tel'=> ['text','Telefonszám',[]],
+            'ado'=> ['text','Adószám',[]],
+            'tb'=> ['text','Tb. szám',[]],
+            'szig'=> ['text','Szig',[]],
+            'start'=> ['date','Munkaviszony kezdete',[]],
+            'end'=> ['date','Munkaviszony vége',[]],
+            'note'=> ['text','Megjegyzés',[]],
             'pub'=>['radiolist','',[['0','Tiltva' ],['1','Engedélyezve',true ]]] ,
             'submit'=>['submit','Ment user'] ,//,'submit'=>['submit','Ment','class'=>'btn btn-danger'] 
         ],
