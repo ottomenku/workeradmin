@@ -42,7 +42,7 @@
     <script>
       function kuldment(){
         $("#editform").prop("target", '_self');
-        $('#editform').attr('action', "/m/ad.ad.doctemplate/formsave").submit();
+        $('#editform').attr('action', "/m/ad.ad.doctemplate/tmplstore").submit();
     }
   </script>
     @endsection>

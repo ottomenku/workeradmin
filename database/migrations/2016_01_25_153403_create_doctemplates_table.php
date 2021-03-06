@@ -18,8 +18,9 @@ class CreateDoctemplatesTable extends Migration
             $table->foreign('ceg_id')->references('id')->on('cegs')->default(1); // nem igazán kell csak könnyít
             $table->string('cat')->default('vegyes');
             $table->string('name');
-            $table->string('filename');
-            $table->string('path');
+            $table->string('filename')->nullable();
+            $table->string('path')->nullable();
+            $table->text('editordata')->default('file');//text nem lehet null
             $table->string('note')->nullable();
             $table->smallInteger('pub')->default(1);
             $table->timestamps();

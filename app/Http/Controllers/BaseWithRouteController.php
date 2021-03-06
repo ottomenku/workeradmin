@@ -126,38 +126,24 @@ switch ($ret) {
 
     case 'download': 
     return Storage::download($this->DATA['file']);  
-    case 'pdfstream': 
-      $head='<!DOCTYPE html> <html><head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-      <title>Page Title</title><style> *{font-family: DejaVu Sans !important;} </style><!-- jók az ékezetes betúi --->
-      </head><body>';
-      $footer='</body> </html>';
-      $html= $head.$_POST['editordata'].$footer;
-      // $html = 'hkhgkhksfjh hajsf jsalfsha jj';
-  // dump($_POST);
-      $dompdf = new Dompdf\Dompdf();
-   //   $data['worker'] = $worker;
-    //  $html = view('doc_tmpl.'.$tmpl, compact('data'))->render();
-      $dompdf->load_html($html,'UTF-8');
-      $dompdf->render();
-    //  $output = $dompdf->output();
-     // file_put_contents($path . $rdat['filename'], $output);
-    return  $dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
-    case 'pdfstreamID': 
-     $id=  $this->ACT['viewpar']['id'] ;
-     $item = Doctemplate::find($id);
-      $html= file_get_contents(resource_path().'/views/doc_tmpl//'.$item->filename, true);
-      $html= str_replace('{{$data[','&lt;&lt;[',$html);
-        $html= str_replace(']}}',']&gt;&gt;',$html); 
+    case 'editorpdfstream': 
+      $html= \FileHandler::contentToFullhtml($this->DATA['editordata']);
       $dompdf = new Dompdf\Dompdf();
       $dompdf->load_html($html,'UTF-8');
       $dompdf->render();
     return  $dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
+       case 'bladepdfstream': 
 
-    
-    case 'downloadFromStorage': 
-     // return Storage::download('\storage\\'.$this->DATA['file']); 
-     return response()->download(storage_path($this->DATA['file']));
-    break;
+      $html=   \View::make('doc_tmpl.frame')
+      ->with('data', $this->DATA)
+      ->with('viewpar', $this->ACT['viewpar'])
+      ->render();
+       $dompdf = new Dompdf\Dompdf();
+     $dompdf->load_html($html,'UTF-8');
+      $dompdf->render();
+    return  $dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
+   // return dump($html) ;
+
     case 'redirect':
     $message=$this->ACT['return'][2] ?? '';
     $redirect=$this->ACT['return'][1];

@@ -10,7 +10,7 @@ return [
           ],  
     'validations' =>['foto'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'] ,
    // 'delFromParrent'=>[ 'viewpar.menu.superadmin.egy'] ,
-    'obClass'=>['baseOB'=>'App\Doc','worker'=>'App\Worker','user'=>'App\User','ManagerHandler'=>'App\Handlers\ManagerHandler'],
+    'obClass'=>['baseOB'=>'App\Doc','doctmpl'=>'App\Doctemplate','worker'=>'App\Worker','ceg'=>'App\Ceg'],
     'viewpar'=>[
         'route'=>'m/ad.man.docgeneral', //ez alapján múködnek a gombok
         'doc_tmpl'=>'tajekoztato',
@@ -22,10 +22,21 @@ return [
      // 20=>['baseOB::getMenu',[], "DATA"]  
           ],
      //   'return'=>['dump']  
-        'return'=>['pdfstream'] 
+        'return'=>['editorpdfstream1'] 
       // 'return'=>['view'] 
   ],
+  'docgeneralview' => [
+    'funcs' => [  
+      10=>['replaceACT',[]] ,
+    20=>['worker::getWorker',['{ACT.routpars.id1}'], "DATA.worker"],  
+    30=>['worker::getUserCeg',[], "DATA.ceg"] 
+        ],
+    //  'return'=>['dump']  
+      'return'=>['bladepdfstream'] 
+    // 'return'=>['view'] 
+],
 
+ 
     'index' => [
     // 'delFromParrent'=>[ 'funcspppp'],
        //'role'=>'manager',worker_id', 'origin', 'name', 'filename', 'path', 'worknote', 'worknote', 'pub'
@@ -54,6 +65,14 @@ return [
              //  'return'=>['dump']    
         ],
 
+        'proba' => [
+            'funcs' => [
+               //  15=>['baseOB::proba',[],'DATA'] 
+            ],    
+            'return'=>['probablade']
+          //  'return'=>['viewsimple','admin_crudgenerator.docs.doc_general']
+      ],
+
         'create' => [
           'viewpar'=>[ 
               'taskheader'=>'Új dokumentum generálás',
@@ -61,25 +80,25 @@ return [
           ], 
             'funcs' => [
                  10=>['replaceACT',[]] ,
-                 15=>['baseOB::moEdit',['{ACT.viewpar.id}'],'DATA.item'] ,
+                 15=>['doctmpl::getTemplate',['{ACT.viewpar.id}'],'DATA.item'] ,
                    20=>['worker::getWorkers',[],'DATA.workers'],  
                    25=>['worker::getUserCeg',[],'DATA.ceg']  
             ],
-             
+           // ACT['routpars']
         
-           // 'return'=>['dump']
+         //  'return'=>['dump']
     
-            'return'=>['viewsimple','admin_crudgenerator.docs.doc_general']
+         'return'=>['viewsimple','admin_crudgenerator.docs.doc_general']
       ],
 
-    'storedoc' => [
+    'storeworkerdocs' => [
         'funcs' => [
            8=>['replaceACT',[]] , 
             10=>['validateToDATA',[],'DATA'],
            // 15=>['ManagerHandler::workerToData',[],'DATA.worker'],
-           20=>['ManagerHandler::cegToData',[],'DATA.ceg'],
+         //  20=>['ManagerHandler::cegToData',[],'DATA.ceg'],
           //20=>['user::getWorker',[],'DATA'],
-             25=>['baseOB::storeDoc',['{DATA}','{ACT}']]  //felül kell irni ha nme az alapértelmezettet akaerjuk: 20=>['baseOB::moCreate',['{DATA.valid}']]
+             25=>['baseOB::storeDocs',['{DATA}','{ACT}']]  //felül kell irni ha nme az alapértelmezettet akaerjuk: 20=>['baseOB::moCreate',['{DATA.valid}']]
           
           //  20=>['baseOB::storeAdatkezeles',['{DATA}','{ACT}']]  
            ],

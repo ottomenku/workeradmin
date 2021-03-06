@@ -1,0 +1,1 @@
+<!DOCTYPE html> <html><head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Page Title</title><style> *{font-family: DejaVu Sans !important;} </style></head><body><p>{{$data['ceg']['adoszam']}}asdfasdas{{$data['worker']['fullname']}}llllllllllllllllllllllll</p></body></html>

@@ -1,0 +1,1 @@
+<p>{{$data['ceg']['adoszam']}}nnnnnnnnnnnnnn&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{$data['worker']['city']}}</p><p><br></p><p>mmmmmmmmmm{{$data['ceg']['ugyvezeto']}}</p>

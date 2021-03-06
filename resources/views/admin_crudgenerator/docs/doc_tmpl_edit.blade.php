@@ -26,7 +26,7 @@
    </div>
       
      
-      <textarea id="summernote" name="editordata">{{$data['html']}}</textarea>
+      <textarea id="summernote" name="editordata">{{$data['editordata']}}</textarea>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="id" value="{{$data['id'] }}"> 
     </form>

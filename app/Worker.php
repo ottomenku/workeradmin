@@ -23,6 +23,18 @@ class Worker extends Model
       $worker=$this->where('user_id',$user->id)->first(); 
       return  [$worker->id];
       }
+      /**
+       * managerek használhatják csak a saját dolgozóit adja vissza
+       */
+      public function getWorker($id)  
+      {  
+        //if($id==0){$id=}
+        $managercegid=\Auth::user()->getCeg()->id;
+
+        $worker=$this->find($id); 
+        if($managercegid==$worker->ceg_id){return $worker;}
+        else {return [];}
+        }
       public function getWorkerids()
       { 
           $user=\Auth::user();

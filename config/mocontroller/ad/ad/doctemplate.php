@@ -19,12 +19,20 @@ return [
         ],
   'preview' => [
         'funcs' => [  
-       // 20=>['baseOB::getMenu',[], "DATA"]  
+          10=>['validateToDATA',[],'DATA'], 
             ],
-       //   'return'=>['dump']  
-          'return'=>['pdfstream'] 
+        //  'return'=>['dump']  
+         'return'=>['editorpdfstream'] 
         // 'return'=>['view'] 
     ],
+    'previewid' => [
+      'funcs' => [  
+        10=>['baseOB::getTemplate',['{ACT.viewpar.id}'],'DATA'], 
+          ],
+       // 'return'=>['dump']  
+        'return'=>['editorpdfstream'] 
+      // 'return'=>['view'] 
+  ],
     'proba' => [
       'funcs' => [  
       20=>['baseOB::getMenu',[], "DATA"]  
@@ -38,15 +46,15 @@ return [
       'funcs' => [ 
         8=>['replaceACT',[]] ,
         10=>['validateToDATA',[],'DATA'],
-       20=>['baseOB::formeditsave',['{DATA}']]  
+       20=>['baseOB::moUpdate',['{DATA}']]  
           ],
-      'return'=>['redirect','{ACT.viewpar.route}','Documentumsablon elkészült:'] ,
+      'return'=>['redirect','{ACT.viewpar.route}','Documentumsablon változások mentve:'] ,
   ],
-    'formsave' => [
+    'tmplstore' => [
       'funcs' => [ 
         8=>['replaceACT',[]] ,
         10=>['validateToDATA',[],'DATA'],
-       20=>['baseOB::formsave',['{DATA}']]  
+       20=>['baseOB::tmplstore',['{DATA}']]  
           ],
       'return'=>['redirect','{ACT.viewpar.route}','Documentumsablon elkészült:'] ,
   ],
@@ -93,7 +101,7 @@ return [
   ],
   'edit' => [
     'viewpar'=>[           
-        'taskheader'=>'Dokumewntum sablon módosítása ',
+        'taskheader'=>'Dokumentum sablon módosítása ',
     ],
     'funcs' => [
         10=>['baseOB::moEdit',['{ACT.viewpar.id}'],'DATA'] ,
@@ -122,12 +130,5 @@ return [
 // az ad.groupcomf funkcióinak használata itt is kell hogy legyen kulcs és nem lehet üres------        
 'pub' => ['allowed'=>true],
 'unpub' => ['allowed'=>true],
-'previewid' => [ 
-  'funcs' => [
-    8=>['replaceACT',[]] 
-  ],
- // 'funcs' => [  10=>['baseOB::show',['{ACT.viewpar.id}'],'DATA']  ],
-    // 'return'=>['dump']  
-     'return'=>['pdfstreamID']
-     ]
+
 ];
