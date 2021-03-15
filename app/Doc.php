@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Worker;
+//use App\Handlers;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +11,7 @@ use Dompdf;
 class Doc extends Model
 {
     //use LogsActivity;
-    use  \App\Traits\MoPdf ;
+ //   use  \App\Traits\MoPdf ;
     /**
      * The database table used by the model.
      *
@@ -30,7 +31,7 @@ class Doc extends Model
      *
      * @var array
      */
-    protected $fillable = ['ceg_id', 'worker_id','cat', 'origin', 'name', 'filename', 'path','editordata','data','worknote', 'adnote', 'pub'];
+    protected $fillable = ['ceg_id', 'worker_id','cat', 'origin', 'name', 'filename', 'path','editodataa','data','worknote', 'adnote', 'pub'];
 
     public function proba($tmplid)
     {
@@ -40,17 +41,19 @@ class Doc extends Model
       // return  view("ggg {{$data['user']}}", compact('data'))->render(); 
      //  return view (['template' => '{{$token}}'], ['token' => 'I am the token value']);
     }
-
-   /**
-     * adminnnak cégenként getWorkerDocs
-     */
-    public function getManagerAdatkezeles($doc_tmpl)
+    public function getManagerAdatkezeles()
     {
         $ceg = \Auth::user()->getCeg();
-        $res = Doc::where(['ceg_id' => $ceg->id, 'cat' => $doc_tmpl])->with('worker')->get();
+        $res = Doc::where(['ceg_id' => $ceg->id])->with('worker')->get();
         return $res;
     }
+    public function getPdfPathFromId($id)
+    {
+        $filename= $this->find($id)->filename;
+        $path=\FileHandler::getCegDocPdfPath();
+        return $path.DIRECTORY_SEPARATOR.$filename;
 
+    }
     public function moCreate($tmplid)
     {
         return  Doctemplate::find($tmplid);   
@@ -60,27 +63,22 @@ class Doc extends Model
  */
     public function storeDocs($data=[],$act=[])
     {
-       $cegid = \Auth::user()->getCeg()->id;
+        $ceg = \Auth::user()->getCeg();
+        $pdfdata=[];
+        $pdfdata['ceg']=$ceg->toarray();   
         $workeids=$data['workerids'] ?? [];
         foreach ($workeids as $workerid) {
-            $worker = Worker::where('id', $workerid)->first();
-            if ($cegid == $worker->ceg_id) {
-                $rdat['ceg_id'] = $worker->ceg_id;
-                $rdat['worker_id'] = $worker->id;
-                $rdat['name'] = $rdat['name'];
-               
-                $rdat['cat'] = 'base';
-               // $rdat['filename'] = $safename . '_' . mktime() . '.pdf';
-               // $rdat['filename'] = $safename . '.pdf';
-               // $rdat['path'] = $path;
-               // $data['worker'] = $worker;
-              // $html = view('doc_tmpl.'.$tmpl, compact('data'))->render();
-             //   $html=iconv(mb_detect_encoding($html, mb_detect_order(), true), "UTF-8", $html);
-             //   $this->pdfGen($rdat,$html);
-                 $this->create($rdat);
-           
+            $worker = Worker::where('id', $workerid)->with('user')->first();
+            $pdfdata['worker']=$worker->toarray();
+            if ($ceg['id'] == $worker['ceg_id']){
+                $data['ceg_id'] = $worker['ceg_id'];
+                $data['worker_id'] =$workerid;
+                $data['cat'] = $data['cat'] ?? 'base';
+                $data['workernote'] = $data['note'] ?? '' ;
+                $data['filename'] = \FileHandler::pdfStore($pdfdata,$act['viewpar'],$data['name'] );
+                $data['data']=json_encode($pdfdata);
+                $this->create($data);
             }
-
         }
     }
 /**
@@ -88,28 +86,26 @@ class Doc extends Model
  */
     public function destroyOne($id) //
     {
-        $item = $this->findOrFail($id);
-        unlink(storage_path($item->path.$item->filename));
+        $filename= $this->find($id)->filename;
+        $path=\FileHandler::getCegDocPdfPath();
+        unlink($path.DIRECTORY_SEPARATOR.$filename);
         $this->destroy($id);
        // if ($stored['lezarva'] == false) {} //lehet tömb is
 
     }
-    public function zarStored($data)
+    public function pub($id)
     {
-        $stored = $this->find($data['id']);
-        $stored->update(['lezarva' => true]);
-        // return $this->getStoreds($data);
-
+        $ob=$this->find($id);
+        $ob->update(['pub'=>1]);
     }
-    public function nyitStored($data)
+  public function unpub($id)
     {
-        $stored = $this->find($data['id']);
-        $stored->update(['lezarva' => false]);
+        $ob= $this->find($id);
+        $ob->update(['pub'=>0]);
     }
-
    
 
-    public function show($id)
+ /*   public function show($id)
     {
         return $this->findOrfalse($id);
 
@@ -123,7 +119,7 @@ class Doc extends Model
       //  return response()->download(storage_path("app/public/10/{$item->filename}"));
       return $filePath;
 
-    }
+    }*/
 
     public function ceg()
     {

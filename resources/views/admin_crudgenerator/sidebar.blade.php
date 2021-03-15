@@ -1,12 +1,14 @@
 @php             
    $menuT= $viewpar['menu'] ?? [];
-   $doctemplate=new App\Doctemplate();
-   $docmenuT=$doctemplate->getMenu(); 
+   $timemenu= $viewpar['timemenu'] ?? false;
  //  $menuT['superadmin'][]=['/admin/generator'=>' Generátor'];
  @endphp             
  <div class="col-md-3">
-@if (Auth::id()>0)
-  @if (Auth::user()->hasRole('superadmin')) 
+ @if ( $timemenu)
+    @include('admin_crudgenerator.timemenu')
+ @else
+    @if (Auth::id()>0)
+    @if (Auth::user()->hasRole('superadmin')) 
 
    <div class="card">
         <div class="card-header">
@@ -24,8 +26,8 @@
             </ul>  
         </div>  
     </div>    
-@endif 
-@if (Auth::user()->hasRole('admin')) 
+    @endif 
+    @if (Auth::user()->hasRole('admin')) 
 
    <div class="card">
         <div class="card-header">
@@ -63,7 +65,10 @@
     </div>    
 @endif 
 @if (Auth::user()->hasRole('manager')) 
-
+@php             
+   $doctemplate=new App\Doctemplate();
+   $docmenuT=$doctemplate->getMenu(); 
+ @endphp  
    <div class="card">
         <div class="card-header">
             Manager menü
@@ -122,6 +127,6 @@
     </div>    
 @endif  
 @endif  
-
+@endif 
 </div>
         

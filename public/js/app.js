@@ -52292,6 +52292,9 @@ var app = new Vue({
     'inverse': 'fordított'
   }), _defineProperty(_data, "calendar", []), _defineProperty(_data, "calendarbase", []), _defineProperty(_data, "times", []), _defineProperty(_data, "workerdays", []), _defineProperty(_data, "basedays", []), _defineProperty(_data, "storeds", []), _defineProperty(_data, "storedToShow", []), _defineProperty(_data, "solver", []), _defineProperty(_data, "timeFrames", []), _data),
   methods: {
+    faClass: function faClass(icon) {
+      return "fa fa-".concat(icon);
+    },
     onfileInputChange: function onfileInputChange(e) {
       var files = e.target.files || e.dataTransfer.files;
 
@@ -52330,8 +52333,15 @@ var app = new Vue({
       var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(this.host + this.baseroute + task, data).then(function (response) {
         _this.storeds = [];
-        Object.entries(response.data).forEach(_this.DataRefresh); // this.calworkerid=this.workers[0].id;
+        Object.entries(response.data).forEach(_this.DataRefresh);
+
+        if (task == 'getbasedata') {
+          _this.calworkerid = _this.workers[0].id;
+          _this.calworker = _this.workers[0];
+          _this.workerids = [_this.workers[0].id];
+        } // this.calworkerid=this.workers[0].id;
         //  this.calworker=this.workers[0];
+
       })["catch"](function (error) {
         alert(error);
       });
@@ -52344,12 +52354,9 @@ var app = new Vue({
       this[value[0]] = value[1];
     },
     setCalworkerid: function setCalworkerid(worker) {
-      if (worker == 'base') {
-        this.calworkerid = 0;
-      } else {
-        this.calworkerid = worker.id;
-        this.calworker = worker;
-      }
+      this.calworkerid = worker.id;
+      this.calworker = worker;
+      this.workerids = [worker.id];
     },
     //selectChange: function () {alert('ttt');},
     selectDays: function selectDays() {
@@ -52463,7 +52470,8 @@ var app = new Vue({
     storedays: function storedays() {
       this.formdata = {
         workernote: $("input[name=workernote]").val(),
-        daytype_id: $("select[name=daytype_id]").val(),
+        //  daytype_id: $("select[name=daytype_id]").val(),
+        daytype_id: $('input[name=daytype_id]:checked').val(),
         pubbase: $('input[name="pubday"]:checked').val()
       };
       this.PandFwitId('storedays');

@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 class CreateTimetypesTable extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the migrations.'','', '',
      *
      * @return void
      */
@@ -21,6 +21,9 @@ class CreateTimetypesTable extends Migration
             $table->integer('fixplusz')->default(0)->nullable();
             $table->string('color')->nullable();
             $table->string('background')->nullable();
+            $table->integer('basehour')->nullable();
+            $table->time('start')->nullable();
+            $table->time('end')->nullable();
             $table->string('note')->nullable();
             $table->smallInteger('pub')->default(1);
            // $table->timestamps();

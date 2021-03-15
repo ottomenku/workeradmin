@@ -20,7 +20,7 @@ class CreateDoctemplatesTable extends Migration
             $table->string('name');
             $table->string('filename')->nullable();
             $table->string('path')->nullable();
-            $table->text('editordata')->default('file');//text nem lehet null
+            $table->text('editordata');//text nem lehet null és nem lehet alapértel,eztt értéke
             $table->string('note')->nullable();
             $table->smallInteger('pub')->default(1);
             $table->timestamps();

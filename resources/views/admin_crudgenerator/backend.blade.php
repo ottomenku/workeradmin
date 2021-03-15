@@ -13,14 +13,15 @@
 
     <title>{{ config('app.name', 'Laravel') }} </title>
 
+
    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    <script src="/js/simplecolor.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
  
  @php
  $now=$now =Carbon\Carbon::now();
@@ -53,7 +54,18 @@
                         });
                     }
                 });
-
+                var colors = [  
+                '#ffff3d','990033', 'ff3366', 'cc0033', 'ff0033', 'ff9999', 'cc3366', 
+                'cc0099', '990066', 'cc66cc', 'cc33cc', 'cc33ff', 'ffccff', '3399ff',  
+                '6666cc', '6666ff', '666699', '333366', '333399', '330099', '3300cc', 
+                '003366', '6699cc', '#0000FF', '006699', '3399cc', '0099cc', '66ccff',     
+                '00ff99', '339966', '006633', '336633', '669966', '66cc66', '99ff99',
+                'ccff00', '999900', 'cccc00', 'cccc33', '333300', '666600', '999933',  
+                '996633', '330000', '663333', '996666', 'cc9999', '993333', 'cc6666',    
+                'ff3333', 'cc3333', 'ff6666', '660000', '990000', 'cc0000',  '000000'];
+              
+                $('#color').simpleColor({ colors: colors });
+                $('#background').simpleColor({ colors: colors });
         $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd', changeYear: true,defaultDate: new Date()});
         $( "#datepicker2" ).datepicker({ dateFormat: 'yy-mm-dd', changeYear: true,defaultDate:+30});
         $("#myModal").on("show.bs.modal", function(e) {

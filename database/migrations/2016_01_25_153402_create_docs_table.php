@@ -23,8 +23,8 @@ class CreateDocsTable extends Migration
             $table->string('name');
             $table->string('filename')->nullable();
             $table->string('path')->nullable();;
-            $table->text('editordata')->default('file');//text nem lehet null
-            $table->json('data')->nullable();
+            $table->text('editordata');//text nem lehet null
+            $table->text('data')->nullable(); // json kell majd
             $table->string('worknote')->nullable();
             $table->string('adnote')->nullable();
             $table->smallInteger('pub')->default(1);

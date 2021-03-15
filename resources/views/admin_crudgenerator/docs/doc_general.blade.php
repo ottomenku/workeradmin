@@ -4,7 +4,7 @@
 
 <div style="margin:5%">   <center><h3>Dokumentum  generálás</h3> </center>
 
-    <form id="editform" method="post" action="/m/ad.man.docgeneral/storeworkerdocs" >
+    <form id="editform" method="post" action="/m/ad.man.docgeneral/storeworkerdocs/{{$data['item']['id']}}" >
       <button type="submit"  class="btn btn-primary" value="Submit"> Documentumok generálása</button>  
    <div class="row">
      <div class="col-md-6">
@@ -24,8 +24,8 @@
                 <input  type="checkbox" name="workerids[]" value="{{$worker->id}}"> 
                 @php
                    // a view link első paraméterének a etmplate idnek kell lennie! 
-                @endphp >
-                <a href="/m/ad.man.docgeneral/docgeneralview/{{$data['item']['id']}}/{{$worker->id}}" target="_blank" title="show" style=" width:20px;font-size: 18px; padding:2px; line-height:0;" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> </a>   
+                @endphp 
+                <a href="/m/ad.man.docgeneral/docgeneralview/{{$data['item']['id']}}/{{$worker->id}}" target="_blank" title="show" style=" width:20px;font-size: 18px; padding:2px; line-height:0;" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>   
                 {{$worker->workername}}            
           </div>
       </div>

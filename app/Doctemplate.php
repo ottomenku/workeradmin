@@ -53,7 +53,7 @@ class Doctemplate extends Model
         $item = $this->findOrFail($data['id']);
         $blade=\FileHandler::editortexToBlade($data['editordata'] ?? '');
        // $blade=\FileHandler::contentToFullhtml($content);
-        unlink(\FileHandler::getDoctmplBladeFileFullPath($item->filename,''));
+        unlink(\FileHandler::getDoctmplBladeFileFullPath($item->filename));
         \FileHandler::bladeStore($item->filename,$blade);
         $item->update($data);
     }

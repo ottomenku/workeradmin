@@ -11,7 +11,7 @@
     </div> 
   
     <div class="col-6">     
-            <input class="form-control"  name="adnote" type="text" id="workernote">                   
+            <input class="form-control"  name="adnote" type="text" id="workernote1">                   
     </div>
 
     <button class=" btn btn-primary" v-on:click="storedays()" style="margin:2px;">           

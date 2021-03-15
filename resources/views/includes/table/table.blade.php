@@ -46,7 +46,16 @@
                    if(substr($key,0,4)=='eval'){   
                     //TODO  az evalnál elegánsabb megoldást találni
                     eval('$value='.$val[1].';');  
-                    }     
+                    }  
+                    elseif (substr($key,0,4)=='icon'){ //substr() azért kell hogy lehessen indexelni
+                        $colorcolname=$val[1]['colorcolname'] ?? 'color';
+                        $color=$item[$colorcolname] ?? 'gray';
+                        $bgcolorcolname=$val[1]['bgcolorcolname'] ?? 'background';
+                        $colname=$val[1]['bgcolorcolname'] ?? 'icon';
+                        $bgcolor='';
+                        if(isset($item[$bgcolorcolname])) {$bgcolor= ' background-color:'.$item[$bgcolorcolname].';';}
+                            $value=' <i style="color:'.$color.';'.$bgcolor.'" class="fa fa-'.$item[$colname].'" aria-hidden="true"></i>';        
+                        } 
                     elseif (substr($key,0,4)=='join'){ //substr() azért kell hogy lehessen indexelni
                     $joinfunc=$val[1];
                         $joinvar=$val[2];

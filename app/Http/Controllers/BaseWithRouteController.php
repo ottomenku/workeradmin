@@ -123,17 +123,18 @@ switch ($ret) {
     case 'viewsimple': //a view teljes elérési útját meg kell adni vagy semmit. Akkor a Taskviews meg a viewsből generálja moView()
       $view=$this->ACT['return'][1];
       return $this->moView($view);
-
+    case 'filestream': 
+        return response()->file($this->DATA['filestream']);
     case 'download': 
-    return Storage::download($this->DATA['file']);  
+   // return Storage::download($this->DATA['file']);
+return response()->download($this->DATA['file']);
     case 'editorpdfstream': 
       $html= \FileHandler::contentToFullhtml($this->DATA['editordata']);
       $dompdf = new Dompdf\Dompdf();
       $dompdf->load_html($html,'UTF-8');
       $dompdf->render();
-    return  $dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
-       case 'bladepdfstream': 
-
+    return  $dompdf->stream("dompdf_out.pdf", array("Attachment" => false));  
+    case 'bladepdfstream': 
       $html=   \View::make('doc_tmpl.frame')
       ->with('data', $this->DATA)
       ->with('viewpar', $this->ACT['viewpar'])

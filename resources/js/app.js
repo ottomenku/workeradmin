@@ -17,6 +17,7 @@ var app = new Vue({
   el: '#app',
   created() {
     this.PandFwitId('getbasedata'); 
+
    // this.PandFwitId('freshdata'); 
   },
   data: {
@@ -83,6 +84,10 @@ var app = new Vue({
 
 methods: 
 {  
+  faClass(icon) {
+    return `fa fa-${icon}`;
+  },
+
    onfileInputChange(e) {
     let files = e.target.files || e.dataTransfer.files;
     if (!files.length){
@@ -110,6 +115,11 @@ postAndFresh: function (task='calendar/',data=null) {
       .then(response => {
         this.storeds=[];
         Object.entries(response.data).forEach(this.DataRefresh);
+if(task=='getbasedata'){
+  this.calworkerid=this.workers[0].id; 
+  this.calworker=this.workers[0];
+  this.workerids=[this.workers[0].id];  
+}
        // this.calworkerid=this.workers[0].id;
       //  this.calworker=this.workers[0];
        }).catch(function (error) {
@@ -125,13 +135,9 @@ postAndFresh: function (task='calendar/',data=null) {
       this[value[0]]=value[1];
     },
 setCalworkerid: function(worker) {
-  if(worker=='base'){this.calworkerid=0;}
-  else{
     this.calworkerid=worker.id; 
    this.calworker=worker;
-  }
-
-  
+   this.workerids=[worker.id];  
 },
 //selectChange: function () {alert('ttt');},
 selectDays: function () {
@@ -160,6 +166,8 @@ selectDays: function () {
 
 PandFwitId: function (task='calendar/',id=0) {
   this.postAndFresh(task,this.getBaseDataWitId(id));
+
+
 },
 
 // zárások-----PandFwitId taskok: storeStoreds,'delStored(id),zarStored(cegid),nyitStored(cegid)-----
@@ -236,7 +244,8 @@ zarStored: function(id) {
   storedays: function() {
     this.formdata = {
         workernote: $("input[name=workernote]").val(),
-        daytype_id: $("select[name=daytype_id]").val(),
+      //  daytype_id: $("select[name=daytype_id]").val(),
+      daytype_id: $('input[name=daytype_id]:checked').val(),
         pubbase: $('input[name="pubday"]:checked').val(),
       }
       this.PandFwitId('storedays');

@@ -24,11 +24,19 @@ class Daytype extends BaseModel
     protected $primaryKey = 'id';
     public $timestamps = false;
     /**
-     * Attributes that should be mass-assignable.
+     * Attributes that should be mass-assignable. 
      *
      * @var array
      */
-    protected $fillable = ['ceg_id', 'name', 'szorzo', 'fixplusz', 'color', 'note','userallowed','pub'];
+    protected $fillable = ['ceg_id','timetype_id', 'name', 'workday', 'szorzo', 'fixplusz', 'color','background','icon','note','userallowed','pub'];
+    public function getCegDaytypes()
+    {
+        return $this->where(['ceg_id' => 1])->get();
+    }
+    public function getDaytype($id)
+    {
+        return $this->find( $id);
+    }
 
     public function workerDaytypesPluck()
     {
@@ -41,6 +49,10 @@ class Daytype extends BaseModel
     public function ceg()
     {
         return $this->belongsTo('App\Ceg'); // assuming user_id and task_id as fk
+    }
+    public function timetype()
+    {
+        return $this->belongsTo('App\Timetype'); // assuming user_id and task_id as fk
     }
     public function day()
     {

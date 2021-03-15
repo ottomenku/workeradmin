@@ -200,7 +200,11 @@ $value = array_get($base_par, 'names.john', 'default'); //dot tömbelérés defa
                                 {{Form::radio($listname, $listvalue, $listchecked)}} {{$listlabel}}
                                @endforeach
                                @break               
-         
+                               @case('iconlist')
+                            
+                            @include('includes.table.icons')
+                            
+                             @break
                                 @default
                                 @php 
                                 $inputp=$param[2]['inputpar'] ?? $param[2] ?? []; 

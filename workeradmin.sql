@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2021. Feb 01. 19:44
--- Kiszolgáló verziója: 10.3.16-MariaDB
--- PHP verzió: 7.3.6
+-- Létrehozás ideje: 2021. Már 09. 20:06
+-- Kiszolgáló verziója: 10.4.17-MariaDB
+-- PHP verzió: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -275,12 +274,15 @@ CREATE TABLE `docs` (
   `ceg_id` int(10) UNSIGNED NOT NULL,
   `worker_id` int(10) UNSIGNED NOT NULL,
   `cat` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `origin` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `origin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `filename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `filename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `editordata` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'file',
+  `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`data`)),
   `worknote` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `adnote` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pub` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -290,15 +292,37 @@ CREATE TABLE `docs` (
 -- A tábla adatainak kiíratása `docs`
 --
 
-INSERT INTO `docs` (`id`, `ceg_id`, `worker_id`, `cat`, `origin`, `name`, `filename`, `path`, `worknote`, `adnote`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(34, 10, 12, 'adatkezeles', 'yfb_adatkezeles_2021_01_31_17_39_16.pdf', 'yfb_adatkezeles_2021-01-31 17:39:16', 'yfb_adatkezeles_2021_01_31_17_39_16.pdf', 'app/public/10/', NULL, NULL, '2021-01-31 16:39:17', '2021-01-31 20:40:10', '2021-01-31 20:40:10'),
-(35, 10, 12, 'adatkezeles', 'yfb_adatkezeles_2021_01_31_21_22_52.pdf', 'yfb_adatkezeles_2021-01-31 21:22:52', 'yfb_adatkezeles_2021_01_31_21_22_52.pdf', 'app/public/10/', NULL, NULL, '2021-01-31 20:22:52', '2021-01-31 20:40:15', '2021-01-31 20:40:15'),
-(36, 10, 11, 'adatkezeles', 'Otto_Menku_adatkezeles_2021_01_31_21_28_16.pdf', 'Ottó Ménkű_adatkezeles_2021-01-31 21:28:16', 'Otto_Menku_adatkezeles_2021_01_31_21_28_16.pdf', 'app/public/10/', NULL, NULL, '2021-01-31 20:28:16', '2021-01-31 20:40:20', '2021-01-31 20:40:20'),
-(37, 10, 11, 'adatkezeles', 'Otto_Menku_adatkezeles_2021_01_31_21_36_43.pdf', 'Ottó Ménkű_adatkezeles_2021-01-31 21:36:43', 'Otto_Menku_adatkezeles_2021_01_31_21_36_43.pdf', 'app/public/10/', NULL, NULL, '2021-01-31 20:36:43', '2021-02-01 17:34:48', '2021-02-01 17:34:48'),
-(38, 10, 11, 'tajekoztato', 'Otto_Menku_tajekoztato_2021_01_31_22_28_45.pdf', 'Ottó Ménkű_tajekoztato_2021-01-31 22:28:45', 'Otto_Menku_tajekoztato_2021_01_31_22_28_45.pdf', 'app/public/10/', NULL, NULL, '2021-01-31 21:28:46', '2021-01-31 22:16:02', '2021-01-31 22:16:02'),
-(39, 10, 11, 'tajekoztato', 'Otto_Menku_tajekoztato_2021_01_31_22_38_04.pdf', 'Ottó Ménkű_tajekoztato_2021-01-31 22:38:04', 'Otto_Menku_tajekoztato_2021_01_31_22_38_04.pdf', 'app/public/10/', NULL, NULL, '2021-01-31 21:38:05', '2021-01-31 22:16:08', '2021-01-31 22:16:08'),
-(40, 10, 11, 'tajekoztato', 'Otto_Menku_tajekoztato_2021_01_31_22_44_08.pdf', 'Ottó Ménkű_tajekoztato_2021-01-31 22:44:08', 'Otto_Menku_tajekoztato_2021_01_31_22_44_08.pdf', 'app/public/10/', NULL, NULL, '2021-01-31 21:44:09', '2021-02-01 17:35:47', '2021-02-01 17:35:47'),
-(41, 10, 11, 'tajekoztato', 'Otto_Menku_tajekoztato_2021_01_31_22_49_03.pdf', 'Ottó Ménkű_tajekoztato_2021-01-31 22:49:03', 'Otto_Menku_tajekoztato_2021_01_31_22_49_03.pdf', 'app/public/10/', NULL, NULL, '2021-01-31 21:49:04', '2021-02-01 17:35:29', '2021-02-01 17:35:29');
+INSERT INTO `docs` (`id`, `ceg_id`, `worker_id`, `cat`, `origin`, `name`, `filename`, `path`, `editordata`, `data`, `worknote`, `adnote`, `pub`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(49, 10, 11, 'base', NULL, 'kkkkkkkk', 'Otto_Menku_kkkkkkkk_60468c3c64eca.pdf', NULL, 'file', '{\"ceg\":{\"id\":10,\"user_id\":35,\"ugyvezeto\":\"Kis l\\u00e1szl\\u00f3\",\"szekhely\":\"J\\u00e1szber\\u00e9ny\",\"cim\":\"Kossuth u.2\",\"ado\":\"6566\",\"cegnev\":\"szuper g2\",\"note\":null,\"pub\":1,\"created_at\":\"2021-01-17 17:59:04\",\"updated_at\":\"2021-01-17 17:59:04\",\"deleted_at\":null},\"worker\":{\"id\":11,\"user_id\":36,\"ceg_id\":10,\"position\":\"efwe\",\"foto\":null,\"fullname\":\"Ott\\u00f3 M\\u00e9nk\\u0171\",\"workername\":\"Ott\\u00f3 M\\u00e9nk\\u0171\",\"mothername\":\"B. R.\",\"alapber\":null,\"bertipus\":null,\"szig\":null,\"city\":\"j\\u00e1szber\\u00e9ny\",\"cim\":\"werw fbgsdfgs \",\"tel\":\"we\",\"birth\":\"1968-09-14\",\"birthplace\":\"J\\u00e1szber\\u00e9ny\",\"ado\":\"ewwer\",\"tb\":\"we\",\"start\":\"2021-01-29\",\"end\":null,\"note\":null,\"pub\":1,\"created_at\":\"2021-01-17 18:05:51\",\"updated_at\":\"2021-01-17 18:05:51\",\"deleted_at\":null,\"user\":{\"id\":36,\"name\":\"Ott\\u00f3 M\\u00e9nk\\u0171\",\"email\":\"menkerfweuotto@gmail.com\",\"email_verified_at\":null,\"created_at\":\"2021-01-17 18:05:51\",\"updated_at\":\"2021-01-17 18:05:51\",\"deleted_at\":null}}}', NULL, NULL, 1, '2021-03-08 19:42:36', '2021-03-09 18:00:35', NULL),
+(50, 10, 12, 'base', NULL, 'kkkkkkkk', 'yfb_kkkkkkkk_60468c3c8cef8.pdf', NULL, 'file', '{\"ceg\":{\"id\":10,\"user_id\":35,\"ugyvezeto\":\"Kis l\\u00e1szl\\u00f3\",\"szekhely\":\"J\\u00e1szber\\u00e9ny\",\"cim\":\"Kossuth u.2\",\"ado\":\"6566\",\"cegnev\":\"szuper g2\",\"note\":null,\"pub\":1,\"created_at\":\"2021-01-17 17:59:04\",\"updated_at\":\"2021-01-17 17:59:04\",\"deleted_at\":null},\"worker\":{\"id\":12,\"user_id\":37,\"ceg_id\":10,\"position\":\"dgrs\",\"foto\":null,\"fullname\":\"dfgs\",\"workername\":\"yfb\",\"mothername\":null,\"alapber\":null,\"bertipus\":null,\"szig\":null,\"city\":null,\"cim\":\"rgwe\",\"tel\":\"erger\",\"birth\":null,\"birthplace\":null,\"ado\":\"ertge\",\"tb\":\"ertgew\",\"start\":\"2021-01-29\",\"end\":null,\"note\":null,\"pub\":1,\"created_at\":\"2021-01-23 12:23:57\",\"updated_at\":\"2021-02-18 19:26:13\",\"deleted_at\":null,\"user\":{\"id\":37,\"name\":\"yfb\",\"email\":\"mendfgkuotto@gmail.com\",\"email_verified_at\":null,\"created_at\":\"2021-01-23 12:23:57\",\"updated_at\":\"2021-01-23 12:23:57\",\"deleted_at\":null}}}', NULL, NULL, 1, '2021-03-08 19:42:36', '2021-03-08 19:42:51', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `doctemplates`
+--
+
+CREATE TABLE `doctemplates` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `ceg_id` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `cat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'vegyes',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `filename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `editordata` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'file',
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pub` smallint(6) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- A tábla adatainak kiíratása `doctemplates`
+--
+
+INSERT INTO `doctemplates` (`id`, `ceg_id`, `cat`, `name`, `filename`, `path`, `editordata`, `note`, `pub`, `created_at`, `updated_at`) VALUES
+(20, 1, 'kkkppppppppp', 'kkkkkkkk', 'kkkkkkkk', 'doc_tmpl', '<p>&lt;&lt;[\'worker\'][\'birth\']&gt;&gt;&lt;&lt;[\'worker\'][\'cim\']&gt;&gt;&lt;&lt;[\'worker\'][\'birthplace\']&gt;&gt;&lt;&lt;[\'worker\'][\'position\']&gt;&gt;&lt;&lt;[\'worker\'][\'mothername\']&gt;&gt;hjkghk,ghkjghk,ghj&lt;&lt;[\'worker\'][\'fullname\']&gt;&gt;</p>', 'kkkkkkkkkkkkkkk', 1, '2021-03-08 19:37:23', '2021-03-09 18:02:00'),
+(21, 1, 'ewrtwertwer', 'zui57i', 'zui57i', 'doc_tmpl', '<p>kljjkléjklé&lt;&lt;[\'worker\'][\'city\']&gt;&gt;</p>', 'nb mbnmb', 1, '2021-03-09 18:01:41', '2021-03-09 18:01:41');
 
 -- --------------------------------------------------------
 
@@ -356,7 +380,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2016_01_26_115523_create_day_file_table', 6),
 (20, '2016_01_25_153402_create_bookings_table', 7),
 (21, '2016_01_26_115523_create_booking_file_table', 7),
-(22, '2016_01_25_153402_create_docs_table', 8);
+(22, '2016_01_25_153402_create_docs_table', 8),
+(23, '2016_01_25_153403_create_doctemplates_table', 9);
 
 -- --------------------------------------------------------
 
@@ -634,10 +659,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Szuperadmin', 'root@dolgozo.com', NULL, '$2y$10$moXCPJnMVa//hlRNslZ5vuVTTXssTsbexEtgfoEAXl1STfqXlj8dK', NULL, NULL, NULL, NULL),
-(2, 'admin', 'admin@dolgozo.com', NULL, '$2y$10$jjvGKRlaxsu.dYfYA2u92u95IF1/FRY7U1jyNISLshkrcbh3BcbbG', '4vM9SA5GpyP5LsCJk5OGAqYn17DKEYMxxVRUmSpUxYQ3pFTVTGl3SRl7z15C', NULL, NULL, NULL),
+(2, 'admin', 'admin@dolgozo.com', NULL, '$2y$10$jjvGKRlaxsu.dYfYA2u92u95IF1/FRY7U1jyNISLshkrcbh3BcbbG', 'CQAjneewvBBhbiV02aWwgCwYUgVlinrgff1vsZBnZYPZJU01De3PilsERV9Y', NULL, NULL, NULL),
 (27, 'prmanager1', 'prmanager1@gmail.com', NULL, '$2y$10$H2xr8W7dll6VNfpkFBl2fe.TaqdOxb6Bow2NlqYRYcdpVpMNq9l2y', NULL, '2020-05-13 14:16:22', '2020-05-13 14:16:22', NULL),
 (28, 'Ottó Ménkű', 'menkuotto@gmail.com', NULL, '$2y$10$WfCPRzRAaIUEcP0lCgwXQeAw3x7rE0rVVRtqHu9VbXl9BM4Zr5C.e', NULL, '2020-05-13 14:18:59', '2020-05-13 14:18:59', NULL),
-(29, 'Dr. Taczman Lajos', 'taczmanl@gmail.com', NULL, '$2y$10$.DX/cyvN1q9adLUUDynn1.j2WCJGpo5HmTo460UlZvQprnMRl6bya', '9QW4g4TLa3KyyzXIe45dLvVMaSmvwhdNcLh2bLoaZAH8srjHfbrxe4Bdb98t', '2020-05-14 15:31:41', '2020-05-17 13:47:39', NULL),
+(29, 'Dr. Taczman Lajos', 'taczmanl@gmail.com', NULL, '$2y$10$.DX/cyvN1q9adLUUDynn1.j2WCJGpo5HmTo460UlZvQprnMRl6bya', 'LWb6tfA15IjcgZ7yJDXJkvxToPyYibWME9rYuTGCqRbxsym8qBckcPeDfSYo', '2020-05-14 15:31:41', '2020-05-17 13:47:39', NULL),
 (30, 'Babjak', 'babjakeva@gmail.com', NULL, '$2y$10$U5pj666cJJ1h/N1JVLZqpuu8MYhGAXlKeC3ioo8Oq8iib8qgYH9Q6', 'CYNOHMB6Ubon3jld5ZbLI629of8MTQhZ03EimmHJ8MqmZcA7zPOw0z2LdjDf', '2020-05-14 15:45:26', '2020-05-17 13:49:07', NULL),
 (33, 'Ottó Ménkű', 'menkuottfgtgeo@gmail.com', NULL, '$2y$10$GjwMC7fArAoHs/QgFPdWCu.iTkGyVIRxxVgvoIJqMWu/5fcgdYFSm', NULL, '2021-01-17 16:40:50', '2021-01-17 16:40:50', NULL),
 (35, 'ggg', 'ggg2@gmail.com', NULL, '$2y$10$c4h61V2uLcbrg8TEHq4XweXtz8x1BNh/JdaB3qznkiKrElfeDiF7G', NULL, '2021-01-17 16:59:04', '2021-01-17 16:59:04', NULL),
@@ -659,6 +684,9 @@ CREATE TABLE `workers` (
   `fullname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `workername` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `mothername` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `alapber` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bertipus` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `szig` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `city` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cim` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -679,12 +707,12 @@ CREATE TABLE `workers` (
 -- A tábla adatainak kiíratása `workers`
 --
 
-INSERT INTO `workers` (`id`, `user_id`, `ceg_id`, `position`, `foto`, `fullname`, `workername`, `mothername`, `city`, `cim`, `tel`, `birth`, `birthplace`, `ado`, `tb`, `start`, `end`, `note`, `pub`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(8, 28, 7, NULL, NULL, 'Ottó Ménkű', 'Ottó Ménkű', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-05-02', NULL, NULL, 1, '2020-05-13 14:18:59', '2020-05-13 14:22:52', NULL),
-(9, 30, 8, 'Pénzügyi asszisztens', NULL, 'Babják Éva', 'Babjak', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2020-05-14 15:45:26', '2020-05-14 15:45:26', NULL),
-(10, 33, 9, '45tw34', NULL, 'Ottó Ménkű', 'Ottó Ménkű', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-01-06', NULL, NULL, 1, '2021-01-17 16:40:50', '2021-01-17 16:56:23', NULL),
-(11, 36, 10, 'efwe', NULL, 'Ottó Ménkű', 'Ottó Ménkű', 'B. R.', 'jászberény', 'werw fbgsdfgs ', 'we', '1968-09-14', 'Jászberény', 'ewwer', 'we', '2021-01-29', NULL, NULL, 1, '2021-01-17 17:05:51', '2021-01-17 17:05:51', NULL),
-(12, 37, 10, 'dgrs', NULL, 'dfgs', 'yfb', NULL, NULL, 'rgwe', 'erger', NULL, NULL, 'ertge', 'ertgew', '2021-01-29', NULL, NULL, 1, '2021-01-23 11:23:57', '2021-01-30 20:15:02', NULL);
+INSERT INTO `workers` (`id`, `user_id`, `ceg_id`, `position`, `foto`, `fullname`, `workername`, `mothername`, `alapber`, `bertipus`, `szig`, `city`, `cim`, `tel`, `birth`, `birthplace`, `ado`, `tb`, `start`, `end`, `note`, `pub`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(8, 28, 7, NULL, NULL, 'Ottó Ménkű', 'Ottó Ménkű', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-05-02', NULL, NULL, 1, '2020-05-13 14:18:59', '2020-05-13 14:22:52', NULL),
+(9, 30, 8, 'Pénzügyi asszisztens', NULL, 'Babják Éva', 'Babjak', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2020-05-14 15:45:26', '2020-05-14 15:45:26', NULL),
+(10, 33, 9, '45tw34', NULL, 'Ottó Ménkű', 'Ottó Ménkű', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-01-06', NULL, NULL, 1, '2021-01-17 16:40:50', '2021-01-17 16:56:23', NULL),
+(11, 36, 10, 'efwe', NULL, 'Ottó Ménkű', 'Ottó Ménkű', 'B. R.', NULL, NULL, NULL, 'jászberény', 'werw fbgsdfgs ', 'we', '1968-09-14', 'Jászberény', 'ewwer', 'we', '2021-01-29', NULL, NULL, 1, '2021-01-17 17:05:51', '2021-01-17 17:05:51', NULL),
+(12, 37, 10, 'dgrs', NULL, 'dfgs', 'yfb', NULL, NULL, NULL, NULL, NULL, 'rgwe', 'erger', NULL, NULL, 'ertge', 'ertgew', '2021-01-29', NULL, NULL, 1, '2021-01-23 11:23:57', '2021-02-18 18:26:13', NULL);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -759,6 +787,13 @@ ALTER TABLE `docs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `docs_ceg_id_foreign` (`ceg_id`),
   ADD KEY `docs_worker_id_foreign` (`worker_id`);
+
+--
+-- A tábla indexei `doctemplates`
+--
+ALTER TABLE `doctemplates`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `doctemplates_ceg_id_foreign` (`ceg_id`);
 
 --
 -- A tábla indexei `files`
@@ -910,7 +945,13 @@ ALTER TABLE `day_file`
 -- AUTO_INCREMENT a táblához `docs`
 --
 ALTER TABLE `docs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+
+--
+-- AUTO_INCREMENT a táblához `doctemplates`
+--
+ALTER TABLE `doctemplates`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT a táblához `files`
@@ -922,7 +963,7 @@ ALTER TABLE `files`
 -- AUTO_INCREMENT a táblához `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT a táblához `permissions`
@@ -1035,6 +1076,12 @@ ALTER TABLE `day_file`
 ALTER TABLE `docs`
   ADD CONSTRAINT `docs_ceg_id_foreign` FOREIGN KEY (`ceg_id`) REFERENCES `cegs` (`id`),
   ADD CONSTRAINT `docs_worker_id_foreign` FOREIGN KEY (`worker_id`) REFERENCES `workers` (`id`);
+
+--
+-- Megkötések a táblához `doctemplates`
+--
+ALTER TABLE `doctemplates`
+  ADD CONSTRAINT `doctemplates_ceg_id_foreign` FOREIGN KEY (`ceg_id`) REFERENCES `cegs` (`id`);
 
 --
 -- Megkötések a táblához `permission_role`

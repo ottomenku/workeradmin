@@ -11,8 +11,11 @@ return [
           'route'=>'m/ad.ad.timetypes', //ez alapján múködnek a gombok
               'form'=>[          
                   'name'=>['text','Név',[]],
+                  'basehour'=>['number','alapértelmezett óraszám',[ 'step' => '1']],
                   'note'=>['text','Megjegyzés',[]],
                   'szorzo'=>['number','Szorzó',[ 'step' => '0.01']],
+                  'color'=>['text','Szín',[]],
+                  'background'=>['text','Háttérszín',[]],
                 //  'fixplusz'=>['number','Fixplusz',[]],  
                   'pub'=>['radiolist','',[['1','Tiltva' ],['0','Engedélyezve',true ]]] ,
                     'submit'=>['submit','Időtipus mentése'], //,'submit'=>['submit','Ment','class'=>'btn btn-danger'] 
@@ -25,6 +28,8 @@ return [
           'table'=>[
               'name'=>['Név'],
               'szorzo'=>['Szorzó',],
+              'color'=>['color',],
+              'basehour'=>['Óra',],
               'note'=>['megjegyzés'],
               'actions'=> ['Action',['edit','destroy','ifpub']]
           ],     

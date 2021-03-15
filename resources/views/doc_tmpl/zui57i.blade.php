@@ -1,0 +1,1 @@
+<p>kljjkléjklé{{$data['worker']['city'] ?? '' }}</p>

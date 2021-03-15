@@ -7,7 +7,7 @@
     @php
         $dc = new \App\Doctemplate();
         
-        $include = 'doc_tmpl.'.$dc->getTemplate($viewpar['id'])->filename ?? $viewpar['include'] ?? '';
+        $include = 'doc_tmpl.'.$dc->getTemplate($viewpar['id'])->filename ?? $data['id'] ?? $viewpar['include'] ?? '';
     @endphp    
 </head>
 <body>

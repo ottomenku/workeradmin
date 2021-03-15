@@ -26,16 +26,20 @@ class Timetype extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['ceg_id','name', 'szorzo', 'fixplusz', 'color', 'note', 'pub'];
+    protected $fillable = ['ceg_id','name', 'szorzo', 'fixplusz','basehour','start', 'end','color', 'note', 'pub'];
 
 
     public function timetypesPluck()
     {
-      return $this->all()->pluck('pub','>',0);  
+      return $this->all()->pluck('name','id');  
     }
     public function ceg()
 	  {
 		return $this->belongsTo('App\Ceg');
+    }
+    public function dytype()
+    {
+      return $this->hasMany('App\Daytype'); 
     }
     public function time()
     {

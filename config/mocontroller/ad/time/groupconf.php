@@ -4,6 +4,7 @@ return [
         'obClass'=>['time'=>'App\Time','day'=>'App\Day','baseday'=>'App\Baseday','timetype'=>'App\Timetype','daytype'=>'App\Daytype',
         'worker'=>'App\Worker','stored'=>'App\Stored','CalendarHandler'=>'App\Handlers\CalendarHandler'],
         'viewpar' => [
+            'timemenu'=>true,
             //'baseroute' => 'm/ad.wor.time.timesimple/', //ez alapján múködnek a gombok
             'menu' => [
               /*  'manager' => [

@@ -17,14 +17,22 @@ return [
   
         ]
     ],
-    'preview' => [
+    'previewid' => [
       'funcs' => [  
-     // 20=>['baseOB::getMenu',[], "DATA"]  
+    20=>['baseOB::getPdfPathFromId',['{ACT.viewpar.id}'], "DATA.filestream"]  
           ],
      //   'return'=>['dump']  
-        'return'=>['editorpdfstream1'] 
+        'return'=>['filestream'] 
       // 'return'=>['view'] 
   ],
+  'download' => [
+    'funcs' => [  
+  20=>['baseOB::getPdfPathFromId',['{ACT.viewpar.id}'], "DATA.file"]  
+        ],
+   //   'return'=>['dump']  
+      'return'=>['download'] 
+    // 'return'=>['view'] 
+],
   'docgeneralview' => [
     'funcs' => [  
       10=>['replaceACT',[]] ,
@@ -106,15 +114,7 @@ return [
            // 'return'=>['dump'],
        
      ],
-     'download' => [
-        'funcs' => [
-           8=>['replaceACT',[]] , 
-          //  10=>['validateToDATA',[],'DATA.valid'],
-            20=>['baseOB::download',['{ACT.viewpar.id}'],'DATA.file']  
-           ],
-        //  'return'=>['redirect','{ACT.viewpar.route}','letöltés'] 
-        'return'=>['downloadFromStorage'] 
-     ],    
+    
    /*  'edit' => [
         'viewpar'=>[           
             'taskheader'=>'{ACT.name} adatainak mődosítása Cég:{ACT.cegnev}',
@@ -138,13 +138,19 @@ return [
     
     ],*/
 
-    'destroy' => [  'delFromParrent'=>[ 'funcs'],
-    'funcs' => [
-        8=>['replaceACT',[]], 
+    'destroy' => [ 
+      'delFromParrent'=>[ 'funcs'],
+      'funcs' => [
+        3=>['replaceACT',[]],  
         10=>['baseOB::destroyOne',['{ACT.viewpar.id}']]     
-        ]],
+        ]
+      ],
  // az ad.groupcomf funkcióinak használata itt is kell hogy legyen kulcs és nem lehet üres------        
-'pub' => ['allowed'=>true],
-'unpub' => ['allowed'=>true]
+    'pub' => [  'funcs' => [
+        10=>['baseOB::pub',['{ACT.viewpar.id}']]     
+      ]],
+    'unpub' => ['funcs' => [
+      10=>['baseOB::unpub',['{ACT.viewpar.id}']]     
+      ]]
 //'show' => ['allowed'=>true], 
 ];

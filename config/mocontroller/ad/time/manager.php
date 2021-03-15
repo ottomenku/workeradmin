@@ -4,12 +4,17 @@
 return [
     'base' => [
         'role' => ['manager'],
-        'obClass' => ['baseOB' => 'App\Handlers\ManagerHandler'],
+        'obClass' => ['baseOB' => 'App\Handlers\ManagerHandler','days' => 'App\Daytype'],
         'viewpar' => [
             'baseroute' => 'm/ad.time.manager/', //ez alapján múködnek a gombok
             'route' => 'm/ad.time.manager/',]
     ],
     'index' => [
+        'funcs' => [
+          20 => ['days::getCegDaytypes', [], 'DATA.daytypes'],
+           // 30 => ['stored::getStoreds', ['{DATA.valid}'], 'DATA.storeds'],
+        ],
+
         'viewpar' => [
           //  'info' => ' fghsghsgf  gdhfhdf', // a taskhoz tartozó infoszöveg
     ],

@@ -6,12 +6,17 @@
             'funcs' => [ 
               3=>['replaceACT',[]] 
             ],
-            'obClass'=>['baseOB'=>'App\Daytype'],
+            'obClass'=>['baseOB'=>'App\Daytype','timetype'=>'App\Timetype'],
             'viewpar'=>[
                 'route'=>'m/ad.ad.daytypes', //ez alapján múködnek a gombok
-                    'form'=>[          
+                    'form'=>[  
+                        'timetype_id'=>['select','Alapértelmezett időtipus',[]],  
                         'name'=>['text','Név',[]],
                         'note'=>['text','Megjegyzés',[]],
+                        'icon'=>['text','Icon',[]],
+                        'iconlist'=>['iconlist','beszúrható Iconok',[]],
+                        'color'=>['text','Szín',[]],
+                        'background'=>['text','Háttérszín',[]],
                         'workday'=>['radiolist','',[['1','Munkanap' ],['0','Pihenőnap',true ]]] ,
                         'userallowed'=>['radiolist','',[['1','felhasználók kérhetik' ],['0','felhasználók nem kérhetik',true ]]] ,
                         'szorzo'=>['number','Szorzó',[ 'step' => '0.01']],
@@ -26,7 +31,8 @@
                 'view'=>'index',
                 'table'=>[
                     'name'=>['Név'],
-                    'szorzo'=>['Szorzó',],
+                    'szorzo'=>['Szorzó'],
+                    'icon_1'=>['Icon',['colname'=>'icon','colorcolname'=>'color','backgroundcolorcolname'=>'background']],
                     //'fixplusz'=>['fixplusz'],
                     'note'=>['megjegyzés'],
                    // 'workday'=>['Munkanap'],
@@ -51,11 +57,18 @@
   // az ad.groupcomf funkcióinak használata itt is kell hogy legyen kulcs és nem lehet üres------
   'create' => [
     'allowed'=>true,
+    'funcs' => [ 
+      10=>['timetype::timetypesPluck',[],'DATA.timetype_id_list'] 
+    ],
+
    // 'delFromParrent'=>['return', 'funcs','viewpar'] , //örökölt külcsok törlése ha nem kell
   ],
   'store' => ['allowed'=>true],
   'show' => ['allowed'=>true],
-  'edit' => ['allowed'=>true],
+  'edit' => [    'funcs' => [ 
+    10=>['baseOB::getDaytype',['{ACT.viewpar.id}'],'DATA'] ,
+    30=>['timetype::timetypesPluck',[],'DATA.timetype_id_list'] 
+  ],],
   'update' => ['allowed'=>true],
   'destroy' => ['allowed'=>true],
   'pub' => ['allowed'=>true],
