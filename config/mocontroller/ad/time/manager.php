@@ -4,14 +4,15 @@
 return [
     'base' => [
         'role' => ['manager'],
-        'obClass' => ['baseOB' => 'App\Handlers\ManagerHandler','days' => 'App\Daytype'],
+        'obClass' => ['baseOB' => 'App\Handlers\ManagerHandler','daytype' => 'App\Daytype','timetype' => 'App\Timetype'],
         'viewpar' => [
             'baseroute' => 'm/ad.time.manager/', //ez alapján múködnek a gombok
             'route' => 'm/ad.time.manager/',]
     ],
     'index' => [
         'funcs' => [
-          20 => ['days::getCegDaytypes', [], 'DATA.daytypes'],
+          20 => ['daytype::getCegDaytypes', [], 'DATA.daytypes'],  //groupconf hívja be
+          30 => ['timetype::getCegTimetypes', [], 'DATA.timetypes'],
            // 30 => ['stored::getStoreds', ['{DATA.valid}'], 'DATA.storeds'],
         ],
 
@@ -20,13 +21,13 @@ return [
     ],
         // 'delFromParrent' => ['obClass', 'funcs'],
        'return' => ['viewFull', 'mocalendarVue.calendarManager'],
-          //     'return'=>['dump']
+        //       'return'=>['dump']
     ],
 
     'getbasedata' => [
         'allowed'=>true,
-         'return'=>['json']
-     // 'return'=>['dump']
+        'return'=>['json']
+     //  'return'=>['dump']-/
     ],
     'freshdata' => [
         'allowed'=>true,

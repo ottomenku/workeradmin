@@ -3,10 +3,11 @@
    $timemenu= $viewpar['timemenu'] ?? false;
  //  $menuT['superadmin'][]=['/admin/generator'=>' Generátor'];
  @endphp             
- <div class="col-md-3">
+
  @if ( $timemenu)
     @include('admin_crudgenerator.timemenu')
  @else
+ <div class="col-md-3">
     @if (Auth::id()>0)
     @if (Auth::user()->hasRole('superadmin')) 
 

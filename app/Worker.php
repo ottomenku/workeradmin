@@ -24,7 +24,7 @@ class Worker extends Model
       return  [$worker->id];
       }
       /**
-       * managerek használhatják csak a saját dolgozóit adja vissza
+       * managerek használhatják csak a saját dolgozót adja vissza
        */
       public function getWorker($id)  
       {  
@@ -35,6 +35,10 @@ class Worker extends Model
         if($managercegid==$worker->ceg_id){return $worker;}
         else {return [];}
         }
+        /**
+         * a manager cégének összes dolgozóját vissza adja
+         * a dolgozónak csak a sajátját
+         */
       public function getWorkerids()
       { 
           $user=\Auth::user();

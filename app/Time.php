@@ -36,7 +36,7 @@ class Time extends Model
  
     public function getTimes($data) //App\Traits\CalendaritemBaseFunc
     {
-        return $this->geItems($data, ['timetype', 'worker']);
+        return $this->getItems($data, ['timetype', 'worker']);
     }   
     public function worker()
     {

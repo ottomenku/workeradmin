@@ -1,4 +1,4 @@
-
+<div class="col-md-2">
 
  <div class="card">
     <div class="card-header">
@@ -8,7 +8,7 @@
     </div>
  
 </div> 
-
+</br> 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     
  <li class="nav-item waves-effect waves-light">
@@ -71,8 +71,53 @@
  
    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
    
- 
+    <div class="row">     
+   
+
+      <div style=" padding-left: 5px; padding-right: 0;" class="col-11"> 
+        <label for="hour" class="col-11 control-label">Óra (ez lesz bérszámfejtve)</label> 
+              <input class="form-control" name="hour" type="number" id="hour">              
+      </div>
+                       
+      <div style=" padding-left: 5px; padding-right: 0;" class="col-6">    
+        <label for="start" class="col-6 control-label">Kezdés </label> 
+              <input class="form-control" name="start" type="time" id="start">       
+      </div>      
+      <div style=" padding-left: 5px; padding-right: 0;" class="col-6">  
+        <label for="end" class="col-6control-label">Befejezés </label>                               
+              <input class="form-control" name="end" type="time" id="end">                       
+      </div>
+      (csak tájékoztató adatok) </br> </br> 
+      <div style=" padding-left: 5px; padding-right: 20;"  class="col-11">           
+
+      @foreach ($data['timetypes'] as $timetype)
+      <div onclick="hourToInput({{$timetype['basehour'] ?? ''}})" class="col-11">  
+    @php
+    $color=$timetype['color']  ?? 'gray';
+    $bgcolor='';
+    if(isset($timetype['background'])) {$bgcolor= ' background-color:'.$timetype['background'].';';}
+
+    @endphp
+
+    <input type="radio"  name="timetype_id" value="{{$timetype['id']}}">
+      <span style="font-size:1.3em; color:{{$color}}; {{$bgcolor}}" >{{$timetype['name'] }} {{$timetype['basehour'] ?? '0'}} óra</span> 
+      </div>
+      
+    @endforeach
+
+
+
+</div>
+
+      <button class=" btn btn-primary"  v-on:click="storetimes()" style="margin:2px;" >           
+          <i class="fa fa-save"></i>
+      </button> 
+      <button class=" btn btn-danger" v-on:click="timesreset()" style="margin:2px;">     
+          <i class="fa fa-trash"></i>
+      </button>       
+      
+  </div> 
 
     </div>
-    
+  
 </div>

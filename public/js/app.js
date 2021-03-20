@@ -52444,7 +52444,7 @@ var app = new Vue({
       this.formdata = {
         end: $("input[name=end]").val(),
         start: $("input[name=start]").val(),
-        timetype_id: $("select[name=timetype_id]").val(),
+        timetype_id: $('input[name=timetype_id]:checked').val(),
         hour: $("input[name=hour]").val(),
         pubbase: $('input[name="pubtime"]:checked').val()
       };

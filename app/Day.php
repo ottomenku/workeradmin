@@ -5,7 +5,8 @@ use App\Traits\CalendaritemBaseFunc;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
-
+use App\Daytype;
+use App\Timetype;
 class Day extends Model
 {
  //   use LogsActivity;
@@ -34,7 +35,7 @@ class Day extends Model
 
     public function getDays($data) //App\Traits\CalendaritemBaseFunc
     {
-        return $this->geItems($data, ['daytype', 'worker']);
+        return $this->getItems($data, ['daytype', 'worker']);
     }
 
     public function daytype()

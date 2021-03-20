@@ -27,7 +27,11 @@ class Timetype extends BaseModel
      * @var array
      */
     protected $fillable = ['ceg_id','name', 'szorzo', 'fixplusz','basehour','start', 'end','color', 'note', 'pub'];
+   public function getCegTimetypes()
+    {
 
+      return $this->where('ceg_id',1)->get();  
+    }
 
     public function timetypesPluck()
     {

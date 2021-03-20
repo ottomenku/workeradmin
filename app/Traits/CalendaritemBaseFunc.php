@@ -7,6 +7,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 use App\Worker;
+use App\Daytype;
+use App\Timetype;
 use App\Facades\CalendarHandler;
 trait CalendaritemBaseFunc 
 {    public function hasGetRole($item,$modifyrole=false)
@@ -76,14 +78,14 @@ trait CalendaritemBaseFunc
      * csak a dolgozó saját idelyeit listázza vagy workernél nagyobb jog estén a saját cég illetve saját csoport idejeit
      * lehet megadni start end illetve year month paramétereket ha egyik sincs az aktuália hónapot veszi 
      */
-    public function geItems($data,$with=['daytype','worker'],$justAllowed=false)
+    public function getItems($data,$with=['daytype','worker'],$justAllowed=false)
     {  
         if(empty($data['start']) || empty($data['end'])){ $data= CalendarHandler::getStartEnd($data);}
         $itemRole=true;
      //   if(empty($data['workerids'])){$worker=new Worker();$data['workerids']=$worker->getWorkerids(); $itemRole=false; }
      //TODO: megoldani hogy szűrt workerids esetén se legyen invalid kulcs hiba (amelyik eorkerid nincs alistában azt most lenulláza a res, a kalendar meg keresi... )
      $worker=new Worker();
-     $data['workerids']=$worker->getWorkerids(); 
+     $data['workerids']=$worker->getWorkerids(); // csak a saját cég dolgozóóit adja vissza
      $itemRole=false; //mindig le kell kérni az összes dolgozót! különben invalid kulcc hibát okozhat a kalendarban
      
         $res=['datekey'=>[],'idkey'=>[]];$hasrole=true;
@@ -107,7 +109,15 @@ trait CalendaritemBaseFunc
 /**
  * worker és admin is használhatja
  */
-public function storeItems($par) 
+public function storeDays($par) 
+{ 
+    $this->storeItems($par,true) ;
+  
+}
+    /**
+ * worker és admin is használhatja
+ */
+public function storeItems($par,$uniq=false) 
 { 
     $store=false; $user=\Auth::user(); 
     
@@ -125,9 +135,22 @@ public function storeItems($par)
         }       
             if($store){
                 foreach($par['datums'] as $datum )
-                {           
+                {              
                 $data['datum']= $datum;
-             $this->create($data);
+                if($uniq){
+                    $item=$this->where(['datum'=>$datum])->first();
+                 if($item){   $this->destroy($item->id);}
+           
+                   $timetype_id=Daytype::find($data['daytype_id'])->timetype_id;
+                   $timetype=Timetype::find($timetype_id);
+                    if($timetype->basehour>0){
+                    $dt=['timetype_id'=>$timetype_id,'worker_id'=>$workerid,'datum'=>$datum,'start'=>$timetype->start,'end'=>$timetype->end,'hour'=>$timetype->basehour,'pub'=>50];
+                    \App\Time::create($dt);
+                    }
+                   
+                    }
+                    $data['worker_id']=$workerid;     
+              $this->create($data);  
                 } 
             }     
     }
@@ -136,7 +159,6 @@ public function storeItems($par)
 
  public function  delItem($data) // a datum tömb kelle legyen
 {  
-    $item=$this->findOrFail($data['id']);
    if($this->hasGetModifyRole($item)) 
     { $item->destroy($data['id']);}
 }

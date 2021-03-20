@@ -7,23 +7,7 @@ return [
             'timemenu'=>true,
             //'baseroute' => 'm/ad.wor.time.timesimple/', //ez alapján múködnek a gombok
             'menu' => [
-              /*  'manager' => [
-                    1 => ['m/ad.man.worker', 'Dolgozók'],
-                    10 => ['m/ad.time.manager', 'Munkaidők'],
-                  //  15 => ['m/ad.man.time.timesimple', 'Munkaidők egyszerűsített'],
-                  //  20 => ['m/ad.man.messages', 'Üzenetek'],
-               //     25 => ['m/ad.man.docs', 'okumentumok'],
-               //     30 => ['m/ad.man.time.stored', 'Zárások'],
-                    35 => ['/', ' Home'],
-                ],
-                'worker' => [
-                    //   1 => ['ad.man.worker', 'Dolgozók'],
-                     //  2 => ['ad.man.ceg', 'Cég'],
-                     10 => ['m/ad.time.worker', 'Munkaidők'],
-                       8 => ['/', ' Home'],
-                        8 => ['m/ad.time.booking', ' Kérelmek'],
-                       //  4 => ['/ad.man.user', ' user'],
-                   ]*/
+              /*  */
           ],
         ],
 
@@ -40,8 +24,10 @@ return [
 
     'getbasedata' => [
         'funcs' => [
-            14 => ['timetype::allpluck', [], 'DATA.timetypes'],
-            16 => ['daytype::allPluck', [], 'DATA.daytypes'],
+          //  14 => ['timetype::allpluck', [], 'DATA.timetypes'],
+          //  16 => ['daytype::allPluck', [], 'DATA.daytypes'],
+          14 => ['daytype::getCegDaytypes', [], 'DATA.daytypes'],
+          16 => ['timetype::getCegTimetypes', [], 'DATA.timetypes'],
             20 => ['baseOB::setWorkerAndCegPar', ['{DATA}'], 'DATA'],
             60 => ['CalendarHandler::getBaseCalendarData', ['{DATA.valid}', '{DATA}'], 'DATA'],
             70 => ['time::getTimes', ['{DATA.valid}'], 'DATA.times'],
@@ -81,8 +67,9 @@ return [
     ],
     'storedays' => [
         'funcs' => [
-            20 => ['day::storeItems', ['{DATA.valid}']],
+            20 => ['day::storeDays', ['{DATA.valid}']],
             30 => ['day::getDays', ['{DATA.valid}'], 'DATA.workerdays'],
+            40 => ['time::getTimes', ['{DATA.valid}'], 'DATA.times'],
         ],
         'return' => ['json'],
     ],

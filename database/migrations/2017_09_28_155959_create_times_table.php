@@ -19,7 +19,7 @@ class CreateTimesTable extends Migration
             $table->integer('timetype_id')->unsigned();
             $table->foreign('timetype_id')->references('id')->on('timetypes');  
             $table->date('datum');
-            $table->time('start');
+            $table->time('start')->nullable();
             $table->time('end')->nullable();
             $table->integer('hour');
         //if havent lang table-------------
