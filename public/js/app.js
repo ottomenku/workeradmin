@@ -52178,10 +52178,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-var _data;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -52200,9 +52196,9 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
 var app = new Vue({
   el: '#app',
   created: function created() {
-    this.PandFwitId('getbasedata'); // this.PandFwitId('freshdata'); 
+    this.PandFwitId('getbasedata');
   },
-  data: (_data = {
+  data: {
     //paraméterek---------------------------------
     viewpar: window.viewpar,
     viewparid: window.viewparid,
@@ -52213,95 +52209,119 @@ var app = new Vue({
     //actuális értékek (kijelölt kiválasztott)-------------
     showModal: false,
     showInfo: false,
-    actTimetype: 2,
-    //timetypetype selectlist actuális értéke
-    actDaytype: 2,
+    //actTimetype_id: 1, //timetypetype selectlist actuális értéke ()()
+    //actTimetype_basehour : '1',
+    //actTimetype_start : '00:00',
+    //actTimetype_end : '00:00',
+    actDaytype_id: 1,
     //daytype selectlist actuális értéke
-    activeTab: 'home',
-    activeAdminTab: 'stored',
     actchecklist: '',
     select_action: 'nothing',
-    workerid: 0,
-    // a stored modal használja
-    calworkerid: 0,
+    actWorkerid: 0,
     // az aktuális worker azonosítója akinek a kalendár adatai megjelennek
-    calworker: [],
-    //az aktuális worker  adatai 
-    // calworkers: [],  // a kiválasztott dolgozók
-    user: [],
-    ceg: [],
-    //base adatok  a post kérésekkor alapból automatikusan elküldve és frissítve------------------------
+    //actTimetype:0,
+    // actDaytype:0,
+    //base adatok  első betöltéskor lekérve------------------------
     year: window.year,
     month: window.month,
-    cegid: 0,
+    ceg: '',
+    //cég adatok egyenlőre csak id és név
     daycheckbox: $('input:checkbox.daycheckbox'),
+    workers: [],
+    // full worker adatok listázáshoz  id kulcsos
+    timetypes: [],
+    //selecthez
+    daytypes: [],
+    //selecthez
+    // frissítéskor alapból automatikusan elküldve és frissítve------------------------
     datums: [],
     //kivállasztott napok dátumai idők napok felviteléhez
     workerids: [],
-    //kivállasztott dolgozók azonosítói
-    workers: [],
-    // full worker adatok
+    //kivállasztott dolgozók azonosítói ezeknek menti a calendar adatokat
     plusdata: {},
     //post kérésben plusz adatok küldése a base adatokon kivül
     formdata: null,
     //post kérésben form adatok küldése a base adatokon kivül
     justdata: null,
     //ha nem üres a post kérésben csak ezek adatok lesznek elküldve plusz az id ha van a paraméterben
-    //select tömbök --------------------------------  
-    timetypes: []
-  }, _defineProperty(_data, "actTimetype", 0), _defineProperty(_data, "daytypes", []), _defineProperty(_data, "actDaytype", 0), _defineProperty(_data, "months", [{
-    value: 1,
-    text: 'Január'
-  }, {
-    value: 2,
-    text: 'Február'
-  }, {
-    value: 3,
-    text: 'Március'
-  }, {
-    value: 4,
-    text: 'Április'
-  }, {
-    value: 5,
-    text: 'Május'
-  }, {
-    value: 6,
-    text: 'Június'
-  }, {
-    value: 7,
-    text: 'Július'
-  }, {
-    value: 8,
-    text: 'Augusztus'
-  }, {
-    value: 9,
-    text: 'Szeptember'
-  }, {
-    value: 10,
-    text: 'Október'
-  }, {
-    value: 11,
-    text: 'November'
-  }, {
-    value: 12,
-    text: 'Decenber'
-  }]), _defineProperty(_data, "checklist", {
-    'all': 'Mind',
-    'workday': 'Munkanapok',
-    'nothing': 'egyiksem',
-    'inverse': 'fordított'
-  }), _defineProperty(_data, "calendar", []), _defineProperty(_data, "calendarbase", []), _defineProperty(_data, "times", []), _defineProperty(_data, "workerdays", []), _defineProperty(_data, "basedays", []), _defineProperty(_data, "storeds", []), _defineProperty(_data, "storedToShow", []), _defineProperty(_data, "solver", []), _defineProperty(_data, "timeFrames", []), _data),
+    // lokális select tömbök --------------------------------    
+    months: [{
+      value: 1,
+      text: 'Január'
+    }, {
+      value: 2,
+      text: 'Február'
+    }, {
+      value: 3,
+      text: 'Március'
+    }, {
+      value: 4,
+      text: 'Április'
+    }, {
+      value: 5,
+      text: 'Május'
+    }, {
+      value: 6,
+      text: 'Június'
+    }, {
+      value: 7,
+      text: 'Július'
+    }, {
+      value: 8,
+      text: 'Augusztus'
+    }, {
+      value: 9,
+      text: 'Szeptember'
+    }, {
+      value: 10,
+      text: 'Október'
+    }, {
+      value: 11,
+      text: 'November'
+    }, {
+      value: 12,
+      text: 'Decenber'
+    }],
+    checklist: {
+      'all': 'Mind',
+      'workday': 'Munkanapok',
+      'nothing': 'egyiksem',
+      'inverse': 'fordított'
+    },
+    //calaendar adatok-----------------------    
+    calendar: [],
+    calendarbase: [],
+    times: [],
+    workerdays: [],
+    basedays: [],
+    SumData: [] //összesítet órá
+
+  },
   methods: {
+    setSumData: function setSumData() {//alert(vardump(this.workerdays.datekey));
+      //--- let str = JSON.stringify(this.workerdays, null, 2);
+      // console.log(this.workerdays.datekey['11']['2021-03-18']['87'].id);
+      //--- console.log(this.workerdays.datekey['11']['2021-03-18']['87']);
+      //ActWorkerid: datums: [] 
+      // times: [], workerdays: [], basedays:[],  tempData.biglist.forEach(function (nObj) {
+      /// let scope = this
+      // $.each(this.workerdays.datekey[12], function(key, value) {
+      // Object.from(this.workerdays.datekey).forEach(function(value){
+      //    this.SumData.push({'key': value,'description:': 'jkj'});
+      //});
+    },
     faClass: function faClass(icon) {
       return "fa fa-".concat(icon);
     },
-    onfileInputChange: function onfileInputChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
 
-      if (!files.length) {
-        this.formdata.files = files;
-      }
-    },
+    /*
+       onfileInputChange(e) {
+        let files = e.target.files || e.dataTransfer.files;
+        if (!files.length){
+          this.formdata.files =files;
+        }
+    
+    },*/
     //adatok PandFwitId-nek és a child funkcüknak-------------------------------------
     getBaseDataWitId: function getBaseDataWitId() {
       var pardata = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -52332,16 +52352,22 @@ var app = new Vue({
       var task = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'calendar/';
       var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(this.host + this.baseroute + task, data).then(function (response) {
-        _this.storeds = [];
+        //this.storeds=[];
         Object.entries(response.data).forEach(_this.DataRefresh);
 
         if (task == 'getbasedata') {
-          _this.calworkerid = _this.workers[0].id;
-          _this.calworker = _this.workers[0];
-          _this.workerids = [_this.workers[0].id];
-        } // this.calworkerid=this.workers[0].id;
-        //  this.calworker=this.workers[0];
-
+          var workerid = Object.keys(_this.workers)[0];
+          _this.actWorkerid = workerid;
+          _this.workerids = [workerid]; // this.actTimetype_id = Object.keys(this.timetypes)[0].id; //timetypetype selectlist actuális értéke ()()
+          //  this.actTimetype_id = this.timetypes[Object.keys(this.timetypes)[0]].id;
+          //  this.actTimetype_basehour = this.timetypes[Object.keys(this.timetypes)[0]].basehour;
+          //   this.actTimetype_start = this.timetypes[Object.keys(this.timetypes)[0]].start;
+          //  this.actTimetype_end = this.timetypes[Object.keys(this.timetypes)[0]].end;
+          //  this.actDaytype_id = this.daytypes[0].id;
+          //  obj[Object.keys(obj)[0]];
+          //   this.setSumData(); //összesíti a dolgozók óráit timetypes:[],  //selecthez
+          // alert(this.timetypes[Object.keys(this.timetypes)[0]].id);
+        }
       })["catch"](function (error) {
         alert(error);
       });
@@ -52353,9 +52379,9 @@ var app = new Vue({
       //  alert(key);
       this[value[0]] = value[1];
     },
-    setCalworkerid: function setCalworkerid(worker) {
-      this.calworkerid = worker.id;
-      this.calworker = worker;
+    setActWorkerid: function setActWorkerid(worker) {
+      this.actWorkerid = worker.id; // this.ActWorker=worker;
+
       this.workerids = [worker.id];
     },
     //selectChange: function () {alert('ttt');},
@@ -52395,40 +52421,39 @@ var app = new Vue({
       this.postAndFresh(task, this.getBaseDataWitId(id));
     },
     // zárások-----PandFwitId taskok: storeStoreds,'delStored(id),zarStored(cegid),nyitStored(cegid)-----
-    showStored: function showStored(id) {
-      this.storedToShow = JSON.parse(this.storeds[id]['fulldata']);
-      this.workerid = this.storeds[id]['worker_id'];
-      this.solver = JSON.parse(this.storeds[id]['solverdata']);
-      this.storedid = id;
-      this.showModal = true;
+
+    /*
+    showStored: function(id) {
+            this.storedToShow=JSON.parse(this.storeds[id]['fulldata']);
+            this.workerid=this.storeds[id]['worker_id'];
+            this.solver=JSON.parse(this.storeds[id]['solverdata']);
+            this.storedid=id;
+            this.showModal= true; 
     },
-    delStored: function delStored(id) {
-      this.PandFwitId('delstored', id);
+    delStored: function(id) {
+      this.PandFwitId('delstored',id);
     },
-    storeStoreds: function storeStoreds() {
+    storeStoreds: function() {
       this.PandFwitId('storestored');
+    }
+    ,nyitStored: function(id) {
+      this.PandFwitId('nyitstored',id);
     },
-    nyitStored: function nyitStored(id) {
-      this.PandFwitId('nyitstored', id);
-    },
-    zarStored: function zarStored(id) {
-      this.PandFwitId('zarstored', id);
-    },
+    zarStored: function(id) {
+      this.PandFwitId('zarstored',id);
+    },*/
     //timeframes------------------------------------------
-    getTimeFrames: function getTimeFrames() {
-      this.formdata = {
-        start: $("input[name=start]").val(),
-        end: $("input[name=end]").val(),
-        szorzo: $("input[name=norma]").val(),
-        justworkdays: 'all'
-      };
 
-      if ($("#workday").is(':checked')) {
-        this.formdata.justworkdays = 'workdays';
-      }
-
-      this.PandFwitId('timeframes');
-    },
+    /*  getTimeFrames: function () {
+        this.formdata = {
+          start: $("input[name=start]").val(),
+          end: $("input[name=end]").val(),
+          szorzo: $("input[name=norma]").val(),
+          justworkdays:'all',
+        }  ;
+        if ($("#workday").is(':checked')) {this.formdata.justworkdays='workdays';}
+      this.PandFwitId('timeframes'); 
+      },*/
     // idők -----------taskok:'deltime(id),-----------------
     timesreset: function timesreset() {
       if (confirm("A kijelölt dolgozók és napok idő bejegyzései végleg törlődni fognak. Biztos hogy ezt akarja?")) {
@@ -52477,17 +52502,17 @@ var app = new Vue({
       this.PandFwitId('storedays');
     },
     // file-----------------------------------
-    filesreset: function filesreset() {
-      if (confirm("A kijelölt napok file bejegyzései végleg törlődni fognak. Biztos hogy ezt akarja?")) {
-        this.PandFwitId('filesreset');
-      }
 
-      ;
+    /*filesreset: function() {
+      if(confirm("A kijelölt napok file bejegyzései végleg törlődni fognak. Biztos hogy ezt akarja?")){
+          this.PandFwitId('filesreset');
+      };  
     },
-    storefiles: function storefiles() {
+    
+    storefiles: function() { 
       this.PandFwitId('storefiles');
-      this.formdatas = {};
-    },
+      this.formdatas ={};  
+        },*/
     //év hó----------------------------------------------
     minusyear: function minusyear() {
       var task = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;

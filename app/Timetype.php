@@ -8,17 +8,17 @@ class Timetype extends BaseModel
 {
     /**
      * The database table used by the model.
-     * 
+     *
      *
      * @var string
      */
     protected $table = 'timetypes';
     public $timestamps = false;
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -26,27 +26,30 @@ class Timetype extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['ceg_id','name', 'szorzo', 'fixplusz','basehour','start', 'end','color', 'note', 'pub'];
-   public function getCegTimetypes()
+    protected $fillable = ['ceg_id', 'name', 'szorzo', 'fixplusz', 'basehour', 'start', 'end', 'color', 'note', 'pub'];
+    public function getCegTimetypes()
     {
-
-      return $this->where('ceg_id',1)->get();  
+        $timetypes = $this->where('ceg_id', 1)->get()->toarray();
+       foreach ($timetypes as $timetype) {
+            $res[$timetype['id']] = $timetype;
+        }
+        return $res;
     }
 
     public function timetypesPluck()
     {
-      return $this->all()->pluck('name','id');  
+        return $this->all()->pluck('name', 'id');
     }
     public function ceg()
-	  {
-		return $this->belongsTo('App\Ceg');
+    {
+        return $this->belongsTo('App\Ceg');
     }
     public function dytype()
     {
-      return $this->hasMany('App\Daytype'); 
+        return $this->hasMany('App\Daytype');
     }
     public function time()
     {
-      return $this->hasMany('App\Time'); 
+        return $this->hasMany('App\Time');
     }
 }

@@ -10,7 +10,9 @@
             'viewpar'=>[
                 'route'=>'m/ad.ad.basedays', //ez alapján múködnek a gombok
                     'form'=>[          
-                        'daytype_id'=>['select','Naptípus',[]],
+                       // 'daytype_id'=>['select','Naptípus',[]],
+                        'name'=>['text','Cím',[]],
+                        'workday'=>['radiolist','',[['1','munkanap' ],['0','szabadnap',true ]]] ,
                         'note'=>['text','Megjegyzés',[]],
                        // 'workday'=>['radiolist','',[['1','Munkanap' ],['0','Pihenőnap',true ]]] ,
                         'datum'=> ['date','',[]],
@@ -24,9 +26,10 @@
                 'table'=>[
                     //'id'=>[],
                     'datum'=>['Dátum',],
-                    'note'=>['megjegyzés'],                
-                    'join_1'=>['Naptipus','daytype','name'],
-                    'join_'=>['Munkanap','daytype','workday'],
+                       'name'=>['cím'],
+                      'note'=>['megjegyzés'],            
+                   // 'join_1'=>['Naptipus','daytype','name'],
+                    //'join_'=>['Munkanap','daytype','workday'],
                      'actions'=> ['Action',['edit','destroy','ifpub'] ]
                 ],
                 ] ,  
@@ -35,13 +38,14 @@
   // az ad.groupcomf funkcióinak használata itt is kell hogy legyen kulcs és nem lehet üres------
     'create' => [
         'funcs' => [ 
-            10=>['daytype::DaytypesPluck',[],'DATA.daytype_id_list'] 
+            60=>['daytype::baseDaytypesPluck',[],'DATA.daytype_id_list'] 
         ],
     // 'delFromParrent'=>['return', 'funcs','viewpar'] , //örökölt külcsok törlése ha nem kell
+   // 'return'=>['dump'] 
     ],
   'edit' => [
     'funcs' => [ 
-        5=>['daytype::daytypesPluck',[],'DATA.daytype_id_list'] 
+        5=>['daytype::baseDaytypesPluck',[],'DATA.daytype_id_list'] 
       ],
     ],
 

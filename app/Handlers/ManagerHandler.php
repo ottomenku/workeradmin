@@ -9,13 +9,21 @@ class ManagerHandler
   public function setWorkerAndCegPar($DATA)
   {
     $user=\Auth::user();
-    $ceg=$user->getCeg();
-    $workers=Worker::where('ceg_id', $ceg->id)->get();
-    $DATA['cegid']=$ceg->id;
-    $DATA['cegnev']=$ceg->cegnev;
+    $DATA['ceg']=$user->getCegPubArray();
+    $workers=Worker::select(['id','position','foto','workername'])->where('ceg_id', $DATA['ceg']['id'])->get();
     $DATA['workerids']=$workers->pluck('id')->toarray();  
     $DATA['workerid']=0;
-    $DATA['workers']=$workers;
+    $DATA['workers']=$workers->toarray();
+    $DATA['level']=$user->level();
+    return $DATA;
+  }
+  public function setCegPar($DATA)
+  {
+    $DATA['ceg']=$user->getCegPubArray();
+    $workers=Worker::select(['id','position','foto','workername'])->where('ceg_id', $DATA['ceg']['id'])->get();
+    $DATA['workerids']=$workers->pluck('id')->toarray();  
+    $DATA['workerid']=0;
+    $DATA['workers']=$workers->toarray();
     $DATA['level']=$user->level();
     return $DATA;
   }

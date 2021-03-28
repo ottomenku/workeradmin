@@ -2,16 +2,14 @@
 
 namespace App;
 
+use App\Traits\CalendaritemBaseFunc;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use  App\Traits\CalendaritemBaseFunc ;
-use Carbon\Carbon;
-use App\Facades\CalendarHandler;
+
 class Time extends Model
-{  
-    use CalendaritemBaseFunc ;
-   // use LogsActivity;
+{
+    use CalendaritemBaseFunc;
+    // use LogsActivity;
     use SoftDeletes;
     /**
      * The database table used by the model.
@@ -21,23 +19,55 @@ class Time extends Model
     protected $table = 'times';
 
     /**
-    * The database primary key value
-    *
-    * @var string
-    */
+     * The database primary key value
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
-    protected $temp=[] ;
+    protected $temp = [];
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['worker_id', 'timetype_id','datum', 'start', 'end', 'hour','adnote', 'worknote','pub'];
- 
-    public function getTimes($data) //App\Traits\CalendaritemBaseFunc
+    protected $fillable = ['worker_id', 'timetype_id', 'datum', 'start', 'end', 'hour', 'adnote', 'worknote', 'pub'];
+
+    public function timesToArr($items, $res = [])
     {
-        return $this->getItems($data, ['timetype', 'worker']);
-    }   
+        foreach ($items as $item) {
+            //  $itemArr=$item->toarray();
+            $itemArr['hour'] = $item->hour;
+            $itemArr['adnote'] = $item->adnote;
+            $itemArr['worknote'] = $item->worknote;
+            $itemArr['start'] = substr($item->start, 0, 5);
+            $itemArr['end'] = substr($item->end, 0, 5);
+            $itemArr['name'] = $item->timetype->name;
+            $itemArr['color'] = $item->timetype->color;
+            $itemArr['background'] = $item->timetype->background;
+            $res[$item->worker_id][$item->datum][$item->id] = $itemArr;
+        }
+        return $res;
+    }
+    public function getTimesFromWorkers($data, $workers) //App\Traits\CalendaritemBaseFunc
+    {
+        $res = [];
+        foreach ($workers as $worker) {
+            $where = $this->getWhere($data, $worker['id'], false);
+            $res = $this->timesToArr($this->with('timetype')->where($where)->get(), $res);
+            //$res['workerdays'][$wid] = $this->with($with)->where($where)->get();
+        }
+        return $res;
+    }
+    public function getTimesFromWorkerIds($data, $workerids) //App\Traits\CalendaritemBaseFunc
+    {
+        $res = [];
+        foreach ($workerids as $wokerid) {
+            $where = $this->getWhere($data, $wokerid, false);
+            $res = $this->timesToArr($this->with('timetype')->where($where)->get(), $res);
+            //$res['workerdays'][$wid] = $this->with($with)->where($where)->get();
+        }
+        return $res;
+    }
     public function worker()
     {
         return $this->belongsTo('App\Worker');

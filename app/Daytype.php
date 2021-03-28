@@ -31,16 +31,19 @@ class Daytype extends BaseModel
     protected $fillable = ['ceg_id','timetype_id', 'name', 'workday', 'szorzo', 'fixplusz', 'color','background','icon','note','userallowed','pub'];
     public function getCegDaytypes()
     {
-        return $this->where(['ceg_id' => 1])->get();
+        return $this->where(['ceg_id' => 1])->where('userallowed' ,'<', 100)->get();
     }
     public function getDaytype($id)
     {
         return $this->find( $id);
     }
-
     public function workerDaytypesPluck()
     {
         return $this->where([['userallowed',1]],['pub','>',0])->pluck('name', 'id');
+    }
+    public function baseDaytypesPluck()
+    {
+        return $this->where([['userallowed',100]],['pub','>',0])->pluck('name', 'id');
     }
     public function DaytypesPluck()
     {

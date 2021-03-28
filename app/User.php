@@ -65,30 +65,37 @@ use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
         return $this->getWorker($userid)->id ?? 0;
     } 
     /**
-      * ha nem adunk meg useridet vagy 0-at adunk a bejelentkezett user id-ja lesz az
-     * az adminnál az 1-es céggel tér vissza (az egyes a base cég) 
+      *Saját cégge tér vissza az adminnál az 1-es cég
      */
-    public function getCeg($userid=0){
-       if($userid>0) {$user_id=$userid;} else{ $user_id=$this->id;}    
-       $user_id= $this->id;
-        $user=$this->find($user_id);
+    public function getCeg(){
+     //  if($userid>0) {$user_id=$userid;} else{ $user_id=$this->id;}    
+    //   $user_id= $this->id;
+    //    $user=$this->find($user_id);
+    $user=\Auth::user();
         if($user->hasRole('owner')) {
-            $ceg=Ceg::where('user_id',$user_id)->first();
+            $ceg=Ceg::where('user_id',$user->id)->first();
         }elseif($user->hasRole('admin')){
         $ceg=Ceg::find(1);
         }
         else{
-            $cegid=Worker::where('user_id',$user_id)->first()->ceg_id;
+            $cegid=Worker::where('user_id',$user->id)->first()->ceg_id;
             $ceg=Ceg::find($cegid);
         }
         return $ceg;
     }
+    public function  getCegPubArray(){
+       $ceg=$this->getCeg();
+         return ['id'=>$ceg->id,"cegnev"=>$ceg->cegnev];
+     }
+
+
+   
    /**
     * ha nem adunk meg useridet vagy 0-at adunk a bejelentkezett user id-ja lesz az
      * az adminnál  1 el tér vissza (az egyes a base cég)
      */
-    public function getCegid($userid=0){
-        return $this->getCeg($userid)->id ?? 0;
+    public function getCegid(){
+        return $this->getCeg()->id ?? 0;
     }
     public function getUser($userid=0){
         if($userid>0) {$user=$this->find($userid);} else{ $user=$this;}  

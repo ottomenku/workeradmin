@@ -33,10 +33,46 @@ class Day extends Model
      */
     protected $fillable = ['daytype_id', 'worker_id', 'datum', 'note', 'pub'];
 
-    public function getDays($data) //App\Traits\CalendaritemBaseFunc
+
+    public function daysToArr($items, $res = [])
     {
-        return $this->getItems($data, ['daytype', 'worker']);
+        foreach ($items as $item) {
+            //  $itemArr=$item->toarray();
+            $itemArr['icon'] = $item->hour;
+            $itemArr['adnote'] = $item->adnote;
+            $itemArr['worknote'] = $item->worknote;
+            $itemArr['start'] = substr($item->start, 0, 5);
+            $itemArr['end'] = substr($item->end, 0, 5);
+            $itemArr['name'] = $item->daytype->name;
+            $itemArr['color'] = $item->daytype->color;
+            $itemArr['background'] = $item->daytype->background;;
+            $itemArr['icon'] = $item->daytype->icon;
+            $res[$item->worker_id][$item->datum][$item->id] = $itemArr;
+        }
+        return $res;
     }
+
+    public function getDaysFromWorkers($data, $workers) //App\Traits\CalendaritemBaseFunc
+    {
+        $res = [];
+        foreach ($workers as $worker) {
+            $where = $this->getWhere($data, $worker['id'], false);
+            $res = $this->daysToArr($this->with('daytype')->where($where)->get(), $res);
+        }
+        return $res;
+    }
+
+    public function getDaysFromWorkerIds($data, $workerids) //App\Traits\CalendaritemBaseFunc
+    {
+        $res = [];
+        foreach ($workerids as $wokerid) {
+            $where = $this->getWhere($data, $wokerid, false);
+            $res = $this->daysToArr($this->with('daytype')->where($where)->get(), $res);
+        }
+        return $res;
+    }
+
+
 
     public function daytype()
     {

@@ -3,27 +3,19 @@ $b='lllllllll';
 @endphp
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
-
   <title>{{ config('app.name', 'MOworktime') }} </title>
-
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-
-
 
   @php
   $now=$now =Carbon\Carbon::now();
@@ -39,10 +31,8 @@ $b='lllllllll';
     window.viewpar=@json($viewpar ?? []) ;
         window.viewparid={{$viewparid}}; 
         window.year= {{$year}};   
-        window.month={{$month}};
-        
+        window.month={{$month}};    
         $( document ).ready(function() {
-
                 $('#checkAll').click(function (event) {
                     if (this.checked) {
                         $('.checkbox').each(function () { //loop through each checkbox
@@ -55,13 +45,10 @@ $b='lllllllll';
                     }
                 });
       //  $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd', changeYear: true,defaultDate: new Date()});
-      //  $( "#datepicker2" ).datepicker({ dateFormat: 'yy-mm-dd', changeYear: true,defaultDate:+30}); 
-          
+      //  $( "#datepicker2" ).datepicker({ dateFormat: 'yy-mm-dd', changeYear: true,defaultDate:+30});         
   });
-  
   </script>
 </head>
-
 <body>
   <div id="app">
       <main class="py-4">
@@ -105,8 +92,10 @@ $b='lllllllll';
   </div>
     <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
     <script>
-      function hourToInput(hour){
- $("#hour").val(hour);
+      function hourToInput(hour,start,end){
+        $("#hour").val(hour);
+    $("#start").val(start);
+    $("#end").val(end);
  //alert(hour);
   }
     </script>
@@ -115,7 +104,7 @@ $b='lllllllll';
       .table td {
         padding: 0.25rem;
       }
-
+      
       [class*="col-"],
       /* Elements whose class attribute begins with "col-" */
       [class^="col-"] {
@@ -123,14 +112,14 @@ $b='lllllllll';
         padding-left: 15px;
         padding-right: 0;
       }
-
+      
       /* card ----------- */
       .card header {
         padding: 10px;
         background-color: rgb(41, 73, 130);
         color: #fff;
       }
-
+      
       .usercard {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         transition: 0.3s;
@@ -142,18 +131,15 @@ $b='lllllllll';
           float:left;
           padding: 5px;*/
       }
-
+      
       .usercard:hover {
         box-shadow: 0 8px 16px 0 rgba(14, 6, 128, 0.8);
       }
-
+      
       .usercardcontainer {
         padding: 2px 16px;
       }
-
-
       /* checkbox radiobutton------------------------------ */
-
       /* The container */
       .checkcontainer {
         display: block;
@@ -167,14 +153,14 @@ $b='lllllllll';
         -ms-user-select: none;
         user-select: none;
       }
-
+      
       /* Hide the browser's default radio button */
       .checkcontainer input {
         position: absolute;
         opacity: 0;
         cursor: pointer;
       }
-
+      
       /* Create a custom radio button */
       .checkmarkradio {
         position: absolute;
@@ -185,22 +171,22 @@ $b='lllllllll';
         background-color: #eee;
         border-radius: 50%;
       }
-
+      
       /* On mouse-over, add a grey background color ------------*/
       .checkcontainer:hover input~.checkmarkradio {
-        background-color: ;
+        background-color:  grey;
       }
-
+      
       /* When the radio button is checked, add a blue background */
       .checkcontainer input:checked~.checkmarkradio {
         background-color: #2196F3;
       }
-
+      
       /* Show the indicator (dot/circle) when checked */
       .checkcontainer input:checked~.checkmarkradio:after {
         display: block;
       }
-
+      
       /* Style the indicator (dot/circle) */
       .checkcontainer .checkmarkradio:after {
         top: 9px;
@@ -210,7 +196,7 @@ $b='lllllllll';
         border-radius: 50%;
         background: white;
       }
-
+      
       /* közös */
       .checkmarkradio:after,
       .checkmarkcheckbox:after {
@@ -218,7 +204,7 @@ $b='lllllllll';
         position: absolute;
         display: none;
       }
-
+      
       /* Create a custom checkbox */
       .checkmarkcheckbox {
         position: absolute;
@@ -228,33 +214,33 @@ $b='lllllllll';
         width: 25px;
         background-color: #eee;
       }
-
-
+      
+      
       /* On mouse-over, add a grey background color */
       .checkcontainer:hover input~.checkmarkcheckbox {
-        background-color: ;
+        background-color: grey;
       }
-
+      
       /* When the checkbox is checked, add a blue background ---------*/
       .checkcontainer input:checked~.checkmarkcheckbox {
         background-color: #2196F3;
       }
-
+      
       /* On mouse-over, add a grey background color */
       .checkcontainer:hover input~.checkmarkcheckbox {
-        background-color: ;
+        background-color: grey;
       }
-
+      
       /* When the checkbox is checked, add a blue background */
       .checkcontainer input:checked~.checkmarkcheckbox {
         background-color: #2196F3;
       }
-
+      
       /* Show the checkmark when checked */
       .checkcontainer input:checked~.checkmarkcheckbox:after {
         display: block;
       }
-
+      
       /* Style the checkmark/indicator */
       .checkcontainer .checkmarkcheckbox:after {
         left: 9px;
@@ -267,7 +253,7 @@ $b='lllllllll';
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
       }
-
+      
       /* Create a custom checkbox2 */
       .checkmarkcheckbox2 {
         position: absolute;
@@ -277,25 +263,19 @@ $b='lllllllll';
         width: 100%;
         background-color: #eee;
       }
-
-
       /* On mouse-over, add a grey background color */
       .checkcontainer:hover input~.checkmarkcheckbox2 {
         background-color: #ece0cf
       }
-
       /* When the checkbox is checked, add a blue background ---------*/
       .checkcontainer input:checked~.checkmarkcheckbox2 {
         background-color: #e4d1b9
       }
-
-
-
       /* Show the checkmark when checked */
       .checkcontainer input:checked~.checkmarkcheckbox2:after {
         display: block;
       }
-
+      
       /* Style the checkmark/indicator */
       .checkcontainer .checkmarkcheckbox2:after {
         left: 9px;
@@ -308,6 +288,8 @@ $b='lllllllll';
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
       }
+      
+
     </style>
 </body>
 

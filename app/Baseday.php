@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class Baseday extends BaseModel
 {
    // use LogsActivity;
-    use SoftDeletes; 
+  //  use SoftDeletes; 
     /**
      * The database table used by the model.
      *
@@ -29,7 +29,7 @@ class Baseday extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['daytype_id','ceg_id', 'datum', 'note', 'pub'];
+    protected $fillable = ['workday','name', 'datum', 'note', 'pub'];
 
     public function moIndex()
     {
@@ -37,7 +37,7 @@ class Baseday extends BaseModel
     }
 
 
-public function getBaseDays($year=0,$month=0,$cegid=1)
+public function getBaseDays($year=0,$month=0)
 {
     $res=[];
     if(empty($year)){$year= Carbon::now()->year;}
@@ -45,13 +45,26 @@ public function getBaseDays($year=0,$month=0,$cegid=1)
     if(strlen($month)<2){$month='0'.$month;}
 
     $days= $this->with('daytype')->where([
-        ['ceg_id', '=', $cegid],
         ['datum', 'like', $year.'-'.$month.'%']
     ])->get();
     foreach($days as $day){
-        $res[$day->datum]=$day->toarray();
+        $res[$this->datumTwoChar($day->datum)]=$day->toarray();
     }
 return $res;  
+}
+public function twoChar($num)
+{
+    if(strlen($num)<2){
+        $num='0'.$num;
+    }
+  return  $num; 
+}
+public function datumTwoChar($datum,$sep='-')
+{
+$datumT= explode($sep,$datum);
+$datumT[1]=$this->twoChar($datumT[1]);
+$datumT[2]=$this->twoChar($datumT[2]);
+  return  implode($sep,$datumT); 
 }
 
    

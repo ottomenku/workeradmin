@@ -11,75 +11,80 @@ use  App\Day;
 use Carbon\Carbon;
 class CalendarHandler 
 { 
-  public function timeframes($data)
-  {
-      $vData = $data['formdata'];
-      $justworkdays=false;
-      if($vData['justworkdays']=='workdays'){$justworkdays=true;};
-      $vData=$this->getStartEnd($vData);
-      $start = $vData['start'] ?? '2019-12-31' ;
-      $end = $vData['end'] ?? '2020-01-10';
-      $cegid = $data['viewparid'] ?? 1; // 1re vissza cserélni!
-      $workerids = $data['workerids'] ?? [];
 
-
-      if(empty($workerids )){$workerids=Worker::where([['ceg_id','=',$cegid]])->get()->pluck('id')->toarray();}
-  $basedays=Baseday::where([['datum','>=',$start],['datum','<=',$end],['ceg_id','=',1]])
-
-  ->with('daytype')->get()->pluck('daytype.workday','datum')->toarray();
-$calendarDay =CalendarHandler::getWorkDays($start,$end);
-   $days= array_merge($calendarDay,$basedays);
-$daysNum=count($days);
-$workdaysnum=count(array_filter($days));
-$szorzo=$vData['szorzo'] ?? 8 ;
-
-if( $justworkdays){$timeFrame=$workdaysnum*$szorzo;}
-else{$timeFrame=$daysNum*$szorzo;}
-
-$timesob=new Time();
-$times=[];
-foreach ($workerids as  $workerid) {
-$worker=Worker::find($workerid);
-$times[$workerid]['sumTime']= $timesob->with('worker')->where([ ['datum', '>=', $start],['datum', '<=', $end],['pub', '>', 5],['worker_id', '=', $workerid]])->sum('hour');
-$times[$workerid]['workername']=$worker->workername;
-$times[$workerid]['dif'] =$times[$workerid]['sumTime']-$timeFrame;
-$times[$workerid]['class'] ='difminusz';
-if($times[$workerid]['dif']>0){ $times[$workerid]['class'] ='difplusz';}
-
-}
-$datar=[];
-$datar['start']=$start;
-$datar['end']=$end;
-$datar['justworkdays']=$justworkdays;
-$datar['daysNum']= $daysNum ;
-$datar['workdaysNum']=  $workdaysnum;
-$datar['szorzo']= $szorzo ;
-$datar['timeFrame']=$timeFrame ;
-$datar['times']= $times ;
-//$res=[];
-//$res['timeFrames']=$data;
-// return response()->json($res);
-//return response()->json($data);
-return $datar;
-} 
 
 
   /**
-   * adott hónap napjai
+   * adott hónap napjai  getBaseCalendarData
     */ 
   public function getBaseCalendarData($pardata,$DATA=[])
   {
  $year=$pardata['year'] ??  Carbon::now()->year;
  $month=$pardata['month'] ?? Carbon::now()->month;
     //base calendart adatok--------------------------------
-      $DATA['calendarbase']  = $this->getMonthDays($year,$month) ;
-      $DATA['calendar']  = $this->groupbyWeeks($DATA['calendarbase']) ;  
-      $Baseday = new Baseday();
-      $DATA['basedays']  = $Baseday->getBaseDays($year,$month) ;
+     // $DATA['calendarbase']  = $this->getMonthDays($year,$month) ;
+     $DATA['calendarbase']  = $this->getMonthDays($year,$month)  ;    
+    $DATA['calendar']  = $this->groupbyWeeks( $DATA['calendarbase'] ) ; 
+  
+    //  $Baseday = new Baseday();
+   //   $DATA['basedays']  = $Baseday->getBaseDays($year,$month) ;
       //$DATA['cegbasedays']  =$Baseday->getBaseDays($year,$month,$cegid) ;
       return $DATA;
   }
+  public function getMonthDays($year='0',$month='0')
+{
+    $date=$this->getDate($year,$month);
+    $aktMonth=$date->month;
+    $aktYear=$date->year;
+   $bd= new  Baseday();
+   $baseday= $bd->getBaseDays($aktYear,$aktMonth);
+   if($date->dayOfWeek<1){$emptydaysNumber=6;}
+   else{$emptydaysNumber=$date->dayOfWeek-1;}
+    $days= $this->getEmptyDays($emptydaysNumber,[],$date->weekOfYear);
+
   
+            while ($aktMonth == $date->month) { 
+                //$datum=$year.'-'.$month.'-'.$date->day;
+                $datum= $this->datumTwoChar($date->year.'-'.$date->month.'-'.$date->day);
+                $nap=$date->day;            
+                $munkanap=true; 
+                $class='workday'; 
+                $daytype='Munkanap';
+                if( $date->dayOfWeek==0){$daytype='Szabadnap';$munkanap=false;$class='freeday';}
+                if( $date->dayOfWeek==6){$daytype='Pihenőnap';$munkanap=false;$class='freeday';}
+                $ujdays= [
+                  //  'daytype'=>'Munkanap', //nem kell, de kelhet egy részletesebb naptárban
+                    'basedaytype'=>'',    //ha rendkivüli nap annak a neve pl nemzeti ünnep, vagy ledolg 03.15
+                    'note'=>[],           // arendkívüli nap jegyzete
+                    'name'=>$this->days[$date->dayOfWeek], //TODO: töb nyelvűsíteni
+                    'day'=>$date->day,
+                    'datum'=> $datum,
+                    'weekOfYear'=>$date->weekOfYear,
+                    'dayOfYear'=>$date->dayOfYear , // a hetenkénti csoportosításhoz kellett de már nem
+                    'dayOfWeek'=>$date->dayOfWeek,
+                    'munkanap'=>$munkanap, //munkaidő számításnál van szerepe
+                    'class'=>$class,
+                    //  'times'=>[],
+                    //'workerdays'=>[],
+                ]; 
+              if(isset($baseday[$datum])){
+                $ujdays['basedaytype']=$baseday[$datum]['name'] ?? '';
+                $ujdays['munkanap']=$baseday[$datum]['workday'] ?? $ujdays['munkanap'];
+                $ujdays['note'][]=$baseday[$datum]['note'] ?? $ujdays['note'];
+                if(isset($baseday[$datum]['note'])){$ujdays['note'][]=$baseday[$datum]['note'];}
+                if($baseday[$datum]['workday']){$ujdays['class']='workday';}
+                else{$ujdays['class']='freeday';}
+              }
+              $days[$datum]=$ujdays;
+                $date->addDay(); 
+
+            }  
+            if($ujdays['dayOfWeek']<1){$emptydaysNumber=0;}
+            else{$emptydaysNumber=7-$ujdays['dayOfWeek'];}
+                $days= $this->getEmptyDays($emptydaysNumber,$days,$ujdays['weekOfYear'],'3333-33-'); 
+
+     return $days;       
+}
   /**
      * ha nincs megadva start és end akkor  a year és a month-ból ha az sincs akkor az aktuális hónapból állítja elő 
      */
@@ -184,17 +189,21 @@ public function getEmptyDays($emptydaysNumber, $emptydays,$weekOfYear,$yearho='1
       for ($i=0; $i<$emptydaysNumber; $i++){
       //  if($i==7){$dayOfWeek=0;}else{$dayOfWeek=$i;} (int)$num
         $emptydays[$yearho.$i]= [
-            'daytype'=>'', //a class is ez
+         //   'daytype'=>'', 
+            'basedaytype'=>'',    //ha rendkivüli nap annak a neve pl nemzeti ünnep, vagy ledolg 03.15
+            'note'=>'',
             'name'=>'empty',
             'day'=>'',
-            'dayOfWeek'=>$i,
-            'weekOfYear'=>$weekOfYear,
+            'datum'=> '',
+            'dayOfWeek'=>0,
+            'weekOfYear'=> $weekOfYear,
             'dayOfYear'=>0 ,
-          // 'datum'=>false,
-            'daytype_id'=>0,
-            'times'=>[],
-            'type'=>'E',
+            'type'=>'E',  // kivezetni
             'munkanap'=>false,
+            'class'=>'empty',
+          //  'times'=>[],
+          //  'workerdays'=>[],
+
         ]; 
     }
     return $emptydays;
@@ -222,44 +231,7 @@ public function getWorkDays($start,$end)
     return $days   ;   
  }
 
-public function getMonthDays($year='0',$month='0')
-{
-    $date=$this->getDate($year,$month);
-    $aktMonth=$date->month;
-   if($date->dayOfWeek<1){$emptydaysNumber=6;}
-   else{$emptydaysNumber=$date->dayOfWeek-1;}
-    $days= $this->getEmptyDays($emptydaysNumber,[],$date->weekOfYear);
-  
-            while ($aktMonth == $date->month) { 
-                //$datum=$year.'-'.$month.'-'.$date->day;
-                $datum= $this->datumTwoChar($date->year.'-'.$date->month.'-'.$date->day);
-                $nap=$date->day;            
-               // $weekOfYear=$date->weekOfYear;
-                $ujdays= [
-                    'daytype'=>'Munkanap', //a class is ez
-                    'name'=>$this->days[$date->dayOfWeek],
-                    'day'=>$date->day,
-                    'datum'=> $datum,
-                    'weekOfYear'=>$date->weekOfYear,
-                    'dayOfYear'=>$date->dayOfYear , // a hetenkénti csoportosításhoz kellett de már nem
-                    'dayOfWeek'=>$date->dayOfWeek,
-                    'munkanap'=>true,
-                    'class'=>'workday',
-                    'times'=>[],
-                ]; 
-                if( $date->dayOfWeek==0){$ujdays['daytype']='Szabadnap';$ujdays['munkanap']=false;$ujdays['class']='freeday';}
-                if($date->dayOfWeek==6 ){$ujdays['daytype']='Pihenőnap';$ujdays['munkanap']=false;$ujdays['class']='freeday';}
-                $days[$datum]= $ujdays; //ha hetenként
-              // $days[$date->day]= $ujdays; //ha hetenként
-                $date->addDay(); 
 
-            }  
-            if($ujdays['dayOfWeek']<1){$emptydaysNumber=0;}
-            else{$emptydaysNumber=7-$ujdays['dayOfWeek'];}
-                $days= $this->getEmptyDays($emptydaysNumber,$days,$ujdays['weekOfYear'],'3333-33-'); 
-
-     return $days;       
-}
 public function groupbyWeeks($days)
 {
    $aktWeek=0; $i=0; //$i azért kell mert néha a december az első héttel ér véget és néha a január az 52.-el kezd
@@ -302,6 +274,56 @@ return $ujdays;
        // $res=array_merge_recursive($data['calendar'],$data['basedays']);
         return $res;
     }*/
+/*  public function timeframes($data)
+  {
+      $vData = $data['formdata'];
+      $justworkdays=false;
+      if($vData['justworkdays']=='workdays'){$justworkdays=true;};
+      $vData=$this->getStartEnd($vData);
+      $start = $vData['start'] ?? '2019-12-31' ;
+      $end = $vData['end'] ?? '2020-01-10';
+      $cegid = $data['viewparid'] ?? 1; // 1re vissza cserélni!
+      $workerids = $data['workerids'] ?? [];
 
+
+      if(empty($workerids )){$workerids=Worker::where([['ceg_id','=',$cegid]])->get()->pluck('id')->toarray();}
+  $basedays=Baseday::where([['datum','>=',$start],['datum','<=',$end],['ceg_id','=',1]])
+
+  ->with('daytype')->get()->pluck('daytype.workday','datum')->toarray();
+$calendarDay =CalendarHandler::getWorkDays($start,$end);
+   $days= array_merge($calendarDay,$basedays);
+$daysNum=count($days);
+$workdaysnum=count(array_filter($days));
+$szorzo=$vData['szorzo'] ?? 8 ;
+
+if( $justworkdays){$timeFrame=$workdaysnum*$szorzo;}
+else{$timeFrame=$daysNum*$szorzo;}
+
+$timesob=new Time();
+$times=[];
+foreach ($workerids as  $workerid) {
+$worker=Worker::find($workerid);
+$times[$workerid]['sumTime']= $timesob->with('worker')->where([ ['datum', '>=', $start],['datum', '<=', $end],['pub', '>', 5],['worker_id', '=', $workerid]])->sum('hour');
+$times[$workerid]['workername']=$worker->workername;
+$times[$workerid]['dif'] =$times[$workerid]['sumTime']-$timeFrame;
+$times[$workerid]['class'] ='difminusz';
+if($times[$workerid]['dif']>0){ $times[$workerid]['class'] ='difplusz';}
+
+}
+$datar=[];
+$datar['start']=$start;
+$datar['end']=$end;
+$datar['justworkdays']=$justworkdays;
+$datar['daysNum']= $daysNum ;
+$datar['workdaysNum']=  $workdaysnum;
+$datar['szorzo']= $szorzo ;
+$datar['timeFrame']=$timeFrame ;
+$datar['times']= $times ;
+//$res=[];
+//$res['timeFrames']=$data;
+// return response()->json($res);
+//return response()->json($data);
+return $datar;
+} */
 
 }

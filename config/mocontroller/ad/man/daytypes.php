@@ -9,7 +9,7 @@
             'validations' =>['icon'  => 'required'] ,
             'obClass'=>['baseOB'=>'App\Daytype','timetype'=>'App\Timetype'],
             'viewpar'=>[
-                'route'=>'m/ad.ad.daytypes', //ez alapján múködnek a gombok
+                'route'=>'m/ad.man.daytypes', //ez alapján múködnek a gombok
                     'form'=>[  
                         'timetype_id'=>['select','Alapértelmezett időtipus',[]],  
                         'name'=>['text','Név',[]],

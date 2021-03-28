@@ -3,17 +3,17 @@
 @section('content')
 
 
-<div class="col-md-10">
-  <div class=" card">
+<div class="col-md-9">
+  
     <div class="card-header">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7">
           @include('mocalendarVue.inc.actions_manager',['refreshTask' => "freshdata"])
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
           <div class="row">
             <div class="col-10">
-              <h3> @{{calworker.fullname}}</h3>
+              <h3  v-if="typeof(workers[actWorkerid]) !== 'undefined'" > @{{workers[actWorkerid].workername}}</h3>
             </div>
             <!-- modal button----------------------------->
             <div class="col-2">
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="card-body">
-
+      <div class=" card">
 
       <!-- modal info------------------------------->
       <modal v-if="showInfo" @close="showInfo = false">
@@ -46,38 +46,36 @@
 
 
       <!--  panel---------------------------------------------------------------------->
-      <div class="table-responsive">
-        
-        <div class="row">
+      <div class="row">     
           <div class="col-md-9">
+            <div class="table-responsive">    
         <!-- calendar ---------------------------------------------------------------->    
             @include('mocalendarVue.inc.calendar_dev')
             <hr>
         <!-- usercard list---------------------------------------------------------------->      
-            <div style="margin-left: 1px;"  class="row"> 
-              <div v-bind:style=" worker.id==calworkerid ? 'border: 3px solid blue;' : 'border: none;' "
-                v-for="worker in workers" class="col-6 col-md-4 usercard" v-on:click="setCalworkerid(worker)">
-               <div >
-               
-                 
-                  <img v-if="typeof(worker.foto)  !== 'undefined' && worker.foto != null" v-bind:src="worker.foto"
-                  style="margin-right: 5px; width:30%; float:left;">
-                  <img v-else src="/images/img_avatar.png" alt="Avatar" style="margin-right: 5px; width:30%; float:left;">
-                 
-                  
+            <div style="margin: 0px;padding: 0px; "  class="row"> 
+              <div style="margin: 0px;padding: 0px; "  v-bind:style=" worker.id==actWorkerid ? 'border: 3px solid blue;' : 'border: none;'  "
+                v-for="worker in workers" class="col-6 col-md-4 usercard" v-on:click="setActWorkerid(worker)">
+               <div>
+                  <img  v-bind:src="worker.foto" alt="foto" style="margin-right: 5px; width:30%; float:left;">
+            
                     <h6 style="padding:5px"><b>@{{worker.workername}}</b></h6>
-                    <p>@{{worker.position}}</p>
+                    <p style="margin: 0px;padding: 0px;" >@{{worker.position}}</p>
                   
                     <div style="display: none;">
                       <input v-model="workerids" type="checkbox" name="workerids[]" v-bind:value="worker.id">
                     </div>
 
- 
               </div>
             </div>
           </div>
+        </div>
           <div class="col-md-3">
-
+            <div style="" 
+            v-for="(item, datum) in SumData" class="col-6 col-md-4 usercard" >
+              @{{datum}}  kkkk
+            </div>
+           <div >
           </div>
 
         </div>
@@ -85,7 +83,6 @@
     </div>
   </div>
 </div>
-
 @include('mocalendarVue.inc.modal_template')
 
 

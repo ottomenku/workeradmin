@@ -20,21 +20,37 @@ return [
           //  'info' => ' fghsghsgf  gdhfhdf', // a taskhoz tartozó infoszöveg
     ],
         // 'delFromParrent' => ['obClass', 'funcs'],
-       'return' => ['viewFull', 'mocalendarVue.calendarManager'],
-        //       'return'=>['dump']
+         'return' => ['viewFull', 'mocalendarVue.calendarManager'],
+      //       'return'=>['dump']
     ],
 
     'getbasedata' => [
-        'allowed'=>true,
         'return'=>['json']
-     //  'return'=>['dump']-/
+       //'return'=>['dump']
+    ],
+    'getbasedata2' => [
+        'funcs' => [
+          //  14 => ['timetype::allpluck', [], 'DATA.timetypes'],
+          //  16 => ['daytype::allPluck', [], 'DATA.daytypes'],
+          14 => ['daytype::getCegDaytypes', [], 'DATA.daytypes'],
+          16 => ['timetype::getCegTimetypes', [], 'DATA.timetypes'],
+          18 => ['worker::getWorkersIdkeybase', [], 'DATA.workers'],
+        //  19 => ['worker::getWorkerids', [], 'DATA.workerids'],
+          20 => ['user::getCegPubArray', [], 'DATA.ceg'],
+          60 => ['CalendarHandler::getBaseCalendarData', ['{DATA.valid}', '{DATA}'], 'DATA'],
+          70 => ['time::getTimesFromWorkers', ['{DATA.valid}','{DATA.workers}'], 'DATA.times'],
+          80 => ['day::getDaysFromWorkers', ['{DATA.valid}','{DATA.workers}'], 'DATA.workerdays'],
+           // 90 => ['stored::getStoreds', ['{DATA.valid}'], 'DATA.storeds'],
+        ],
+         //'return' => ['json'],
+         'return'=>['dump']
     ],
     'freshdata' => [
         'allowed'=>true,
     ],
 
 //stored---------------------------
-'delstored' => [
+/*'delstored' => [
   'funcs' => [
       20 => ['stored::delStored', ['{DATA.valid}']],
       90 => ['stored::getStoreds', ['{DATA.valid}'], 'DATA.storeds'],
@@ -47,7 +63,7 @@ return [
       90 => ['stored::getStoreds', ['{DATA.valid}'], 'DATA.storeds'],
   ],
   'return' => ['json'],
-],
+],*/
 
 //day functions-------------------------------------
     'resetdays' => [
