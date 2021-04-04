@@ -52,7 +52,7 @@ class Day extends Model
         return $res;
     }
 
-    public function getDaysFromWorkers($data, $workers) //App\Traits\CalendaritemBaseFunc
+    public function getDaysFromWorkers($data, $workers=[]) //App\Traits\CalendaritemBaseFunc
     {
         $res = [];
         foreach ($workers as $worker) {

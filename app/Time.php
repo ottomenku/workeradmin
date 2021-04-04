@@ -48,7 +48,7 @@ class Time extends Model
         }
         return $res;
     }
-    public function getTimesFromWorkers($data, $workers) //App\Traits\CalendaritemBaseFunc
+    public function getTimesFromWorkers($data, $workers=[]) //App\Traits\CalendaritemBaseFunc
     {
         $res = [];
         foreach ($workers as $worker) {

@@ -42,8 +42,8 @@ return [
     'freshdata' => [
         'funcs' => [
             60 => ['CalendarHandler::getBaseCalendarData', ['{DATA.valid}', '{DATA}'], 'DATA'],
-            70 => ['time::getTimesFromWorkers', ['{DATA.valid}','{DATA.workers}'], 'DATA.times'],
-            80 => ['day:: getDaysFromWorkers', ['{DATA.valid}','{DATA.workers}'], 'DATA.workerdays'],
+            70 => ['time::getTimesFromWorkerIds', ['{DATA.valid}','{DATA.valid.workerids}'], 'DATA.times'],
+            80 => ['day::getDaysFromWorkerids', ['{DATA.valid}','{DATA.valid.workerids}'], 'DATA.workerdays'],
            // 90 => ['stored::getStoreds', ['{DATA.valid}'], 'DATA.storeds'],
         ],
 

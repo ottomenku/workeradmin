@@ -55,12 +55,12 @@
                 @endforeach
           
             <div class="row">
-                  <label for="daytype_id" class="col-3 control-label">megjegyzés</label>
+                  <label for="dayadnote" class="col-3 control-label">megjegyzés</label>
 
             </div>
             <div class="row">
                 <div class="col-11">
-                    <input class="form-control" name="adnote" type="text" id="workernote">
+                    <input class="form-control" name="dayadnote" type="text" id="dayadnote">
                 </div>
             
                 <button class=" btn btn-primary" v-on:click="storedays()" style="margin:2px;">
@@ -107,8 +107,8 @@
                         value="{{array_values($data['timetypes'])[0]['end']}}">
                     </div>
                     <div class="col-11">
-                      <label for="end" class="col-11 control-label">Megjegyzés </label>
-                      <input class="form-control" name="adnote" type="text" id="workernote">
+                      <label for="timeadnote" class="col-11 control-label">Megjegyzés </label>
+                      <input class="form-control" name="timeadnote" type="text" id="timeadnote">
                     </div>
                   </div>
                 </div>
