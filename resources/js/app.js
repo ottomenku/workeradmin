@@ -71,7 +71,9 @@ var app = new Vue({
         times: [],
         workerdays: [],
         basedays: [],
-        SumData: [], //összesítet órá
+        SumData: {}, //összesítet órá
+        SumDays: {}, //összesítet napok
+        SumTimes: {}, //összesítet idők
         test: {
             1: '111fff',
             'mmk': 'mmfff',
@@ -82,27 +84,71 @@ var app = new Vue({
 
 
     methods: {
-        setSumData() {
-            $.each(this.test, function(key, value) {
-                // list.push(key);
-                console.log('Index: ' + key + ' Value: ' + value);
+        sumWorkerdays() {
+            let sumDays = {};
+            let ledolgozott = 0;
+            $.each(this.workerdays[this.actWorkerid], function(datum, value) {
+                $.each(value, function(id, val) {
+                    if (val.workday) { ledolgozott++; }
+                    if (typeof sumDays[val.name] !== 'undefined') {
+                        sumDays[val.name]++;
+                    } else {
+                        Vue.set(sumDays, val.name, 1);
+                    }
+                });
             });
+            this.SumDays = sumDays;
+            console.log(sumDays);
+            return ledolgozott;
+        },
+        sumWorkertimes() {
+            let sumTimes = {};
+            let sum = 0;
+            $.each(this.times[this.actWorkerid], function(datum, value) {
+                $.each(value, function(id, val) {
+                    sum = sum + val.hour;
+                    if (typeof sumTimes[val.name] !== 'undefined') {
+                        sumTimes[val.name] = sumTimes[val.name] + val.hour;
+                    } else {
+                        Vue.set(sumTimes, val.name, val.hour);
+                    }
+                });
+            });
+            this.SumTimes = sumTimes;
+            console.log(sumTimes);
+            return sum;
+        },
+        setSumData() {
+            let nap = 0;
+            let munkanap = 0;
+            let sumWorkdays = 0;
+            let sumhours = 0;
+            $.each(this.calendarbase, function(key, value) {
+                if (key.substring(0, 4) == '1111' || key.substring(0, 4) == '3333') {} else {
+                    nap = nap + 1;
+                    if (value.munkanap == true) { munkanap++; }
+                }
+            });
+            sumWorkdays = this.sumWorkerdays();
+            sumhours = this.sumWorkertimes();
 
-            /*    this.test.forEach((number, index) => {
-                console.log('Index: ' + index + ' Value: ' + number);
-            });*/
+            Vue.set(this.SumData, 'nap', nap);
+            Vue.set(this.SumData, 'munkanap', munkanap);
+            Vue.set(this.SumData, 'ledolgozott nap', sumWorkdays);
+            Vue.set(this.SumData, 'ledolgozott óra', sumhours);
+            // console.log(sumDays);
         },
 
         faClass(icon) {
             return `fa fa-${icon}`;
         },
         /*
-           onfileInputChange(e) {
+            onfileInputChange(e) {
             let files = e.target.files || e.dataTransfer.files;
             if (!files.length){
-              this.formdata.files =files;
+                this.formdata.files =files;
             }
-    
+
         },*/
 
         //adatok PandFwitId-nek és a child funkcüknak-------------------------------------
@@ -137,18 +183,8 @@ var app = new Vue({
                         let workerid = Object.keys(this.workers)[0];
                         this.actWorkerid = workerid;
                         this.workerids = [workerid];
-                        this.setSumData();
-                        // this.actTimetype_id = Object.keys(this.timetypes)[0].id; //timetypetype selectlist actuális értéke ()()
-                        //  this.actTimetype_id = this.timetypes[Object.keys(this.timetypes)[0]].id;
-                        //  this.actTimetype_basehour = this.timetypes[Object.keys(this.timetypes)[0]].basehour;
-                        //   this.actTimetype_start = this.timetypes[Object.keys(this.timetypes)[0]].start;
-                        //  this.actTimetype_end = this.timetypes[Object.keys(this.timetypes)[0]].end;
-
-                        //  this.actDaytype_id = this.daytypes[0].id;
-                        //  obj[Object.keys(obj)[0]];
-                        //   this.setSumData(); //összesíti a dolgozók óráit timetypes:[],  //selecthez
-                        // alert(this.timetypes[Object.keys(this.timetypes)[0]].id);
                     }
+                    this.setSumData();
                 }).catch(function(error) {
                     alert(error);
                 });
@@ -165,6 +201,7 @@ var app = new Vue({
             this.actWorkerid = worker.id;
             // this.ActWorker=worker;
             this.workerids = [worker.id];
+            this.setSumData();
         },
         //selectChange: function () {alert('ttt');},
         selectDays: function() {
@@ -205,29 +242,29 @@ var app = new Vue({
                 this.showModal= true; 
         },
         delStored: function(id) {
-          this.PandFwitId('delstored',id);
+            this.PandFwitId('delstored',id);
         },
         storeStoreds: function() {
-          this.PandFwitId('storestored');
+            this.PandFwitId('storestored');
         }
         ,nyitStored: function(id) {
-          this.PandFwitId('nyitstored',id);
+            this.PandFwitId('nyitstored',id);
         },
         zarStored: function(id) {
-          this.PandFwitId('zarstored',id);
+            this.PandFwitId('zarstored',id);
         },*/
         //timeframes------------------------------------------
 
         /*  getTimeFrames: function () {
             this.formdata = {
-              start: $("input[name=start]").val(),
-              end: $("input[name=end]").val(),
-              szorzo: $("input[name=norma]").val(),
-              justworkdays:'all',
+                start: $("input[name=start]").val(),
+                end: $("input[name=end]").val(),
+                szorzo: $("input[name=norma]").val(),
+                justworkdays:'all',
             }  ;
             if ($("#workday").is(':checked')) {this.formdata.justworkdays='workdays';}
-          this.PandFwitId('timeframes'); 
-          },*/
+            this.PandFwitId('timeframes'); 
+            },*/
 
         // idők -----------taskok:'deltime(id),-----------------
 
@@ -251,9 +288,9 @@ var app = new Vue({
                 adnote: $("input[name=timeadnote]").val(),
             };
             /*   this.formdata.end = $("input[name=end]").val();
-               this.formdata.timetype_id=  $("select[name=timetype_id]").val();
-               this.formdata.hour = $("input[name=hour]").val();
-               this.formdata.pubbase=  $('input[name="pubtime"]:checked').val();
+                this.formdata.timetype_id=  $("select[name=timetype_id]").val();
+                this.formdata.hour = $("input[name=hour]").val();
+                this.formdata.pubbase=  $('input[name="pubtime"]:checked').val();
             **/
             this.PandFwitId('storetimes');
         },
@@ -279,14 +316,14 @@ var app = new Vue({
         },
         // file-----------------------------------
         /*filesreset: function() {
-          if(confirm("A kijelölt napok file bejegyzései végleg törlődni fognak. Biztos hogy ezt akarja?")){
-              this.PandFwitId('filesreset');
-          };  
+            if(confirm("A kijelölt napok file bejegyzései végleg törlődni fognak. Biztos hogy ezt akarja?")){
+                this.PandFwitId('filesreset');
+            };  
         },
-    
+
         storefiles: function() { 
-          this.PandFwitId('storefiles');
-          this.formdatas ={};  
+            this.PandFwitId('storefiles');
+            this.formdatas ={};  
             },*/
 
         //év hó----------------------------------------------

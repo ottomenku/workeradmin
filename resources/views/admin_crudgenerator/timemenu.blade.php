@@ -58,7 +58,7 @@
                   <label for="dayadnote" class="col-3 control-label">megjegyzés</label>
 
             </div>
-            <div class="row">
+            <div style="margin-left: 0px;" class="row">
                 <div class="col-11">
                     <input class="form-control" name="dayadnote" type="text" id="dayadnote">
                 </div>
@@ -75,7 +75,8 @@
                 <!--  napok form  end --------------------------------->
             </div>
           </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
             <div class="row">
 
@@ -137,7 +138,8 @@
                   </div>
                   @endforeach
 
-                </div>
+                
+                <div style="margin-left: 0px;" class="row">
                 <button class=" btn btn-primary" v-on:click="storetimes()" style="margin:2px;">
                   <i class="fa fa-save"></i>
                 </button>
@@ -148,8 +150,9 @@
                   <i class="fa fa-plus">Új időtipus</i>
                 </a>
               </div>
-
+              </div>
+            </div>
             </div>
 
-          </div>
+          
   </div>       

@@ -47,6 +47,7 @@ class Day extends Model
             $itemArr['color'] = $item->daytype->color;
             $itemArr['background'] = $item->daytype->background;;
             $itemArr['icon'] = $item->daytype->icon;
+            $itemArr['workday'] = $item->daytype->workday;
             $res[$item->worker_id][$item->datum][$item->id] = $itemArr;
         }
         return $res;

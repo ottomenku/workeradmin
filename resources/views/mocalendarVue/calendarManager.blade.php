@@ -47,7 +47,7 @@
 
       <!--  panel---------------------------------------------------------------------->
       <div class="row">     
-          <div class="col-md-9">
+          <div class="col-md-8">
             <div class="table-responsive">    
         <!-- calendar ---------------------------------------------------------------->    
             @include('mocalendarVue.inc.calendar_dev')
@@ -70,16 +70,22 @@
             </div>
           </div>
         </div>
-          <div class="col-md-3">
-            <div style="" 
-            v-for="(item, datum) in SumData" class="col-6 col-md-4 usercard" >
-              @{{datum}}  kkkk
-            </div>
-           <div >
-          </div>
-
-        </div>
       </div>
+          <div class="col-md-4">
+            <span style="font-size: 1.3em; font-weight:bold; ">Összesítés:</span>
+            <div   v-for="(item, key) in SumData" >
+              @{{key}} : @{{item}}
+            </div>
+            <span style="font-size: 1.3em; font-weight:bold; ">Napok:</span>
+            <div   v-for="(item, key) in SumDays" >
+              @{{key}} : @{{item}}
+            </div>
+            <span style="font-size: 1.3em; font-weight:bold; ">Órák:</span>
+            <div   v-for="(item, key) in SumTimes" >
+              @{{key}} : @{{item}}
+            </div>
+        </div>
+      
     </div>
   </div>
 </div>
