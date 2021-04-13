@@ -31,8 +31,8 @@ return [
     
 'store' => [
   'funcs' => [
-    10=>['validateToDATA',[],'DATA.valid'],
-    20=>['baseOB::moCreate',['{DATA.valid}']]     
+   10=>['validateToDATA',[],'DATA.valid'],
+   20=>['baseOB::moCreate',['{DATA.valid}']]     
     ],
     'return'=>['redirect','{ACT.viewpar.route}','Adatok mentve'] 
 

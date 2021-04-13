@@ -4,8 +4,10 @@
 return [
     'base' => [
         'role' => ['worker'],
-        'obClass' => ['baseOB' => 'App\Handlers\WorkerHandler'],
+        'obClass' => ['baseOB' => 'App\Handlers\WorkerHandler',
+        'worker' => 'App\Worker','daytype' => 'App\Daytype','timetype' => 'App\Timetype'],
         'viewpar' => [
+            'timemenu'=>false,
             'baseroute' => 'm/ad.time.worker/', //ez alapján múködnek a gombok
            // 'route' => 'm/ad.time.worker/',
         ],
@@ -13,15 +15,23 @@ return [
     'index' => [
         'viewpar' => [
             'info' => ' fghsghsgf  gdhfhdf', // a taskhoz tartozó infoszöveg
-    ],
-        'allowed'=>true,
-        // 'delFromParrent' => ['obClass', 'funcs'],
-       'return' => ['viewFull', 'mocalendarVue.calendarWorker'],
+    ],    
+     'funcs' => [
+        20 => ['daytype::getCegDaytypes', [], 'DATA.daytypes'],  //groupconf hívja be
+        30 => ['timetype::getCegTimetypes', [], 'DATA.timetypes'],
+        
+      ],
+
+       'return' => ['viewFull', 'mocalendarVue.calendarWorkerDev'],
         //       'return'=>['dump']
     ],
 
     'getbasedata' => [
-        'allowed'=>true,
+        'funcs' => [
+            18 => ['worker::getWorkerBase', [], 'DATA.workers'],
+          ],
+
+        
     ],
     'freshdata' => [
         'allowed'=>true,

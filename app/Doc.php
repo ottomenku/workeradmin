@@ -7,6 +7,8 @@ use App\Worker;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
+use App\Handlers\FileHandler;
 use Dompdf;
 class Doc extends Model
 {
@@ -31,8 +33,10 @@ class Doc extends Model
      *
      * @var array
      */
-    protected $fillable = ['ceg_id', 'worker_id','cat', 'origin', 'name', 'filename', 'path','editodataa','data','worknote', 'adnote', 'pub'];
+    protected $fillable = ['ceg_id', 'worker_id','cat', 'origin', 'name', 'filename', 'type','path','editodataa','data','worknote', 'adnote', 'pub'];
 
+   
+   
     public function proba($tmplid)
     {
         $data=['user'=>'username'];
@@ -47,6 +51,14 @@ class Doc extends Model
         $res = Doc::where(['ceg_id' => $ceg->id])->with('worker')->get();
         return $res;
     }
+
+
+    public function getWorkerDocs()
+    {
+        $workerid = \Auth::user()->getWorkerid();
+        $res = Doc::where(['worker_id' => $workerid])->with('worker')->get();
+        return $res;
+    }
     public function getPdfPathFromId($id)
     {
         $filename= $this->find($id)->filename;
@@ -59,7 +71,7 @@ class Doc extends Model
         return  Doctemplate::find($tmplid);   
     }
 /**
- * nem kell jogosultság vizsgálat mert csak a manager configból érhető el
+ *    $file['type'] = $request->file('file')->getMimeType(); nem kell jogosultság vizsgálat mert csak a manager configból érhető el
  */
     public function storeDocs($data=[],$act=[])
     {
@@ -74,12 +86,66 @@ class Doc extends Model
                 $data['ceg_id'] = $worker['ceg_id'];
                 $data['worker_id'] =$workerid;
                 $data['cat'] = $data['cat'] ?? 'base';
-                $data['workernote'] = $data['note'] ?? '' ;
+                $data['worknote'] = $data['note'] ?? '' ;
                 $data['filename'] = \FileHandler::pdfStore($pdfdata,$act['viewpar'],$data['name'] );
                 $data['data']=json_encode($pdfdata);
                 $this->create($data);
             }
         }
+    }
+    public function storeWorkerDoc($request,$data)
+    { 
+        $filehandler= new FileHandler();
+        $user=\Auth::user();
+        $ceg =$user->getCeg();
+        $workerid=$user->getWorkerid();
+        $path='doc'.DIRECTORY_SEPARATOR.$ceg->id;
+        $file = $request->file('filef');
+        $destinationPath = storage_path().DIRECTORY_SEPARATOR.$path;
+        if(!is_dir($destinationPath)){mkdir($structure, $destinationPath, true);}
+        $fileNameWithoutExt=$filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $kep=['image/jpeg','image/png'];
+       // $doc=['application/pdf','application/msword','text/plain','application/vnd.openxmlformats-officedocument.wordprocessingml.document',];
+        $name=$data['name'] ??  $fileNameWithoutExt;
+        $data['type']=strtolower($file->getClientOriginalExtension());
+        $data['name'] = $name;
+        $data['origin'] =$file->getClientOriginalName();
+       // $data['mimetype'] =$file->getMimeType();  
+        $data['worker_id'] =$workerid;
+        $data['ceg_id'] =$ceg->id;
+        $data['cat'] = 'workerdoc';
+        $data['workernote'] = $data['note'] ?? '' ;     
+        $data['filename'] = $filehandler->getSafeName($name,true).'.'.$data['type'];
+        $data['path'] = $path;
+    
+        if(in_array($data['type'],['jpeg','png','jpg',])){//ha kép jön
+            $resize=true;
+            $img = \Image::make($file);
+            if($resize){
+            $width = 1000; // your max width
+            $height = 1000; // your max height     
+            $img->height() > $img->width() ? $width=null : $height=null;
+            $img->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+            });
+            }
+           // $img = Image::make($image->getRealPath());
+            $img->encode($data['type'])->save($destinationPath.DIRECTORY_SEPARATOR. $data['filename'] );
+            //$img->save($destinationPath, $data['filename']);
+           // \Storage::putFileAs($destinationPath  . $data['filename'], (string)$img->encode($data['type'], 95),  $data['filename']);
+
+        }else{// kell elseif mert a validation ellenőrzi hogy csak kép vagy dok jöhessen
+            $file->move( $destinationPath, $data['filename']);
+        }
+       
+       $this->create($data);
+    
+    //  return $request->filef->getMimeType();  
+           
+               // 
+              // $destinationPath = 'uploads';
+              // $file->move($destinationPath,$file->getClientOriginalName());
+   //   return $data  ;  
     }
 /**
  * ha le van zárva nem törli

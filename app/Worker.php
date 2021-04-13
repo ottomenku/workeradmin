@@ -69,6 +69,28 @@ class Worker extends Model
         }
         return $res;
     }
+
+   /**
+     * time worker használja csak a saját adatait kapja
+     */
+    public function getWorkerBase()
+    {
+        $res = [];
+        $user=\Auth::user();
+
+        $worker = Worker::where('user_id', $user->id)->first() ;
+        
+                $res[$worker->id]['id'] = $worker->id;
+                $res[$worker->id]['foto'] = $worker->foto ?? '/images/img_avatar.png';
+                $res[$worker->id]['workername'] = $worker->workername;
+                $res[$worker->id]['position'] = $worker->position ?? 'alkalmazott';
+               
+        return $res;
+    }
+
+    /**
+     * time manager használja a cég összes  workerét lekéri
+     */
     public function getWorkersIdkeyBase()
     {
         $res = [];

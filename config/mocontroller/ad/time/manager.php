@@ -20,8 +20,8 @@ return [
           //  'info' => ' fghsghsgf  gdhfhdf', // a taskhoz tartozó infoszöveg
     ],
         // 'delFromParrent' => ['obClass', 'funcs'],
-         'return' => ['viewFull', 'mocalendarVue.calendarManager'],
-      //       'return'=>['dump']
+        'return' => ['viewFull', 'mocalendarVue.calendarManager'],
+      //        'return'=>['dump']
     ],
 
     'getbasedata' => [

@@ -9,12 +9,23 @@ return [
         'funcs' => [ 
             3=>['replaceACT',[]] 
           ],  
-    'validations' =>['foto'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'] ,
+      
+    'validations' =>[
+    'foto'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    'filef' => 'required',
+    'filef.*' => 'mimes:doc,pdf,docx,txt,xls,jpeg,png,jpg,gif',
+    ] ,
    // 'delFromParrent'=>[ 'viewpar.menu.superadmin.egy'] ,
     'obClass'=>['baseOB'=>'App\Doc','worker'=>'App\Worker'],
     'viewpar'=>[
         'route'=>'m/ad.wor.docs', //ez alapján múködnek a gombok
-  
+      'form'=>[          
+            'name'=>['text','Név (Nem kötelező, alapérteémezetten a fájlnév lesz )',[]],
+            'filef'=>['file','fájl kivalasztás'],
+            'note'=>['text','Megjegyzés',[]],
+            'submit'=>['submit','feltöltés'], //,'submit'=>['submit','Ment','class'=>'btn btn-danger'] 
+            'formend'=>['formend']
+          ],
         ]
     ],
     'index' => [
@@ -29,14 +40,17 @@ return [
                // 'id'=>['Id',],
               //  'join_1'=>['Dolgozó','worker','workername'] ,
                 'name'=>['doc'] ,
+                'type'=>['type'] ,
+                'cat'=>['cat'] ,
+
                  'created_at'=>['Dátum'] ,
                // 'fullname'=>['Teljes név'] ,
               //  'join_2'=>['Email','user','email'],
               //  'actions'=> ['Action',[['show',['style'=>'none']],'download','ifpub'] ]
-              'actions'=> ['Action',['download'] ]
-                ],
-                
-            ]   ,   
+              'actions'=> ['Action',['download','destroy']]
+                ],      
+            ],   
+
             'funcs' => [
                10=>['replaceACT',[]] , 
              //  20=>['baseOB::getManagerAdatkezeles',['{ACT}','{OB.Request}'],'DATA.tabledata']  
@@ -47,27 +61,33 @@ return [
 
     'create' => [
         'viewpar'=>[ 
-            'taskheader'=>'Új dolgozó Cég:{ACT.cegnev}',
+            'taskheader'=>'Új dodokumentum feltöltés',
             
         ], 
           'funcs' => [
                 10=>['replaceACT',[]] ,
                  20=>['worker::getWorkers',[],'DATA']  
-            ],
-      
+            ]
+
         //  'return'=>['dump'],
 
-          'return'=>['viewsimple','admin_crudgenerator.docs.create']
+        //  'return'=>['viewsimple','admin_crudgenerator.docs.create']
     ],
-
     'store' => [
+      'funcs' => [
+     //  10=>['validateToDATA',[],'DATA.valid'],
+       20=>['baseOB::storeWorkerDoc',['{OB.Request}','{DATA.valid}']]     
+        ],
+      //  'return'=>['dump']  
+    ],
+  /* 'store' => [
         'funcs' => [
            8=>['replaceACT',[]] , 
             10=>['validateToDATA',[],'DATA.valid'],
             20=>['baseOB::storeAdatkezeles',['{DATA.valid}','{ACT}']]  
            ],
            'return'=>['redirect','{ACT.viewpar.route}','Dolgozó mentve:'] 
-     ],
+     ],*/
      'download' => [
         'funcs' => [
            8=>['replaceACT',[]] , 

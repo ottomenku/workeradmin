@@ -22,13 +22,13 @@ return [
         //      'return'=>['dump']
     ],
 
-    'getbasedata' => [
+    'getbasedata' => [//TODO: megnézni a worker miért nem múködik ha itt kikommenteljük a 18-as sort ott meg beírunk egy másik 18-ast
         'funcs' => [
           //  14 => ['timetype::allpluck', [], 'DATA.timetypes'],
           //  16 => ['daytype::allPluck', [], 'DATA.daytypes'],
           14 => ['daytype::getCegDaytypes', [], 'DATA.daytypes'],
           16 => ['timetype::getCegTimetypes', [], 'DATA.timetypes'],
-          18 => ['worker::getWorkersIdkeybase', [], 'DATA.workers'],
+         18 => ['worker::getWorkersIdkeybase', [], 'DATA.workers'],
         //  19 => ['worker::getWorkerids', [], 'DATA.workerids'],
           20 => ['user::getCegPubArray', [], 'DATA.ceg'],
           60 => ['CalendarHandler::getBaseCalendarData', ['{DATA.valid}', '{DATA}'], 'DATA'],
