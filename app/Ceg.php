@@ -7,7 +7,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 //TODO cég tiltása esetén ne tudjanak a dolgozók és a managerek se bejelentkezni
-
+//TODO pub gombot kicserélni éllapot jelzőre (alap, kiemelt, Vip, tiltva)
 class Ceg extends BaseModel
 {
     //use LogsActivity;
@@ -55,6 +55,13 @@ class Ceg extends BaseModel
     
         return  $ceg;   
     } 
+    public function getCegPluck()
+    {
+        $ceg= $this->where('id','>',1)->pluck('cegnev', 'id')->toarray();
+        $ceg['1']='Mindegyik';
+        return $ceg;
+  
+      }
     public function getCeg($ACT,$OB)
     {
         $ceg= $this->where('id','<>',1);

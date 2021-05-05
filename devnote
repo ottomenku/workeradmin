@@ -1,3 +1,5 @@
+TODO Worker elszámolási adatai, kedvezmények(adó),alapbér bértipus, (havi őrabér)
+
 //Image csomag telepítés---------------------------------
  composer require intervention/image
  config >> app.php
@@ -8,11 +10,16 @@ php_flag display_startup_errors on
 php_flag display_errors on
 
 beléptető linkek
-admin:
+root  (szuperadmin):
 changeuser/aD15ll465ghAjfEbbulkkkkllllllhgzz/2
-taczman (admin):
+
+admin (tacmannak):
+changeuser/aD15ll465ghAjfEbbulkkkkllllllhgzz/2
+taczman (manager):
 changeuser/aD15ll465ghAjfEbbulkkkkllllllhgzz/29
 ggg2:(manager)
 changeuser/aD15ll465ghAjfEbbulkkkkllllllhgzz/35
 ybl:(worker)
 changeuser/aD15ll465ghAjfEbbulkkkkllllllhgzz/37
+
+http://localhost:8000/change   

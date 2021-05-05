@@ -29,9 +29,21 @@ class Daytype extends BaseModel
      * @var array
      */
     protected $fillable = ['ceg_id','timetype_id', 'name', 'workday', 'szorzo', 'fixplusz', 'color','background','icon','note','userallowed','pub'];
-    public function getCegDaytypes()
+   
+    public function getAllWithCeg()
     {
-        return $this->where(['ceg_id' => 1])->where('userallowed' ,'<', 100)->get();
+        return   $this->with('ceg')->get();
+    }
+   
+    public function getCegDayTypes()
+    {
+        $ceg = \Auth::user()->getCeg();
+        $res=[];
+        $timetypes = $this->where('ceg_id','=',1)->orwhere('ceg_id','=', $ceg->id)->get()->toarray();
+       foreach ($timetypes as $timetype) {
+            $res[$timetype['id']] = $timetype;
+        }
+        return $res;
     }
     public function getDaytype($id)
     {

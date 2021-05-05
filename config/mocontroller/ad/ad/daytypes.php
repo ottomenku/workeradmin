@@ -7,7 +7,7 @@
               3=>['replaceACT',[]] 
             ],
             'validations' =>['icon'  => 'required'] ,
-            'obClass'=>['baseOB'=>'App\Daytype','timetype'=>'App\Timetype'],
+            'obClass'=>['baseOB'=>'App\Daytype','timetype'=>'App\Timetype','ceg'=>'App\Ceg'],
             'viewpar'=>[
                 'route'=>'m/ad.ad.daytypes', //ez alapján múködnek a gombok
                     'form'=>[  
@@ -21,7 +21,8 @@
                         'workday'=>['radiolist','',[['1','Munkanap' ],['0','Pihenőnap',true ]]] ,
                         'userallowed'=>['radiolist','',[['1','Usereknek is' ],['10','Managereknek',true ],['100','Adminoknak' ]]] ,
                         'szorzo'=>['number','Szorzó',[ 'step' => '0.01']],
-                        'fixplusz'=>['number','Fixplusz',[]],  
+                        'fixplusz'=>['number','Fixplusz',[]], 
+                        'ceg_id'=>['selectFromPluck','Cég aki használhatja','cegs','1'] ,
                         'pub'=>['radiolist','',[['0','Tiltva' ],['1','Engedélyezve',true ]]] ,
                          'submit'=>['submit','Naptípus mentése'], //,'submit'=>['submit','Ment','class'=>'btn btn-danger'] 
                         'formend'=>['formend']
@@ -32,7 +33,8 @@
                 'view'=>'index',
                 'table'=>[
                     'name'=>['Név'],
-                    'szorzo'=>['Szorzó'],
+                   // 'szorzo'=>['Szorzó'],
+                   'join_i'=>['Tulajdonos','ceg','cegnev'],
                     'icon_1'=>['Icon',['colname'=>'icon','colorcolname'=>'color','backgroundcolorcolname'=>'background']],
                     //'fixplusz'=>['fixplusz'],
                     'note'=>['megjegyzés'],
@@ -50,7 +52,8 @@
 
                 ] ,     
                 'funcs' => [ 
-                     10=>['baseOB::moIndex',[],'DATA.tabledata'] 
+                   //  10=>['baseOB::moIndex',[],'DATA.tabledata'] 
+                   10=>['baseOB::getAllWithCeg',[],'DATA.tabledata'] 
                    ],
             'return'=>['view'] 
            // 'return'=>['dump'] 
@@ -59,7 +62,8 @@
   'create' => [
     'allowed'=>true,
     'funcs' => [ 
-      10=>['timetype::timetypesPluck',[],'DATA.timetype_id_list'] 
+      10=>['timetype::timetypesPluck',[],'DATA.timetype_id_list'] ,
+      20=>['ceg::getCegPluck',[],'DATA.cegs'] 
     ],
 
    // 'delFromParrent'=>['return', 'funcs','viewpar'] , //örökölt külcsok törlése ha nem kell

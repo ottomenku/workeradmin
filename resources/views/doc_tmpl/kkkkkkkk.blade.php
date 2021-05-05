@@ -1,1 +1,1 @@
-<p>{{$data['worker']['birth'] ?? '' }}{{$data['worker']['cim'] ?? '' }}{{$data['worker']['birthplace'] ?? '' }}{{$data['worker']['position'] ?? '' }}{{$data['worker']['mothername'] ?? '' }}hjkghk,ghkjghk,ghj{{$data['worker']['fullname'] ?? '' }}</p>
+<p>{{$data['worker']['birth'] ?? '' }}{{$data['worker']['cim'] ?? '' }}{{$data['worker']['birthplace'] ?? '' }}{{$data['worker']['position'] ?? '' }}{{$data['worker']['mothername'] ?? '' }}hjkghk,ghkjghk,ghj{{$data['worker']['fullname'] ?? '' }}nnnnnnnnnnnn</p>

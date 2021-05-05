@@ -45,24 +45,7 @@
             @endforeach
             </ul>  
         </div>  
-        <div class="card-header">
-           Zárások
-        </div>
-@php
-    $cegs=App\Ceg::where('pub','>',0)->get(); 
-@endphp
 
-        <div class="card-body">
-            <ul class="nav flex-column" role="tablist">
-             @foreach($cegs ?? [] as $ceg)
-             <li class="nav-item" role="presentation">
-                <a class="nav-link" href="{{ url('/m/ad.time.admin/getceg/'.$ceg->id) }}">
-                    {{ $ceg->cegnev}}
-                </a>
-            </li>
-            @endforeach
-            </ul>  
-        </div> 
     </div>    
 @endif 
 @if (Auth::user()->hasRole('manager')) 
@@ -89,14 +72,14 @@
           Dokumentum generálás
         </div>
         @foreach($docmenuT as $cat=>$menus)     
-        <div class="card-header">
+        <div class="card-header" style="color:rgb(61, 114, 211)">
            {{$cat}}
         </div>
-        <div class="card-body">
+        <div >
             
-            <ul class="nav flex-column" role="tablist">
+            <ul >
                 @foreach($menus ?? [] as $menu)
-                <li class="nav-item" role="presentation">
+                <li>
                     <a class="nav-link" href="/m/ad.man.docgeneral/create/{{$menu['id']}}">
                         {{ $menu['name']}}
                     </a>

@@ -10,6 +10,30 @@ return [
         'workadmin' => ['m/ad.wad.worker'],
         'worker' => ['m/ad.time.worker'],   
     ],
+    'actionButtonBasePar'=>['class'=>'btn btn-sm', 'Style'=>''], // az action buttonhoz hozzáadja a tableuj
+    'actionButton'=>[
+        'show'=>['class'=>'btn-info ', 'fa'=>'fa fa-eye','title'=>'show full data',],
+        'previewid'=>[ 'class'=>'btn-info ', 'fa'=>'fa fa-eye', 'title'=>'show' ],
+        'download'=>['class'=>'btn-primary','fa'=>'fa fa-download','title'=>'Letöltés'],
+        'edit'=>['class'=>'btn-primary','fa'=>'fa fa-pencil-square-o','title'=>'Szerkesztés'],
+        'destroy'=>['class'=>' btn-danger ','fa'=>'fa fa-trash-o','title'=>'Törlés','onclick'=>"return confirm('Biztos hogy törölni akarja?')" ],
+        'pub'=>['class'=>' btn-danger ','fa'=>'fa fa-times','title'=>'Tiltva, engedélyezés'],
+        'unpub'=>['class'=>' btn-success ','fa'=>'fa fa-check','title'=>'Engedélyezve, tiltás'],
+        'pubinfo'=>['class'=>' btn-danger ','href'=>'#','fa'=>'fa fa-times','title'=>'Tiltva, engedélyezés'],
+        'unpubinfo'=>['class'=>' btn-success ','href'=>'#','fa'=>'fa fa-check','title'=>'Engedélyezve, tiltás'],
+       'closed'=>['class'=>' btn-light ','fa'=>'fa fa-unlock-alt','title'=>'Lezárás'],
+        'unclosed'=>['class'=>' btn-outline-danger','fa'=>'fa fa-lock','title'=>'Feloldás'],
+        'closedinfo'=>['href'=>'#','class'=>' btn-light ','fa'=>'fa fa-unlock-alt','title'=>'Lezárás'],
+        'unclosedinfo'=>['href'=>'#','class'=>' btn-outline-danger','fa'=>'fa fa-lock','title'=>'Feloldás'],
+     // 'allowed'=>['class'=>'btn-light','style'=>' color:green;','title'=>'Feloldás','text'=>'Efogadva'],
+      // 'new'=>['class'=>'btn-light','title'=>'új','text'=>'Új'],
+
+        ],
+
+
+
+
+
 
 //type: primary,  secondary, success, danger, warning, info, light, link
 //méret: btn-lg,btn-sm  Körvonal: btn-outline-primary stb
@@ -25,6 +49,7 @@ return [
     'show'=>[
        // 'button'=>'info', // a gomb tipusa a classban behelyettesíti
        'class'=>'btn btn-info btn-sm',
+
         'task'=>'show', // a kattintásra meghivandó task
         'fa'=>'fa fa-eye',
         'title'=>'show full data',

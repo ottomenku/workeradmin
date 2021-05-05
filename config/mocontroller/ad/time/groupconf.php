@@ -26,8 +26,8 @@ return [
         'funcs' => [
           //  14 => ['timetype::allpluck', [], 'DATA.timetypes'],
           //  16 => ['daytype::allPluck', [], 'DATA.daytypes'],
-          14 => ['daytype::getCegDaytypes', [], 'DATA.daytypes'],
-          16 => ['timetype::getCegTimetypes', [], 'DATA.timetypes'],
+          14 => ['daytype::getCegDayTypes', [], 'DATA.daytypes'],
+          16 => ['timetype::getCegTimeTypes', [], 'DATA.timetypes'],
          18 => ['worker::getWorkersIdkeybase', [], 'DATA.workers'],
         //  19 => ['worker::getWorkerids', [], 'DATA.workerids'],
           20 => ['user::getCegPubArray', [], 'DATA.ceg'],
@@ -36,8 +36,8 @@ return [
           80 => ['day::getDaysFromWorkers', ['{DATA.valid}','{DATA.workers}'], 'DATA.workerdays'],
            // 90 => ['stored::getStoreds', ['{DATA.valid}'], 'DATA.storeds'],
         ],
-        'return' => ['json'],
-        //  'return'=>['dump']
+         'return' => ['json'],
+        // 'return'=>['dump']
     ],
     'freshdata' => [
         'funcs' => [
@@ -58,6 +58,7 @@ return [
             20 => ['day::resetItem', ['{DATA.valid}']],
             25 => ['worker::getWorkersIdkeybase', [], 'DATA.workers'],
             30 => ['day::getDaysFromWorkers', ['{DATA.valid}','{DATA.workers}'], 'DATA.workerdays'],
+            40 => ['time::getTimesFromWorkers', ['{DATA.valid}','{DATA.workers}'], 'DATA.times'],
         ],
         'return' => ['json'],
     ],
@@ -66,6 +67,7 @@ return [
             20 => ['day::delItem', ['{DATA.valid}']],
             25 => ['worker::getWorkersIdkeybase', [], 'DATA.workers'],
             30 => ['day::getDaysFromWorkers', ['{DATA.valid}','{DATA.workers}'], 'DATA.workerdays'],
+            40 => ['time::getTimesFromWorkers', ['{DATA.valid}','{DATA.workers}'], 'DATA.times'],
         ],
         'return' => ['json'],
     ],
@@ -74,7 +76,7 @@ return [
             20 => ['day::storeDays', ['{DATA.valid}']],
             25 => ['worker::getWorkersIdkeybase', [], 'DATA.workers'],
             30 => ['day::getDaysFromWorkers', ['{DATA.valid}','{DATA.workers}'], 'DATA.workerdays'],
-           // 40 => ['time::getTimes', ['{DATA.valid}'], 'DATA.times'],
+            40 => ['time::getTimesFromWorkers', ['{DATA.valid}','{DATA.workers}'], 'DATA.times'],
         ],
         'return' => ['json'],
     ],

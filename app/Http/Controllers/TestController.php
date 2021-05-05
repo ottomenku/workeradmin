@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use PDF;
 use App\Stored;
 use App\User;
+use App\Worker;
+use App\Ceg;
 
 class TestController extends Controller
 {
@@ -22,6 +24,7 @@ class TestController extends Controller
      */
     public function index()
     {
+
         return view('home');
     }
     public function probaManagerLogin($key)
@@ -35,6 +38,17 @@ class TestController extends Controller
         }else{return redirect('/login');}
        
     }
+    public function change()
+    {
+        $cegs=Ceg::with('user')->get()->toarray();
+        foreach ( $cegs as $ceg) {
+            $data[$ceg['id']]['cegdata']=$ceg;
+            $data[$ceg['id']]['workers']=Worker::where('ceg_id',$ceg['id'])->with('user')->get()->toarray();
+        }
+       //return dump($data);
+        return view('change', compact('data'));
+    }
+
     public function changeUser($key,$id)
     {
         ///changeuser/aD15ll465ghAjfEbbulkkkkllllllhgzz/29

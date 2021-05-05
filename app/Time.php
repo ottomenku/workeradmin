@@ -60,7 +60,7 @@ class Time extends Model
     }
     public function getTimesFromWorkerIds($data, $workerids) //App\Traits\CalendaritemBaseFunc
     {
-        $res = [];
+        $res =[];
         foreach ($workerids as $wokerid) {
             $where = $this->getWhere($data, $wokerid, false);
             $res = $this->timesToArr($this->with('timetype')->where($where)->get(), $res);

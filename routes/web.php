@@ -17,6 +17,7 @@ Route::get('/config', 'ConfigEditor@index');
 Route::get('/kilep', 'Auth\LoginController@logout');
 //Route::get('probamanagerlogin/{key}', 'TestController@probaManagerLogin');
 Route::get('changeuser/{key}/{id}', 'TestController@changeUser');
+Route::get('change', 'TestController@change');
 Route::get('/', function () {
     return view('welcome');
 });

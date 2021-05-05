@@ -100,8 +100,18 @@ $value = array_get($base_par, 'names.john', 'default'); //dot tömbelérés defa
                                 @endphp 
                               <{{$tipus}} {{$param}}> {{$content}} </{{$tipus}}>
                                @break
+                                @case('selectFromPluck')
+                                    @php
+                                    //example: 'ceg_id'=>['selectFromPluck','label','$data key','checked'] ,
+                                    //example: 'ceg_id'=>['selectFromPluck','Cég aki használhatja','cegs($data['cegs']-be keresi a pluck arrayt)','1(az egyes kulcs lesz a checked)'] ,
+                                    $checked= $param[3] ?? null;
+                                    @endphp 
+                                    {!! Form::select($name, $data[$param[2]], $checked, []) !!}   
+                                 @break
+                               
                                @case('selectFromArr')
                                     @php
+                                    //example 'pub'=>['selectFromArr','jogosultság(felirat)',['1'=>'Alap','5'=>'Pro','10'=>'VIP','0'=>'Tiltva'],'1(selected kulcs)'] 
                                     $checked= $param[3] ?? null;
                                     $inputp=$param[2]['inputpar'] ?? $param[2] ?? []; 
                                     $inputpar=config('tpar.inputpar'); 

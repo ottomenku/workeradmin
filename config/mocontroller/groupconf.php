@@ -29,7 +29,7 @@ return [
                 1 => ['m/ad.man.worker', 'Dolgozók'],
                 10 => ['m/ad.time.manager', 'Munkaidők'],
               //20 => ['m/ad.man.messages', 'Üzenetek'],
-                25 => ['m/ad.man.docgeneral', 'Dokomentum generálás'],
+              25 => ['m/ad.man.docgeneral', 'Dokomentumok'],
            //   30 => ['m/ad.man.time.stored', 'Zárások'],
                 35 => ['/', ' Home'],
            // 35 => ['/', ' Home'],

@@ -25,7 +25,7 @@
                 @php
                    // a view link első paraméterének a etmplate idnek kell lennie! 
                 @endphp 
-                <a href="/m/ad.man.docgeneral/docgeneralview/{{$data['item']['id']}}/{{$worker->id}}" target="_blank" title="show" style=" width:20px;font-size: 18px; padding:2px; line-height:0;" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>   
+              <!--  <a href="/m/ad.man.docgeneral/docgeneralview/{{$data['item']['id']}}/{{$worker->id}}" target="_blank" title="show"  class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a> -->  
                 {{$worker->workername}}            
           </div>
       </div>

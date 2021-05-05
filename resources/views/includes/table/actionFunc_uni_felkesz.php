@@ -37,6 +37,30 @@ function buttonGeneral($actual,$route,$taskId) { //pl.('del','/m/ad.man.booking'
     return $res;   
 }
 /**
+ * $ifArr tömb kulcsai az ikon nevek amivel visszatér a függvény, ha akulcshoz tartozó tömbben deklarált feltétl teljesül.
+ *  Ha egyik feltétel sem jó ajkkor a base kulcsú ikonnal tér vissza.
+ * A $valueArr tmbjének kulcsai $ifArr tomb változó nevei, értékükkel vizsgálja hogy igaz e az $ifArr valamelyik feltétele
+ */
+function getActualIfIcon($ifArr,$valueArr) {
+//ifArr example: [['base'=>'baseicon'],['icon1'=>['val2','>',val1'],['icon,'=>['val2','<',val1']]]
+//$valueArr example: [['val1'=>'pubval'],['val2'=>1]]
+$icon=$ifarr['base'];
+unset($ifarr['base']);
+foreach ($ifArr as $key => $value) {
+    if($value[1]=='<' && $valueArr[$value[0]] < $valueArr[$value[2]] ){ $icon= $key ;  }
+    if($value[1]=='>' && $valueArr[$value[0]] >$valueArr[$value[2]] ){ $icon= $key ;  }
+    if($value[1]=='<=' && $valueArr[$value[0]] <= $valueArr[$value[2]] ){$icon = $key ;  }
+    if($value[1]=='>=' && $valueArr[$value[0]] >= $valueArr[$value[2]] ){$icon = $key ;  } 
+    if($value[1]=='==' && $valueArr[$value[0]] == $valueArr[$value[2]] ){$icon = $key ;  }
+    if($value[1]=='=' && $valueArr[$value[0]] == $valueArr[$value[2]] ){$icon = $key ;  }
+    if($value[1]=='!=' && $valueArr[$value[0]] != $valueArr[$value[2]] ){ $icon= $key ;  }
+
+}
+ return $icon;
+}
+
+
+/**
  * Az action alapján alapértelmezetten mocontroller.mocontroller.baseAction ($viewpar['baseActionKey']-ben felül lehet írni) 
  * config tömből kikeresi az aktuális paramétereket és összefésüli az action paramétereivel $action[1] ha vannak
  * 
@@ -117,10 +141,37 @@ function alterButton($action,$viewpar,$item) {//váltó gombok---
 return array_merge($actual, $param); //lehet üres is
  // return $actual;
 }
+/**
+ * ha az if arr tömb ne csinál semmit, ha stirng előb megkeresi a viewpar$viewpar['ifArr'] -ban 
+ *   a configban egyesíti és azzal tér vissza
+ */
+function getifArr($ifarr,$viewpar) {
+    if(!is_array($ifarr)){
+        $configKey='mocontroller.ifArr.'.$ifArr;
+        $ifArr=$viewpar['ifArr'][$ifarr] ?? [];
+        $configIfArr=config($configKey) ?? [];
+      $ifArr= array_merge($configIfArr,$ifArr);
+    }
+return $ifarr;
+}
+function getIcons($actions,$viewpar,$item) {
+    $icons=[];
+    foreach ($actions as $key => $action) {
+        if(is_array($action)){
+            $ifarr=$this->getifArr($action[0],$viewpar) ;
+            $$valueArr=$this->getifArr($action[0],$viewpar) ;  
+            $icons[]=agetActualIfIcon($ifArr,$valueArr);
 
-function actionbutton($action,$viewpar,$item) {
-  
-    $actual=alterButton($action,$viewpar,$item);
+        }
+       else{$icons[]=$action;}
+    }  
+    return  $icons;
+} 
+
+
+function actionbutton($actions,$viewpar,$item) {
+    $icons=$this->getIcons($actions,$viewpar,$item);
+    
  
     return  buttonGeneral($actual,url($viewpar['route']),$item->id);
 } 

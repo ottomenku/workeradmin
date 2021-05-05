@@ -18,6 +18,7 @@ return [
    // 'delFromParrent'=>[ 'viewpar.menu.superadmin.egy'] ,
     'obClass'=>['baseOB'=>'App\Doc','worker'=>'App\Worker'],
     'viewpar'=>[
+      'tableinclude'=>'includes.table.tableuj',
         'route'=>'m/ad.wor.docs', //ez alapján múködnek a gombok
       'form'=>[          
             'name'=>['text','Név (Nem kötelező, alapérteémezetten a fájlnév lesz )',[]],
@@ -33,7 +34,8 @@ return [
        //'role'=>'manager',worker_id', 'origin', 'name', 'filename', 'path', 'worknote', 'worknote', 'pub'
      //  'replaceACT'=>false,
         'viewpar'=>[ 
-
+         // 'tableFuncInc'=>'includes.table.actionFunc',
+         'tableFuncInc'=>'includes.table.simplePlusActionFunc',
             'taskheader'=>'Worker manager, Cég:{ACT.cegnev}',
             'view'=>'index',
             'table'=>[
@@ -46,11 +48,11 @@ return [
                  'created_at'=>['Dátum'] ,
                // 'fullname'=>['Teljes név'] ,
               //  'join_2'=>['Email','user','email'],
-              //  'actions'=> ['Action',[['show',['style'=>'none']],'download','ifpub'] ]
-              'actions'=> ['Action',['download','destroy']]
-                ],      
-            ],   
-
+             //    'actions'=> ['show','download'] 
+            // 'actions'=> [['ifnotnew',['edit',['param']]],'show' ]
+            'actions'=> ['download','destroynew']  ], 
+          ],
+         
             'funcs' => [
                10=>['replaceACT',[]] , 
              //  20=>['baseOB::getManagerAdatkezeles',['{ACT}','{OB.Request}'],'DATA.tabledata']  
@@ -73,21 +75,31 @@ return [
 
         //  'return'=>['viewsimple','admin_crudgenerator.docs.create']
     ],
-    'store' => [
+    'proba' => [
       'funcs' => [
      //  10=>['validateToDATA',[],'DATA.valid'],
+       20=>['baseOB::proba',[],'DATA'],   
+      ],
+       'return'=>['dump']  
+    ],
+
+    'destroy' => [  
+    'delFromParrent'=>[ 'funcs'],
+    'funcs' => [
+        8=>['replaceACT',[]], 
+        10=>['baseOB::destroyWorkerOne',['{ACT.viewpar.id}']]     
+        ]
+       // ,'return'=>['dump']  
+      ],
+
+    'store' => [
+      'funcs' => [
+       10=>['validateToDATA',[],'DATA.valid'],
        20=>['baseOB::storeWorkerDoc',['{OB.Request}','{DATA.valid}']]     
         ],
       //  'return'=>['dump']  
     ],
-  /* 'store' => [
-        'funcs' => [
-           8=>['replaceACT',[]] , 
-            10=>['validateToDATA',[],'DATA.valid'],
-            20=>['baseOB::storeAdatkezeles',['{DATA.valid}','{ACT}']]  
-           ],
-           'return'=>['redirect','{ACT.viewpar.route}','Dolgozó mentve:'] 
-     ],*/
+
      'download' => [
         'funcs' => [
            8=>['replaceACT',[]] , 
@@ -96,8 +108,9 @@ return [
            ],
         //  'return'=>['redirect','{ACT.viewpar.route}','letöltés'] 
         'return'=>['downloadFromStorage'] 
+       // 'return'=>['dump']
      ],    
-     'edit' => [
+  /*   'edit' => [
         'viewpar'=>[           
             'taskheader'=>'{ACT.name} adatainak mődosítása Cég:{ACT.cegnev}',
         ],
@@ -118,15 +131,10 @@ return [
        20=>['baseOB::moUpdate',['{ACT.viewpar.id}','{DATA.valid}']]     
         ],
     
-    ],
+    ],*/
 
-    'destroy' => [  'delFromParrent'=>[ 'funcs'],
-    'funcs' => [
-        8=>['replaceACT',[]], 
-        10=>['baseOB::destroyOne',['{ACT.viewpar.id}']]     
-        ]],
  // az ad.groupcomf funkcióinak használata itt is kell hogy legyen kulcs és nem lehet üres------        
-'pub' => ['allowed'=>true],
-'unpub' => ['allowed'=>true],
-'show' => ['allowed'=>true], 
+//'pub' => ['allowed'=>true],
+//'unpub' => ['allowed'=>true],
+//'show' => ['allowed'=>true], 
 ];

@@ -20,7 +20,15 @@ class Doc extends Model
      * @var string
      */
     protected $table = 'docs';
-
+    protected $basePath = 'doc';  // nem lehet sima path mert akkor a $doc->path  (eloquentes objektum) ez lesz
+    protected $cegPath = '';   //$this->path.DIRECTORY_SEPARATOR.$ceg->id;
+    protected $fullpath = '';  //storage_path().DIRECTORY_SEPARATOR. $this->cegPath ;
+    protected $resize = true;
+    protected $width = 1000;    //max width megtarja az arányokat
+    protected $height = 1000;    //max height megtarja az arányokat
+    protected $user; 
+    protected $ceg; 
+    protected $fleInputName='filef'; 
     /**
      * The database primary key value.
      *
@@ -35,16 +43,9 @@ class Doc extends Model
      */
     protected $fillable = ['ceg_id', 'worker_id','cat', 'origin', 'name', 'filename', 'type','path','editodataa','data','worknote', 'adnote', 'pub'];
 
+   //TODO type-ot meg ownwer_id -ot beírni a migrationba
    
-   
-    public function proba($tmplid)
-    {
-        $data=['user'=>'username'];
-       return  $this->blade("ggg {{$data['user']}}", $data);
-
-      // return  view("ggg {{$data['user']}}", compact('data'))->render(); 
-     //  return view (['template' => '{{$token}}'], ['token' => 'I am the token value']);
-    }
+//--- manager function -----------------------------
     public function getManagerAdatkezeles()
     {
         $ceg = \Auth::user()->getCeg();
@@ -52,27 +53,6 @@ class Doc extends Model
         return $res;
     }
 
-
-    public function getWorkerDocs()
-    {
-        $workerid = \Auth::user()->getWorkerid();
-        $res = Doc::where(['worker_id' => $workerid])->with('worker')->get();
-        return $res;
-    }
-    public function getPdfPathFromId($id)
-    {
-        $filename= $this->find($id)->filename;
-        $path=\FileHandler::getCegDocPdfPath();
-        return $path.DIRECTORY_SEPARATOR.$filename;
-
-    }
-    public function moCreate($tmplid)
-    {
-        return  Doctemplate::find($tmplid);   
-    }
-/**
- *    $file['type'] = $request->file('file')->getMimeType(); nem kell jogosultság vizsgálat mert csak a manager configból érhető el
- */
     public function storeDocs($data=[],$act=[])
     {
         $ceg = \Auth::user()->getCeg();
@@ -93,64 +73,132 @@ class Doc extends Model
             }
         }
     }
+       public function getPdfPathFromId($id)
+    {
+        $filename= $this->find($id)->filename;
+        $path=\FileHandler::getCegDocPdfPath();
+        return $path.DIRECTORY_SEPARATOR.$filename;
+
+    }
+    public function moCreate($tmplid)
+    {
+        return  Doctemplate::find($tmplid);   
+    }
+
+//---  worker function ---------------------------------
+    public function getWorkerDocs()
+    {
+        $workerid = \Auth::user()->getWorkerid();
+        $res = Doc::where(['worker_id' => $workerid])->with('worker')->get();
+        return $res;
+    }
     public function storeWorkerDoc($request,$data)
     { 
+        $this->setUserAndceg();
+        $file = $this->setDirAndFile($request);
+        $data=$this->getdataToStoreDoc( $file,$data); 
+        
+      if(in_array($data['type'],['jpeg','png','jpg',])){//ha kép jön (a type-ot a getdatatoStoreDoc() kisbetűsre alakítja)
+            $this->saveImage($file,$data,$this->resize);
+           
+        }else{//nem kell elseif mert a validation ellenőrzi hogy csak kép vagy dok jöhessen
+            $file->move( $this->fullpath, $data['filename']);
+        }      
+       $this->create($data);
+    }
+/**
+ * csak akkor törli ha a sajátja és nem régi 
+ */
+public function destroyWorkerOne($id) //
+{
+    $item= $this->find($id);
+    $to = Carbon::createFromFormat('Y-m-d H:s:i', $item->updated_at);
+    $from =Carbon::now();
+    $diff_in_hours = $to->diffInHours($from);
+    $user=\Auth::user();
+    if($diff_in_hours<3 && $item->worker_id==$user->getWorkerid()) {
+    $path=storage_path().DIRECTORY_SEPARATOR.$item->path; 
+    $filename=$item->filename;
+    unlink($path.DIRECTORY_SEPARATOR.$filename);
+    $this->destroy($id);
+    }
+   // if ($stored['lezarva'] == false) {} //lehet tömb is
+   return  $item;
+}
+
+public function proba() //
+{
+    $item= $this->find(2);
+    $to = Carbon::createFromFormat('Y-m-d H:s:i', $item->updated_at);
+    $from =Carbon::now();
+    $diff_in_hours = $to->diffInHours($from);
+    //print_r($diff_in_hours);// Output: 6
+return $diff_in_hours;
+}
+/**
+ *    $file['type'] = $request->file('file')->getMimeType(); nem kell jogosultság vizsgálat mert csak a manager configból érhető el
+ */
+ 
+// --- handlerek------------------------------------------------------------------------
+
+    public function getdataToStoreDoc($file,$data)
+    {         
         $filehandler= new FileHandler();
-        $user=\Auth::user();
-        $ceg =$user->getCeg();
-        $workerid=$user->getWorkerid();
-        $path='doc'.DIRECTORY_SEPARATOR.$ceg->id;
-        $file = $request->file('filef');
-        $destinationPath = storage_path().DIRECTORY_SEPARATOR.$path;
-        if(!is_dir($destinationPath)){mkdir($structure, $destinationPath, true);}
-        $fileNameWithoutExt=$filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $kep=['image/jpeg','image/png'];
-       // $doc=['application/pdf','application/msword','text/plain','application/vnd.openxmlformats-officedocument.wordprocessingml.document',];
+        
+        $workerid=$this->user->getWorkerid();
+        $fileNameWithoutExt=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $name=$data['name'] ??  $fileNameWithoutExt;
         $data['type']=strtolower($file->getClientOriginalExtension());
         $data['name'] = $name;
         $data['origin'] =$file->getClientOriginalName();
        // $data['mimetype'] =$file->getMimeType();  
         $data['worker_id'] =$workerid;
-        $data['ceg_id'] =$ceg->id;
+        $data['owner_id'] =$workerid;
+        $data['ceg_id'] =$this->ceg->id;
         $data['cat'] = 'workerdoc';
         $data['workernote'] = $data['note'] ?? '' ;     
         $data['filename'] = $filehandler->getSafeName($name,true).'.'.$data['type'];
-        $data['path'] = $path;
-    
-        if(in_array($data['type'],['jpeg','png','jpg',])){//ha kép jön
-            $resize=true;
-            $img = \Image::make($file);
-            if($resize){
-            $width = 1000; // your max width
-            $height = 1000; // your max height     
-            $img->height() > $img->width() ? $width=null : $height=null;
-            $img->resize($width, $height, function ($constraint) {
-            $constraint->aspectRatio();
-            });
-            }
-           // $img = Image::make($image->getRealPath());
-            $img->encode($data['type'])->save($destinationPath.DIRECTORY_SEPARATOR. $data['filename'] );
-            //$img->save($destinationPath, $data['filename']);
-           // \Storage::putFileAs($destinationPath  . $data['filename'], (string)$img->encode($data['type'], 95),  $data['filename']);
-
-        }else{// kell elseif mert a validation ellenőrzi hogy csak kép vagy dok jöhessen
-            $file->move( $destinationPath, $data['filename']);
-        }
-       
-       $this->create($data);
-    
-    //  return $request->filef->getMimeType();  
-           
-               // 
-              // $destinationPath = 'uploads';
-              // $file->move($destinationPath,$file->getClientOriginalName());
-   //   return $data  ;  
+        $data['path'] =$this->cegPath;
+     return $data;   
     }
+   public function saveImage($file,$data, $resize=true)
+    {   
+        $img = \Image::make($file);
+        if($resize){
+        $width = $this->width; // your max width
+        $height =$this->height; // your max height     
+        $img->height() > $img->width() ? $width=null : $height=null;
+
+        $img->resize($width, $height, function ($constraint) {
+        $constraint->aspectRatio();
+        });
+        $img->encode($data['type'])->save($this->fullpath.DIRECTORY_SEPARATOR. $data['filename'] );
+        }
+    }
+
+
+
+    public function setUserAndceg()
+    {    
+        $this->user=\Auth::user();
+        $this->ceg =$this->user->getCeg();
+    }
+
+    public function setDirAndFile($request)
+    {   
+        $this->cegPath = $this->basePath.DIRECTORY_SEPARATOR.$this->ceg->id;
+        $this->fullpath=storage_path().DIRECTORY_SEPARATOR. $this->cegPath;
+        if(!is_dir($this->fullpath))
+        {
+            if (!mkdir($this->fullpath, 0777, true)) {die('Failed to create folders...'); }
+        } 
+        return $request->file($this->fleInputName);  //$file
+    }
+ 
 /**
  * ha le van zárva nem törli
  */
-    public function destroyOne($id) //
+    public function destroyManagerOne($id) //
     {
         $filename= $this->find($id)->filename;
         $path=\FileHandler::getCegDocPdfPath();
@@ -159,6 +207,9 @@ class Doc extends Model
        // if ($stored['lezarva'] == false) {} //lehet tömb is
 
     }
+ /**
+  * Csak adminoknak mocontroller ellenőrzi a jogot
+   */   
     public function pub($id)
     {
         $ob=$this->find($id);
@@ -167,7 +218,7 @@ class Doc extends Model
   public function unpub($id)
     {
         $ob= $this->find($id);
-        $ob->update(['pub'=>0]);
+        $ob->update(['pub'=>-1]);
     }
    
 
@@ -175,17 +226,17 @@ class Doc extends Model
     {
         return $this->findOrfalse($id);
 
-    }
+    }*/
     public function download($id)
     {
         $item= $this->find($id);
-        $filePath = $item->path.$item->filename;
+        $filePath = $item->path.DIRECTORY_SEPARATOR.$item->filename;
       //  $headers = ['Content-Type: application/pdf'];
        // $fileName = time().'.pdf';
-      //  return response()->download(storage_path("app/public/10/{$item->filename}"));
-      return $filePath;
+     //    return response()->download(storage_path($filePath));
+     return $filePath;
 
-    }*/
+    }
 
     public function ceg()
     {

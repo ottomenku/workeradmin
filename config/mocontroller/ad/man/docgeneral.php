@@ -50,7 +50,7 @@ return [
        //'role'=>'manager',worker_id', 'origin', 'name', 'filename', 'path', 'worknote', 'worknote', 'pub'
      //  'replaceACT'=>false,
         'viewpar'=>[ 
-
+          'createbutton'=>false,
             'taskheader'=>'Worker manager, Cég:{ACT.cegnev}',
            'view'=>'index',
            'table'=>[

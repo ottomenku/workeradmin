@@ -128,7 +128,10 @@ switch ($ret) {
     case 'download': 
    // return Storage::download($this->DATA['file']);
 return response()->download($this->DATA['file']);
-    case 'editorpdfstream': 
+       case 'downloadFromStorage': 
+  // return Storage::download($this->DATA['file']);
+ return response()->download(storage_path().DIRECTORY_SEPARATOR.$this->DATA['file']); 
+ case 'editorpdfstream': 
       $html= \FileHandler::contentToFullhtml($this->DATA['editordata']);
       $dompdf = new Dompdf\Dompdf();
       $dompdf->load_html($html,'UTF-8');

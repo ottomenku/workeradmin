@@ -6,7 +6,7 @@ return [
       'funcs' => [ 
         3=>['replaceACT',[]] 
       ],
-      'obClass'=>['baseOB'=>'App\Timetype'],
+      'obClass'=>['baseOB'=>'App\Timetype','ceg'=>'App\Ceg'],
       'viewpar'=>[
           'route'=>'m/ad.ad.timetypes', //ez alapján múködnek a gombok
               'form'=>[          
@@ -17,6 +17,7 @@ return [
                   'color'=>['text','Szín',[]],
                   'background'=>['text','Háttérszín',[]],
                 //  'fixplusz'=>['number','Fixplusz',[]],  
+                'ceg_id'=>['selectFromPluck','Cég aki használhatja','cegs','1'] ,
                   'pub'=>['radiolist','',[['1','Tiltva' ],['0','Engedélyezve',true ]]] ,
                     'submit'=>['submit','Időtipus mentése'], //,'submit'=>['submit','Ment','class'=>'btn btn-danger'] 
                   'formend'=>['formend']
@@ -27,7 +28,8 @@ return [
       'viewpar'=>[ 
           'table'=>[
               'name'=>['Név'],
-              'szorzo'=>['Szorzó',],
+             // 'szorzo'=>['Szorzó',],
+             'join_i'=>['Tulajdonos','ceg','cegnev'],
               'color'=>['color',],
               'basehour'=>['Óra',],
               'note'=>['megjegyzés'],
@@ -35,15 +37,18 @@ return [
           ],     
           ] ,     
           'funcs' => [ 
-                10=>['baseOB::moindex',[],'DATA.tabledata'] 
+                10=>['baseOB::getAllWithCeg',[],'DATA.tabledata'] 
+              
               ],
-      'return'=>['view'] 
+    'return'=>['view'] 
       // 'return'=>['dump'] 
   ],
 
   // az ad.groupcomf funkcióinak használata itt is kell hogy legyen kulcs és nem lehet üres------
   'create' => [
-    'allowed'=>true,
+    'funcs' => [ 10=>['ceg::getCegPluck',[],'DATA.cegs']  ],
+    //20=>['replaceACT',[]] ,  
+    //'return'=>['dump'] 
    // 'delFromParrent'=>['return', 'funcs','viewpar'] , //örökölt külcsok törlése ha nem kell
   ],
   'store' => ['allowed'=>true],

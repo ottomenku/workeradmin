@@ -161,6 +161,8 @@ class Worker extends Model
         $worker = $this->findOrFail($id);
         $userid = $worker->user_id;
         $data['workername'] = $data['workername'] ?? $data['name'];
+     
+
         //foto mentése------------
         if (isset($data['image']) && $data['image']) {
             $image = $data['image'];
@@ -170,6 +172,11 @@ class Worker extends Model
         }
         $worker->update($data);
         $user = User::findOrFail($userid);
+        //if($data['email']==$user->email) {unset($data['email']);}
+        if($data['email']!=$user->email) {
+                    $validator = Validator::make($data, ['email' => 'unique:users,email']);
+          //  unset($data['email']);
+        }
         $user->update($data);
     }
     public function moDestroy($id)

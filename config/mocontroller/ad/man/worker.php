@@ -11,7 +11,7 @@ return [
           ],  
     'validations' =>[
         'foto'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'email'  => 'required|unique:users|max:255',
+        'email'  => 'required|max:255',
     
     ] ,
    // 'delFromParrent'=>[ 'viewpar.menu.superadmin.egy'] ,
@@ -19,17 +19,17 @@ return [
     'viewpar'=>[
         'route'=>'m/ad.man.worker', //ez alapján múködnek a gombok
         'form'=>[   
-            'name'=>['text','Felhasználónév (egyedi)',['required' => 'required']],
+            'name'=>['text','Felhasználónév (ezzel tud bejelenkezni,egyedi)',['required' => 'required']],
             'fullname'=>['text','Teljes (anyakönyvi) név',[]],
-            'workername'=> ['text','Egyedi név',[]],
+            'workername'=> ['text','Workwernév, Ez fog megjelenni a listákban táblázatoban,egyedi',[]],
             'email'=> ['email','Email',['required' => 'required']],
             'password'=> ['text','Jelszó (Ha üresen marad nem változik)',[]],
             'position'=> ['text','',[]],
             'image'=> ['image','foto',[]], //'fileupload name'=> ['tipus','mező név',[]],
             'cim'=> ['text','utca, házszám',[]],
             'város'=> ['text','Város (cím)',[]],
-            'alapber'=> ['text','alapbér',[]],
-            'bertipus'=> ['text','Bértipus',[]],    
+           // 'alapber'=> ['text','alapbér',[]],
+           // 'bertipus'=> ['text','Bértipus',[]],    
             'mothername'=> ['text','Anyja neve',[]], 
             'tel'=> ['text','Telefonszám',[]],
             'ado'=> ['text','Adószám',[]],
@@ -49,7 +49,7 @@ return [
      //  'replaceACT'=>false,
         'viewpar'=>[ 
 
-            'taskheader'=>'Worker manager, Cég:{ACT.cegnev}',
+            'taskheader'=>'Dolgozók, Cég:{ACT.cegnev}',
             'view'=>'index',
             'table'=>[
                // 'id'=>['Id',],
@@ -79,6 +79,7 @@ return [
     ],
 
     'store' => [
+        'validations' =>['email'  => 'required|unique:users|max:255', ] ,
         'funcs' => [
            8=>['replaceACT',[]] , 
             10=>['validateToDATA',[],'DATA.valid'],
@@ -102,6 +103,7 @@ return [
   
     'update' => [ 'succes_message'=>'Dolgozó adatai frissítve!',
    // 'delFromParrent'=>[ 'funcs'],
+
     'funcs' => [
         8=>['replaceACT',[]] , 
         10=>['validateToDATA',[],'DATA.valid'],

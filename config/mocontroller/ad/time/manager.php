@@ -32,8 +32,8 @@ return [
         'funcs' => [
           //  14 => ['timetype::allpluck', [], 'DATA.timetypes'],
           //  16 => ['daytype::allPluck', [], 'DATA.daytypes'],
-          14 => ['daytype::getCegDaytypes', [], 'DATA.daytypes'],
-          16 => ['timetype::getCegTimetypes', [], 'DATA.timetypes'],
+          14 => ['daytype::getCegDayTypes', [], 'DATA.daytypes'],
+          16 => ['timetype::getCegTimeTypes', [], 'DATA.timetypes'],
           18 => ['worker::getWorkersIdkeybase', [], 'DATA.workers'],
         //  19 => ['worker::getWorkerids', [], 'DATA.workerids'],
           20 => ['user::getCegPubArray', [], 'DATA.ceg'],
@@ -48,7 +48,6 @@ return [
     'freshdata' => [
         'allowed'=>true,
     ],
-
 //stored---------------------------
 /*'delstored' => [
   'funcs' => [
