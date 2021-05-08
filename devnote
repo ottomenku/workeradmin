@@ -1,4 +1,11 @@
 TODO Worker elszámolási adatai, kedvezmények(adó),alapbér bértipus, (havi őrabér)
+// test domain, test adatbázis váltás-----------------------
+ App\Providers\AppServiceProvider 
+    public function boot()
+    {
+        $host=explode('.', $_SERVER['HTTP_HOST']);
+       if($host[0]=='test') {config()->set('database.default', 'testmysql');} 
+    }
 
 //Image csomag telepítés---------------------------------
  composer require intervention/image

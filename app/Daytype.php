@@ -39,7 +39,7 @@ class Daytype extends BaseModel
     {
         $ceg = \Auth::user()->getCeg();
         $res=[];
-        $timetypes = $this->where('ceg_id','=',1)->orwhere('ceg_id','=', $ceg->id)->get()->toarray();
+        $timetypes = $this->with('ceg')->where('ceg_id','=',1)->orwhere('ceg_id','=', $ceg->id)->get()->toarray();
        foreach ($timetypes as $timetype) {
             $res[$timetype['id']] = $timetype;
         }
@@ -47,7 +47,7 @@ class Daytype extends BaseModel
     }
     public function getDaytype($id)
     {
-        return $this->find( $id);
+        return $this->with('ceg')->find( $id);
     }
     public function workerDaytypesPluck()
     {

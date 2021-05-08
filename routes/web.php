@@ -10,6 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['domain' => 'test.localhost:8000'], function() {
+    Route::get('/h', function() {
+     die('nincs tesztroute');
+    });
+});
+
+
 //config editor----------------------------------------
 Route::get('/config', 'ConfigEditor@index');
 
@@ -44,6 +51,11 @@ Route::any('/{route}/{task}/{id}/{id1}', 'BaseWithRouteController@baseWithRoute'
 });
 Route::get('/pdf/{id}', 'HomeController@pdf')->name('pdf');
 
+
+
+
+
+/*
 Route::group(['prefix' => 'a'],function () {
     Route::any('/postStoredsData', 'StoredController@postStoredsData');
     Route::any('/getStoreds/{year}/{month}/{cegid}', 'StoredController@getStoreds');
@@ -51,4 +63,5 @@ Route::group(['prefix' => 'a'],function () {
     Route::any('/zarStoreds/{year}/{month}/{cegid}/{id}', 'StoredController@zarStoreds'); 
     Route::any('/nyitStoreds/{year}/{month}/{cegid}/{id}', 'StoredController@nyitStoreds'); 
     Route::any('/timeframes', 'StoredController@timeframes');
-});
+});*/
+

@@ -71,9 +71,12 @@
   'store' => ['allowed'=>true],
   'show' => ['allowed'=>true],
   'edit' => [    'funcs' => [ 
-    10=>['baseOB::getDaytype',['{ACT.viewpar.id}'],'DATA'] ,
+   10=>['baseOB::getDaytype',['{ACT.viewpar.id}'],'DATA.formdata'] ,
+   20=>['ceg::getCegPluck',[],'DATA.cegs'] ,
     30=>['timetype::timetypesPluck',[],'DATA.timetype_id_list'] 
-  ],],
+  ],
+ // 'return'=>['dump'] 
+],
   'update' => ['allowed'=>true],
   'destroy' => ['allowed'=>true],
   'pub' => ['allowed'=>true],

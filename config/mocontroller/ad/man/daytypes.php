@@ -69,7 +69,9 @@
   'edit' => [    'funcs' => [ 
     10=>['baseOB::getDaytype',['{ACT.viewpar.id}'],'DATA'] ,
     30=>['timetype::timetypesPluck',[],'DATA.timetype_id_list'] 
-  ],],
+  ],
+ 
+  ] ,
   'update' => ['allowed'=>true],
   'destroy' => ['allowed'=>true],
   'pub' => ['allowed'=>true],

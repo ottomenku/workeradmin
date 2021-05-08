@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-    }
+       if(isset($_SERVER['HTTP_HOST'])){
+            $host=explode('.', $_SERVER['HTTP_HOST']);  
+            if($host[0]=='test') {config()->set('database.default', 'testmysql');} 
+        }
+
+    } 
 }
