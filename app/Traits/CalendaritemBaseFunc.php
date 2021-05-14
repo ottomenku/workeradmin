@@ -182,31 +182,4 @@ public function hasGetRole($item, $modifyrole = false)
 
         return false;
     }
-
-    /**
-     * adott dolgozók adott időszakának idelyei
-     * csak a dolgozó saját idelyeit listázza vagy workernél nagyobb jog estén a saját cég illetve saját csoport idejeit
-     * lehet megadni start end illetve year month paramétereket ha egyik sincs az aktuália hónapot veszi
-     */
-  /* public function getItems($data, $with = ['daytype', 'worker'], $justAllowed = false)
-    {
-        if (empty($data['start']) || empty($data['end'])) {$data = CalendarHandler::getStartEnd($data);}
-        $itemRole = true;
-        //   if(empty($data['workerids'])){$worker=new Worker();$data['workerids']=$worker->getWorkerids(); $itemRole=false; }
-        //TODO: megoldani hogy szűrt workerids esetén se legyen invalid kulcs hiba (amelyik eorkerid nincs alistában azt most lenulláza a res, a kalendar meg keresi... )
-        $worker = new Worker();
-        $data['workerids'] = $worker->getWorkerids(); // csak a saját cég dolgozóóit adja vissza
-        $itemRole = false; //mindig le kell kérni az összes dolgozót! különben invalid kulcc hibát okozhat a kalendarban
-
-        $res = [];
-        $hasrole = true;
-        foreach ($data['workerids'] as $wid) {
-            if ($justAllowed) {$where = [['datum', '>=', $data['start']], ['datum', '<=', $data['end']], ['pub', '>', 5]];} else { $where = [['datum', '>=', $data['start']], ['datum', '<=', $data['end']]];}
-            $items = $this->with($with)->where($where)->get();
-            // $items= $this->with(['itemtype','worker'])->where([['datum', '>=',$data['start'] ],['datum', '<=', $data['end']],['worker_id', '=', $wid]])->get();
-            if ($itemRole && isset($items[0]) && !empty($items[0])) {$hasrole = $this->hasGetRole($items[0]);}
-            if ($hasrole && isset($items[0]) && !empty($items[0])) {$res = $this->itemsToArr($items, $res);}
-        }
-        return $res;
-    }*/
 }

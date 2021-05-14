@@ -2,7 +2,7 @@
 //figyelem ugyanolyan hulcsnál lefagy!!!!!!!!!!!
 //BaseWithRouteController
 return [
-
+    'probakey' =>'conf_probavalue',
     'base'=>[
    // 'allowed'=>false,   
    // 'delFromParrent'=>[ 'viewpar.menu.superadmin.egy'] ,

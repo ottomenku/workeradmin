@@ -106,23 +106,5 @@ public function removeFromAarr($arr, $dotkeys='')
     else{return \Arr::get($this->$prop,implode('.',$dotkeys));}
    
    }
-   function listFolderFiles($dir){
-      $res=[];
-       $ffs = scandir($dir);
-       unset($ffs[array_search('.', $ffs, true)]);
-       unset($ffs[array_search('..', $ffs, true)]);
-   
-       // prevent empty ordered elements
-       if (count($ffs) < 1){ return $res;}
-          
 
-       foreach($ffs as $ff){
-           
-           if(is_dir($dir.'/'.$ff)){ $res[$ff]=$this->listFolderFiles($dir.'/'.$ff);}
-           else{$res[]=$ff;}
-          
-       }
-
-      return $res;
-   }
 }
